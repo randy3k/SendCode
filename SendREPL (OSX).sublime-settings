@@ -1,0 +1,23 @@
+{
+    "prog": "iterm",
+    "default" : {
+        "prog": "terminal",
+        "auto_expand_line": true,
+        "auto_advance" : true,
+        "auto_advance_non_empty": false,
+        "bracketed_paste_mode": false,
+
+        "r" : {
+            "prog": "terminal",
+        },
+
+        "python" : {
+            "prog": "terminal",
+        },
+
+        "julia" : {
+            "prog": "terminal",
+            "bracketed_paste_mode": true
+        }
+    }
+}
