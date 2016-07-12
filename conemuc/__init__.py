@@ -1,4 +1,3 @@
-import sublime
 import os
 import subprocess
 
@@ -12,9 +11,11 @@ def escape_dquote(cmd):
     return cmd
 
 
-def send_to_conemu(cmd):
+def send_to_conemu(cmd, path=None):
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    if not path:
+        path = CONEMUC
     subprocess.check_call(
-        '"' + escape_dquote(CONEMUC) + '" ' + '-GuiMacro:0 Paste(0,"%s\n")' % escape_dquote(cmd),
+        '"' + escape_dquote(path) + '" ' + '-GuiMacro:0 Paste(0,"%s\n")' % escape_dquote(cmd),
         startupinfo=startupinfo)

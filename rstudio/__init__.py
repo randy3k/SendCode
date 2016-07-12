@@ -1,6 +1,5 @@
 import sublime
 import os
-import subprocess
 from ..applescript import execute_applescript
 from ..autohotkey import execute_autohotkey_script
 from ..xdotool import xdotool

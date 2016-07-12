@@ -42,7 +42,8 @@ class TextSender:
         send_to_iterm(cmd.rstrip(), self.bracketed_paste_mode)
 
     def send_to_conemu(self, cmd):
-        send_to_conemu(cmd.rstrip())
+        conemuc_path = self.settings.get("conemuc", None)
+        send_to_conemu(cmd.rstrip(), conemuc_path)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
@@ -108,8 +109,13 @@ class RTextSender(TextSender):
         def send_to_r(self, cmd):
             pass
 
-    def send_to_rstudio(self, cmd):
-        send_to_rstudio(cmd.rstrip())
+    if sublime.platform() == "linux":
+        def send_to_rstudio(self, cmd):
+            xdotool_path = self.settings.get("xdotool", None)
+            send_to_rstudio(cmd.rstrip(), xdotool_path)
+    else:
+        def send_to_rstudio(self, cmd):
+            send_to_rstudio(cmd.rstrip())
 
     def send_to_chrome_rstudio(self, cmd):
         send_to_chrome_rstudio(cmd.rstrip())
