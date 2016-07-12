@@ -102,6 +102,15 @@ class PythonTextSender(TextSender):
         else:
             send_to_iterm(cmd)
 
+    def send_to_conemu(self, cmd):
+        cmd = cmd.rstrip()
+        if len(re.findall("\n", cmd)) > 0:
+            send_to_conemu(r"%cpaste -q")
+            send_to_conemu(cmd.rstrip())
+            send_to_conemu("--")
+        else:
+            send_to_conemu(cmd)
+
 
 class JuliaTextSender(TextSender):
     pass
