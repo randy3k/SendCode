@@ -8,6 +8,7 @@ from .rstudio import send_to_rstudio
 from .conemuc import send_to_conemu
 from .tmux import send_to_tmux
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
+from .safari import send_to_safari_jupyter, send_to_safari_rstudio
 
 
 class TextSender:
@@ -49,6 +50,9 @@ class TextSender:
     def send_to_chrome_jupyter(self, cmd):
         send_to_chrome_jupyter(cmd.rstrip())
 
+    def send_to_safari_jupyter(self, cmd):
+        send_to_safari_jupyter(cmd.rstrip())
+
     def send_text(self, cmd):
         prog = self.prog
         if prog.lower() == "terminal":
@@ -61,6 +65,8 @@ class TextSender:
             self.send_to_tmux(cmd)
         elif prog.lower() == "chrome-jupyter":
             self.send_to_chrome_jupyter(cmd)
+        elif prog.lower() == "safari-jupyter":
+            self.send_to_safari_jupyter(cmd)
         else:
             sublime.message_dialog("%s is not supported for current syntax." % prog)
 
@@ -79,6 +85,8 @@ class RTextSender(TextSender):
             self.send_to_rstudio(cmd)
         elif prog.lower() == "chrome-rstudio":
             self.send_to_chrome_rstudio(cmd)
+        elif prog.lower() == "safari-rstudio":
+            self.send_to_safari_rstudio(cmd)
         else:
             super(RTextSender, self).send_text(cmd)
 
@@ -98,6 +106,9 @@ class RTextSender(TextSender):
 
     def send_to_chrome_rstudio(self, cmd):
         send_to_chrome_rstudio(cmd.rstrip())
+
+    def send_to_safari_rstudio(self, cmd):
+        send_to_safari_rstudio(cmd.rstrip())
 
 
 class PythonTextSender(TextSender):
