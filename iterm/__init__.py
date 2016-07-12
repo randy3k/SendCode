@@ -1,5 +1,5 @@
 import os
-from ..applescript import execute_applescript
+from ..applescript import osascript
 
 ITERM = os.path.join(os.path.dirname(__file__), "iterm.applescript")
 ITERM_BRACKETED = os.path.join(os.path.dirname(__file__), "iterm_bracketed.applescript")
@@ -7,6 +7,6 @@ ITERM_BRACKETED = os.path.join(os.path.dirname(__file__), "iterm_bracketed.apple
 
 def send_to_iterm(cmd, bracketed=False):
     if bracketed:
-        execute_applescript(ITERM_BRACKETED, cmd)
+        osascript(ITERM_BRACKETED, cmd)
     else:
-        execute_applescript(ITERM, cmd)
+        osascript(ITERM, cmd)

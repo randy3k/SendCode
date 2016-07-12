@@ -1,7 +1,7 @@
 import sublime
 import os
-from ..applescript import execute_applescript
-from ..autohotkey import execute_autohotkey_script
+from ..applescript import osascript
+from ..autohotkey import autohotkey
 from ..xdotool import xdotool
 from ..clipboard import Clipboard
 
@@ -13,12 +13,12 @@ plat = sublime.platform()
 
 if plat == "osx":
     def send_to_rstudio(cmd):
-        execute_applescript(RSTUDIOAPPLESCRIPT, cmd)
+        osascript(RSTUDIOAPPLESCRIPT, cmd)
 
 elif plat == "windows":
     def send_to_rstudio(cmd):
         Clipboard.set_clipboard(cmd)
-        execute_autohotkey_script(RSTUDIOAHK)
+        autohotkey(RSTUDIOAHK)
         Clipboard.reset_clipboard()
 
 elif plat == "linux":
