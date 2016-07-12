@@ -1,5 +1,4 @@
 {
-    "prog": "iterm",
     "default" : {
         "prog": "terminal",
         "auto_expand_line": true,

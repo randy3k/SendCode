@@ -7,10 +7,10 @@ class TextGetter:
 
     def __init__(self, view):
         self.view = view
-        settings = Settings(view)
-        self.auto_expand_line = settings.get("auto_expand_line", True)
-        self.auto_advance = settings.get("auto_advance", True)
-        self.auto_advance_non_empty = settings.get("auto_advance_non_empty", False)
+        self.settings = Settings(view)
+        self.auto_expand_line = self.settings.get("auto_expand_line", True)
+        self.auto_advance = self.settings.get("auto_advance", True)
+        self.auto_advance_non_empty = self.settings.get("auto_advance_non_empty", False)
 
     @classmethod
     def initialize(cls, view):
