@@ -1,4 +1,3 @@
-import sublime
 import sublime_plugin
 import os
 from .text_getter import TextGetter
@@ -66,3 +65,12 @@ class SendReplCommand(sublime_plugin.TextCommand):
 
         sender = TextSender.initialize(self.view, prog=prog)
         sender.send_text(cmd)
+
+
+class SendReplBuild(sublime_plugin.WindowCommand):
+
+    def run(self, cmd=None, prog=None):
+        self.window.active_view().run_command(
+            "send_repl",
+            {"cmd": cmd, "prog": prog}
+        )

@@ -26,7 +26,7 @@ class Settings:
 
     def get(self, key, default=None):
         # return top most setting
-        if self.s.has(key):
+        if self.s.has(key) and self.s.get(key):
             return self.s.get(key, default)
 
         syntax = self.syntax()

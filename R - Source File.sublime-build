@@ -1,0 +1,5 @@
+{
+    "target": "send_repl_build",
+    "cmd": "source(\"$file\")",
+    "selector": "source.r"
+}

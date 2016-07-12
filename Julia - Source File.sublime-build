@@ -1,0 +1,5 @@
+{
+    "target": "send_repl_build",
+    "cmd": "include(\"$file\")",
+    "selector": "source.julia"
+}
