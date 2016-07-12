@@ -18,7 +18,7 @@ class SendReplChooseProgramCommand(sublime_plugin.WindowCommand):
             self.app_list = ["[Reset]", "Cmder", "ConEmu",
                              "R32", "R64", "RStudio"]
         elif plat == "linux":
-            self.app_list = ["[Reset]", "gnome-terminal", "tmux", "RStudio"]
+            self.app_list = ["[Reset]", "tmux", "screen", "RStudio"]
         else:
             sublime.error_message("Platform not supported!")
 

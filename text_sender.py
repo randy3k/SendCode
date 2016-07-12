@@ -7,6 +7,7 @@ from .r import send_to_r
 from .rstudio import send_to_rstudio
 from .conemuc import send_to_conemu
 from .tmux import send_to_tmux
+from .screen import send_to_screen
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
 from .safari import send_to_safari_jupyter, send_to_safari_rstudio
 
@@ -47,6 +48,10 @@ class TextSender:
         tmux = self.settings.get("tmux", "tmux")
         send_to_tmux(cmd.rstrip(), tmux, self.bracketed_paste_mode)
 
+    def send_to_screen(self, cmd):
+        screen = self.settings.get("screen", "screen")
+        send_to_screen(cmd.rstrip(), screen, self.bracketed_paste_mode)
+
     def send_to_chrome_jupyter(self, cmd):
         send_to_chrome_jupyter(cmd.rstrip())
 
@@ -63,6 +68,8 @@ class TextSender:
             self.send_to_conemu(cmd)
         elif prog.lower() == "tmux":
             self.send_to_tmux(cmd)
+        elif prog.lower() == "screen":
+            self.send_to_screen(cmd)
         elif prog.lower() == "chrome-jupyter":
             self.send_to_chrome_jupyter(cmd)
         elif prog.lower() == "safari-jupyter":
@@ -135,7 +142,7 @@ class PythonTextSender(TextSender):
         cmd = cmd.rstrip()
         if len(re.findall("\n", cmd)) > 0:
             send_to_conemu(r"%cpaste -q")
-            send_to_conemu(cmd.rstrip())
+            send_to_conemu(cmd)
             send_to_conemu("--")
         else:
             send_to_conemu(cmd)
@@ -145,11 +152,20 @@ class PythonTextSender(TextSender):
         cmd = cmd.rstrip()
         if len(re.findall("\n", cmd)) > 0:
             send_to_tmux(r"%cpaste -q", tmux)
-            send_to_tmux(cmd.rstrip(), tmux)
+            send_to_tmux(cmd, tmux)
             # send ctrl-D instead of "--" since `set-buffer` does not work properly
             send_to_tmux("\x04", tmux)
         else:
             send_to_tmux(cmd, tmux)
+
+    def send_to_screen(self, cmd):
+        cmd = cmd.rstrip()
+        if len(re.findall("\n", cmd)) > 0:
+            send_to_screen(r"%cpaste -q")
+            send_to_screen(cmd.rstrip())
+            send_to_screen("--")
+        else:
+            send_to_screen(cmd)
 
 
 class JuliaTextSender(TextSender):

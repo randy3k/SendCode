@@ -3,11 +3,10 @@ import subprocess
 
 def send_to_tmux(cmd, tmux="tmux", bracketed_paste_mode=False):
     if bracketed_paste_mode:
-        subprocess.check_call([tmux, 'set-buffer', "\u001B[200~"])
+        subprocess.check_call([tmux, 'set-buffer', "\x1b[200~"])
         subprocess.check_call([tmux, 'paste-buffer', '-d'])
-        cmd = cmd + "\n"
         send_to_tmux(cmd, tmux, False)
-        subprocess.check_call([tmux, 'set-buffer', "\u001B[201~"])
+        subprocess.check_call([tmux, 'set-buffer', "\x1b[201~"])
         subprocess.check_call([tmux, 'paste-buffer', '-d'])
     else:
         n = 200
