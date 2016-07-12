@@ -1,4 +1,9 @@
 {
+    "user" : {
+        // customize your settings here
+    },
+
+    // do not override the default settings
     "default" : {
         "prog": "terminal",
         "auto_expand_line": true,
@@ -19,6 +24,9 @@
             "bracketed_paste_mode": true
         }
     },
+
+    // path related settings
+
     // path to tmux
     // "tmux": "tmux"
 }

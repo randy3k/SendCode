@@ -1,4 +1,9 @@
 {
+    "user" : {
+        // customize your settings here
+    },
+
+    // do not override the default settings
     "default" : {
         "prog": "cmder",
         "auto_expand_line": true,
@@ -18,6 +23,12 @@
             "prog": "cmder"
         }
     },
+
+    // path related settings
+    
     // path to Rgui.exe
     // "rgui": "C:\\Program Files\\R\\R-3.3.1\\bin\\x64\\Rgui.exe"
+
+    // path to ConEmuC.exe
+    // "conemuc": "ConEmuC.exe"
 }
