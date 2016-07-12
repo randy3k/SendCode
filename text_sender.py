@@ -43,7 +43,7 @@ class TextSender:
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
-        send_to_tmux(cmd.rstrip(), tmux)
+        send_to_tmux(cmd.rstrip(), tmux, self.bracketed_paste_mode)
 
     def send_text(self, cmd):
         prog = self.prog
