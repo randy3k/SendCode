@@ -1,5 +1,6 @@
 import sublime
 import os
+import subprocess
 from ..applescript import execute_applescript
 from ..autohotkey import execute_autohotkey_script
 from ..clipboard import Clipboard
@@ -22,4 +23,12 @@ elif plat == "windows":
 
 elif plat == "linux":
     def send_to_rstudio(cmd):
-        pass
+        wid = subprocess.check_output(["xdotool", "search", "--onlyvisible", "--class", "rstudio"])
+        if wid:
+            wid = wid.decode("utf-8").strip().split("\n")[-1]
+            Clipboard.set_clipboard(cmd)
+            subprocess.check_call(["xdotool", "key", "--window", wid, 
+                                    "--clearmodifiers", "ctrl+v"])
+            subprocess.check_call(["xdotool", "key", "--window", wid,
+                                    "--clearmodifiers", "Return"])
+            Clipboard.reset_clipboard()
