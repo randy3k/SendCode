@@ -20,3 +20,6 @@ elif plat == "windows":
             rgui = "1"
         execute_autohotkey_script(RAHK, rgui)
         Clipboard.reset_clipboard()
+else:
+    def send_to_r(cmd):
+        pass
