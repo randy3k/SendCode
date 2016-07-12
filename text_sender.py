@@ -36,44 +36,45 @@ class TextSender:
             return TextSender(view, **kwargs)
 
     def send_to_terminal(self, cmd):
-        send_to_terminal(cmd.rstrip(), self.bracketed_paste_mode)
+        send_to_terminal(cmd, self.bracketed_paste_mode)
 
     def send_to_iterm(self, cmd):
-        send_to_iterm(cmd.rstrip(), self.bracketed_paste_mode)
+        send_to_iterm(cmd, self.bracketed_paste_mode)
 
     def send_to_conemu(self, cmd):
         conemuc_path = self.settings.get("conemu", None)
-        send_to_conemu(cmd.rstrip(), conemuc_path)
+        send_to_conemu(cmd, conemuc_path)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
-        send_to_tmux(cmd.rstrip(), tmux, self.bracketed_paste_mode)
+        send_to_tmux(cmd, tmux, self.bracketed_paste_mode)
 
     def send_to_screen(self, cmd):
         screen = self.settings.get("screen", "screen")
-        send_to_screen(cmd.rstrip(), screen, self.bracketed_paste_mode)
+        send_to_screen(cmd, screen, self.bracketed_paste_mode)
 
     def send_to_chrome_jupyter(self, cmd):
-        send_to_chrome_jupyter(cmd.rstrip())
+        send_to_chrome_jupyter(cmd)
 
     def send_to_safari_jupyter(self, cmd):
-        send_to_safari_jupyter(cmd.rstrip())
+        send_to_safari_jupyter(cmd)
 
     def send_text(self, cmd):
-        prog = self.prog
-        if prog.lower() == "terminal":
+        cmd = cmd.rstrip()
+        prog = self.prog.lower()
+        if prog == "terminal":
             self.send_to_terminal(cmd)
-        elif prog.lower() == "iterm":
+        elif prog == "iterm":
             self.send_to_iterm(cmd)
-        elif prog.lower() == "cmder" or prog.lower() == "conemu":
+        elif prog == "cmder" or prog == "conemu":
             self.send_to_conemu(cmd)
-        elif prog.lower() == "tmux":
+        elif prog == "tmux":
             self.send_to_tmux(cmd)
-        elif prog.lower() == "screen":
+        elif prog == "screen":
             self.send_to_screen(cmd)
-        elif prog.lower() == "chrome-jupyter":
+        elif prog == "chrome-jupyter":
             self.send_to_chrome_jupyter(cmd)
-        elif prog.lower() == "safari-jupyter":
+        elif prog == "safari-jupyter":
             self.send_to_safari_jupyter(cmd)
         else:
             sublime.message_dialog("%s is not supported for current syntax." % prog)
@@ -82,18 +83,19 @@ class TextSender:
 class RTextSender(TextSender):
 
     def send_text(self, cmd):
-        prog = self.prog
-        if prog.lower() == "r":
+        cmd = cmd.rstrip()
+        prog = self.prog.lower()
+        if prog == "r":
             self.send_to_r(cmd)
-        elif prog.lower() == "r64":
+        elif prog == "r64":
             self.send_to_r(cmd, "x64")
-        elif prog.lower() == "r32":
+        elif prog == "r32":
             self.send_to_r(cmd, "i386")
-        elif prog.lower() == "rstudio":
+        elif prog == "rstudio":
             self.send_to_rstudio(cmd)
-        elif prog.lower() == "chrome-rstudio":
+        elif prog == "chrome-rstudio":
             self.send_to_chrome_rstudio(cmd)
-        elif prog.lower() == "safari-rstudio":
+        elif prog == "safari-rstudio":
             self.send_to_safari_rstudio(cmd)
         else:
             super(RTextSender, self).send_text(cmd)
@@ -112,22 +114,21 @@ class RTextSender(TextSender):
     if sublime.platform() == "linux":
         def send_to_rstudio(self, cmd):
             xdotool_path = self.settings.get("xdotool", None)
-            send_to_rstudio(cmd.rstrip(), xdotool_path)
+            send_to_rstudio(cmd, xdotool_path)
     else:
         def send_to_rstudio(self, cmd):
-            send_to_rstudio(cmd.rstrip())
+            send_to_rstudio(cmd)
 
     def send_to_chrome_rstudio(self, cmd):
-        send_to_chrome_rstudio(cmd.rstrip())
+        send_to_chrome_rstudio(cmd)
 
     def send_to_safari_rstudio(self, cmd):
-        send_to_safari_rstudio(cmd.rstrip())
+        send_to_safari_rstudio(cmd)
 
 
 class PythonTextSender(TextSender):
 
     def send_to_terminal(self, cmd):
-        cmd = cmd.rstrip()
         if len(re.findall("\n", cmd)) > 0:
             send_to_terminal(r"%cpaste -q")
             send_to_terminal(cmd)
@@ -136,7 +137,6 @@ class PythonTextSender(TextSender):
             send_to_terminal(cmd)
 
     def send_to_iterm(self, cmd):
-        cmd = cmd.rstrip()
         if len(re.findall("\n", cmd)) > 0:
             send_to_iterm(r"%cpaste -q")
             send_to_iterm(cmd)
@@ -145,7 +145,6 @@ class PythonTextSender(TextSender):
             send_to_iterm(cmd)
 
     def send_to_conemu(self, cmd):
-        cmd = cmd.rstrip()
         if len(re.findall("\n", cmd)) > 0:
             send_to_conemu(r"%cpaste -q")
             send_to_conemu(cmd)
@@ -155,7 +154,6 @@ class PythonTextSender(TextSender):
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
-        cmd = cmd.rstrip()
         if len(re.findall("\n", cmd)) > 0:
             send_to_tmux(r"%cpaste -q", tmux)
             send_to_tmux(cmd, tmux)
@@ -165,10 +163,9 @@ class PythonTextSender(TextSender):
             send_to_tmux(cmd, tmux)
 
     def send_to_screen(self, cmd):
-        cmd = cmd.rstrip()
         if len(re.findall("\n", cmd)) > 0:
             send_to_screen(r"%cpaste -q")
-            send_to_screen(cmd.rstrip())
+            send_to_screen(cmd)
             send_to_screen("--")
         else:
             send_to_screen(cmd)
