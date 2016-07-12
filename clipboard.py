@@ -3,6 +3,8 @@ import threading
 
 
 class Clipboard:
+    thread = None
+    
     @classmethod
     def set_clipboard(cls, cmd):
         if not cls.thread:

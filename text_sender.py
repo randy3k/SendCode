@@ -3,8 +3,9 @@ import re
 from .settings import Settings
 from .terminal import send_to_terminal
 from .iterm import send_to_iterm
-from .r import send_to_r, send_to_r32, send_to_r64
+from .r import send_to_r
 from .rstudio import send_to_rstudio
+from .conemuc import send_to_conemu
 
 
 class TextSender:
@@ -36,12 +37,17 @@ class TextSender:
     def send_to_iterm(self, cmd):
         send_to_iterm(cmd.rstrip(), self.bracketed_paste_mode)
 
+    def send_to_conemu(self, cmd):
+        send_to_conemu(cmd.rstrip())
+
     def send_text(self, cmd):
         prog = self.prog
         if prog.lower() == "terminal":
             self.send_to_terminal(cmd)
         elif prog.lower() == "iterm":
             self.send_to_iterm(cmd)
+        elif prog.lower() == "cmder" or prog.lower() == "conemu":
+            self.send_to_conemu(cmd)
         else:
             sublime.message_dialog("%s is not supported for current syntax." % prog)
 
@@ -53,24 +59,24 @@ class RTextSender(TextSender):
         if prog.lower() == "r":
             self.send_to_r(cmd)
         elif prog.lower() == "r64":
-            self.send_to_r64(cmd)
+            self.send_to_r(cmd, "x64")
         elif prog.lower() == "r32":
-            self.send_to_r32(cmd)
+            self.send_to_r(cmd, "i386")
         elif prog.lower() == "rstudio":
             self.send_to_rstudio(cmd)
         else:
             super(RTextSender, self).send_text(cmd)
 
-    def send_to_r(self, cmd):
-        send_to_r(cmd)
-
-    def send_to_r32(self, cmd):
-        r32 = self.settings.get("r32", None)
-        send_to_r32(cmd, r32)
-
-    def send_to_r64(self, cmd):
-        r64 = self.settings.get("r64", None)
-        send_to_r64(cmd, r64)
+    if sublime.platform() == "osx":
+        def send_to_r(self, cmd):
+            send_to_r(cmd)
+    elif sublime.platform() == "windows":
+        def send_to_r(self, cmd, rgui):
+            rgui = self.settings.get("rgui", rgui)
+            send_to_r(cmd, rgui)
+    else:
+        def send_to_r(self, cmd):
+            pass
 
     def send_to_rstudio(self, cmd):
         send_to_rstudio(cmd.rstrip())

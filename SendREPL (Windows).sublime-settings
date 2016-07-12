@@ -1,22 +1,23 @@
 {
     "default" : {
-        "prog": "terminal",
+        "prog": "cmder",
         "auto_expand_line": true,
         "auto_advance" : true,
         "auto_advance_non_empty": false,
         "bracketed_paste_mode": false,
 
         "r" : {
-            "prog": "terminal"
+            "prog": "cmder"
         },
 
         "python" : {
-            "prog": "terminal"
+            "prog": "cmder"
         },
 
         "julia" : {
-            "prog": "terminal",
-            "bracketed_paste_mode": true
+            "prog": "cmder"
         }
-    }
+    },
+    // path to Rgui.exe
+    // "rgui": "C:\\Program Files\\R\\R-3.3.1\\bin\\x64\\Rgui.exe"
 }

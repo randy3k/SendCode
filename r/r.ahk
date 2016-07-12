@@ -26,12 +26,12 @@ if (RprocID == "")
 if (RprocID == "")
 {
     Rguiexe = %1%
-    if (Rguiexe == "1") {
+    if (Rguiexe == "x64") {
         SetRegView 64
         RegRead, Rhome, HKEY_LOCAL_MACHINE,SOFTWARE\R-core\R, InstallPath
         Rguiexe := Rhome . "\bin\x64\Rgui.exe"
     }
-    else if (Rguiexe == "0"){
+    else if (Rguiexe == "i386"){
         SetRegView 32
         RegRead, Rhome, HKEY_LOCAL_MACHINE,SOFTWARE\R-core\R, InstallPath
         Rguiexe := Rhome . "\bin\i386\Rgui.exe"
