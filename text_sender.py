@@ -5,7 +5,7 @@ from .terminal import send_to_terminal
 from .iterm import send_to_iterm
 from .r import send_to_r
 from .rstudio import send_to_rstudio
-from .conemuc import send_to_conemu
+from .conemu import send_to_conemu
 from .tmux import send_to_tmux
 from .screen import send_to_screen
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
@@ -42,7 +42,7 @@ class TextSender:
         send_to_iterm(cmd.rstrip(), self.bracketed_paste_mode)
 
     def send_to_conemu(self, cmd):
-        conemuc_path = self.settings.get("conemuc", None)
+        conemuc_path = self.settings.get("conemu", None)
         send_to_conemu(cmd.rstrip(), conemuc_path)
 
     def send_to_tmux(self, cmd):
