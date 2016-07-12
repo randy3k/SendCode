@@ -1,21 +1,21 @@
 {
     "default" : {
-        "prog": "terminal",
+        "prog": "gnome-terminal",
         "auto_expand_line": true,
         "auto_advance" : true,
         "auto_advance_non_empty": false,
         "bracketed_paste_mode": false,
 
         "r" : {
-            "prog": "terminal"
+            "prog": "gnome-terminal"
         },
 
         "python" : {
-            "prog": "terminal"
+            "prog": "gnome-terminal"
         },
 
         "julia" : {
-            "prog": "terminal",
+            "prog": "gnome-terminal",
             "bracketed_paste_mode": true
         }
     },

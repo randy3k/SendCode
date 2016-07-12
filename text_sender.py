@@ -6,6 +6,7 @@ from .iterm import send_to_iterm
 from .r import send_to_r
 from .rstudio import send_to_rstudio
 from .conemuc import send_to_conemu
+from .tmux import send_to_tmux
 
 
 class TextSender:
@@ -40,6 +41,10 @@ class TextSender:
     def send_to_conemu(self, cmd):
         send_to_conemu(cmd.rstrip())
 
+    def send_to_tmux(self, cmd):
+        tmux = self.settings.get("tmux", "tmux")
+        send_to_tmux(cmd.rstrip(), tmux)
+
     def send_text(self, cmd):
         prog = self.prog
         if prog.lower() == "terminal":
@@ -48,6 +53,8 @@ class TextSender:
             self.send_to_iterm(cmd)
         elif prog.lower() == "cmder" or prog.lower() == "conemu":
             self.send_to_conemu(cmd)
+        elif prog.lower() == "tmux":
+            self.send_to_tmux(cmd)
         else:
             sublime.message_dialog("%s is not supported for current syntax." % prog)
 
@@ -110,6 +117,17 @@ class PythonTextSender(TextSender):
             send_to_conemu("--")
         else:
             send_to_conemu(cmd)
+
+    def send_to_tmux(self, cmd):
+        tmux = self.settings.get("tmux", "tmux")
+        cmd = cmd.rstrip()
+        if len(re.findall("\n", cmd)) > 0:
+            send_to_tmux(r"%cpaste -q", tmux)
+            send_to_tmux(cmd.rstrip(), tmux)
+            # send ctrl-D instead of "--" since `set-buffer` does not work properly
+            send_to_tmux("\x04", tmux)
+        else:
+            send_to_tmux(cmd, tmux)
 
 
 class JuliaTextSender(TextSender):
