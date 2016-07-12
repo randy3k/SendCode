@@ -5,21 +5,22 @@ import threading
 class Clipboard:
     thread = None
 
-    @classmethod
-    def set_clipboard(cls, cmd):
-        if not cls.thread:
-            cls.cb = sublime.get_clipboard()
+    def set_clipboard(self, cmd):
+        if not self.thread:
+            self.cb = sublime.get_clipboard()
         else:
-            cls.thread.cancel()
-            cls.thread = None
+            self.thread.cancel()
+            self.thread = None
         sublime.set_clipboard(cmd)
 
-    @classmethod
-    def reset_clipboard(cls):
+    def reset_clipboard(self):
         def _reset_clipboard():
-            if cls.cb is not None:
-                sublime.set_clipboard(cls.cb)
-            cls.cb = None
-            cls.thread = None
-        cls.thread = threading.Timer(0.5, _reset_clipboard)
-        cls.thread.start()
+            if self.cb is not None:
+                sublime.set_clipboard(self.cb)
+            self.cb = None
+            self.thread = None
+        self.thread = threading.Timer(0.5, _reset_clipboard)
+        self.thread.start()
+
+if 'clipboard' not in globals():
+    clipboard = Clipboard()
