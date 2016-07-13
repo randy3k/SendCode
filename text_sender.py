@@ -43,7 +43,7 @@ class TextSender:
 
     def send_to_conemu(self, cmd):
         conemuc_path = self.settings.get("conemu", None)
-        send_to_conemu(cmd, conemuc_path)
+        send_to_conemu(cmd, conemuc_path, self.bracketed_paste_mode)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")

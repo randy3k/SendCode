@@ -20,7 +20,8 @@
         },
 
         "julia" : {
-            "prog": "cmder"
+            "prog": "cmder",
+            "bracketed_paste_mode": true
         }
     },
 
