@@ -16,24 +16,20 @@ elif plat == "windows":
     import win32gui
     import win32api
     import win32con
-    import win32clipboard
 
     def send_to_rstudio(cmd):
         rid = win32gui.FindWindow("Qt5QWindowIcon", "RStudio")
         # TODO: reset clipboard
         if rid:
             control_state = win32api.GetKeyState(win32con.VK_CONTROL)
-            win32clipboard.OpenClipboard()
-            win32clipboard.EmptyClipboard()
-            win32clipboard.SetClipboardText(cmd)
-            win32clipboard.CloseClipboard()
+            clipboard.set_clipboard(cmd)
             win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0)
             win32api.PostMessage(rid, win32con.WM_KEYDOWN, ord("V"), 0)
             win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
             win32api.PostMessage(rid, win32con.WM_KEYDOWN, win32con.VK_RETURN, 0)
             if control_state < 0:
                 sublime.set_timeout(lambda: win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0), 1)
-
+            clipboard.reset_clipboard()
 
 elif plat == "linux":
     from xdotool import xdotool

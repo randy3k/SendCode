@@ -87,10 +87,6 @@ class RTextSender(TextSender):
         prog = self.prog.lower()
         if prog == "r":
             self.send_to_r(cmd)
-        elif prog == "r64":
-            self.send_to_r(cmd, "x64")
-        elif prog == "r32":
-            self.send_to_r(cmd, "i386")
         elif prog == "rstudio":
             self.send_to_rstudio(cmd)
         elif prog == "chrome-rstudio":
@@ -100,24 +96,11 @@ class RTextSender(TextSender):
         else:
             super(RTextSender, self).send_text(cmd)
 
-    if sublime.platform() == "osx":
-        def send_to_r(self, cmd):
-            send_to_r(cmd)
-    elif sublime.platform() == "windows":
-        def send_to_r(self, cmd, rgui):
-            rgui = self.settings.get("rgui", rgui)
-            send_to_r(cmd, rgui)
-    else:
-        def send_to_r(self, cmd):
-            pass
+    def send_to_r(self, cmd):
+        send_to_r(cmd)
 
-    if sublime.platform() == "linux":
-        def send_to_rstudio(self, cmd):
-            xdotool_path = self.settings.get("xdotool", None)
-            send_to_rstudio(cmd, xdotool_path)
-    else:
-        def send_to_rstudio(self, cmd):
-            send_to_rstudio(cmd)
+    def send_to_rstudio(self, cmd):
+        send_to_rstudio(cmd)
 
     def send_to_chrome_rstudio(self, cmd):
         send_to_chrome_rstudio(cmd)

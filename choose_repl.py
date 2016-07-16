@@ -16,7 +16,7 @@ class SendReplChooseProgramCommand(sublime_plugin.WindowCommand):
                              "tmux"]
         elif plat == "windows":
             self.app_list = ["[Reset]", "Cmder", "ConEmu",
-                             "R32", "R64", "RStudio"]
+                             "R", "RStudio"]
         elif plat == "linux":
             self.app_list = ["[Reset]", "tmux", "screen", "RStudio"]
         else:
