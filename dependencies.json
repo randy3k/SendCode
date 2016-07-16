@@ -3,5 +3,10 @@
         "*": [
             "xdotool"
         ]
+    },
+    "windows": {
+        "*": [
+            "python-pywin32"
+        ]
     }
 }
