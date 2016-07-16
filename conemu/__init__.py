@@ -1,8 +1,6 @@
+import sublime
 import os
 import subprocess
-
-
-CONEMUC = os.path.join(os.path.dirname(__file__), "ConEmuC.exe")
 
 
 def escape_dquote(cmd):
@@ -11,16 +9,18 @@ def escape_dquote(cmd):
     return cmd
 
 
-def send_to_conemu(cmd, path=None, bracketed=False):
+def send_to_conemu(cmd, bracketed=False):
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    if not path:
-        path = CONEMUC
+    ret = subprocess.call("ConEmuC /ConInfo", startupinfo=startupinfo)
+    if ret != 0:
+        sublime.error_message("ConEmuC.exe not found.")
+
     if bracketed:
         subprocess.check_call(
-            '"' + escape_dquote(path) + '" ' + '-GuiMacro:0 Paste(0,"\x1b[200~%s\x1b[201~\n")' % escape_dquote(cmd),
+            'ConEmuC -GuiMacro:0 Paste(0,"\x1b[200~%s\x1b[201~\n")' % escape_dquote(cmd),
             startupinfo=startupinfo)
     else:
         subprocess.check_call(
-            '"' + escape_dquote(path) + '" ' + '-GuiMacro:0 Paste(0,"%s\n")' % escape_dquote(cmd),
+            'ConEmuC -GuiMacro:0 Paste(0,"%s\n")' % escape_dquote(cmd),
             startupinfo=startupinfo)
