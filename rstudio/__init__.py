@@ -23,13 +23,13 @@ elif plat == "windows":
         clipboard.reset_clipboard()
 
 elif plat == "linux":
-    from ..xdotool import xdotool
+    from xdotool import xdotool
 
-    def send_to_rstudio(cmd, xdotool_path=None):
-        wid = xdotool("search", "--onlyvisible", "--class", "rstudio", path=xdotool_path)
+    def send_to_rstudio(cmd):
+        wid = xdotool("search", "--onlyvisible", "--class", "rstudio")
         if wid:
             wid = wid.decode("utf-8").strip().split("\n")[-1]
             clipboard.set_clipboard(cmd)
-            xdotool("key", "--window", wid, "--clearmodifiers", "ctrl+v", path=xdotool_path)
-            xdotool("key", "--window", wid, "--clearmodifiers", "Return", path=xdotool_path)
+            xdotool("key", "--window", wid, "--clearmodifiers", "ctrl+v")
+            xdotool("key", "--window", wid, "--clearmodifiers", "Return")
             clipboard.reset_clipboard()
