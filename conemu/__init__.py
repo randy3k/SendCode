@@ -51,10 +51,13 @@ def send_to_conemu(cmd, bracketed=False):
         sublime.error_message("ConEmuC.exe not found.")
 
     if bracketed:
-        subprocess.Popen(
-            'ConEmuC -GuiMacro:0 Paste(0,"\x1b[200~%s\x1b[201~\n")' % escape_dquote(cmd),
+        subprocess.check_call(
+            'ConEmuC -GuiMacro:0 Paste(2,"\x1b[200~%s\x1b[201~")' % escape_dquote(cmd),
             startupinfo=startupinfo)
     else:
-        subprocess.Popen(
-            'ConEmuC -GuiMacro:0 Paste(0,"%s\n")' % escape_dquote(cmd),
+        subprocess.check_call(
+            'ConEmuC -GuiMacro:0 Paste(2,"%s")' % escape_dquote(cmd),
             startupinfo=startupinfo)
+
+    subprocess.check_call(
+        'ConEmuC -GuiMacro:0 Keys("Return")', startupinfo=startupinfo)
