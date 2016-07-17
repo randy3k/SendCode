@@ -16,6 +16,7 @@ def get_clipboard():
         cb = sublime.get_clipboard()
     return cb
 
+
 def set_clipboard(cmd):
     if plat == "windows":
         win32clipboard.OpenClipboard()
