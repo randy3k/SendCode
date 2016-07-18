@@ -26,10 +26,10 @@
     },
 
     // path related settings
-    
+
     // path to tmux
     // "tmux": "tmux",
 
-    // path to xdotool
-    // "xdotool": "xdotool"
+    // path to screen
+    // "screen": "screen"
 }

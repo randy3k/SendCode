@@ -26,10 +26,10 @@
     },
 
     // path related settings
-    
-    // path to Rgui.exe
-    // "rgui": "C:\\Program Files\\R\\R-3.3.1\\bin\\x64\\Rgui.exe"
 
-    // path to ConEmuC.exe
-    // "conemuc": "ConEmuC.exe"
+    // path to tmux
+    // "tmux": "tmux",
+
+    // path to screen
+    // "screen": "screen"
 }
