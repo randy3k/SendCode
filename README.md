@@ -26,17 +26,17 @@ Then you should be able to install SendREPL via Package Control as usual. If you
 
 ### Usage
 
-Use the command `SendREPL: Choose REPL Program` in command palette to quickly change the active program. The default is Terminal for Mac, Cmder for Windows and tmux for Linux. 
+Select a program using the command `SendREPL: Choose REPL Program` in command palette. The default program is Terminal for Mac, Cmder for Windows and tmux for Linux. 
 
 - <kbd>cmd</kbd>+<kbd>enter</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>enter</kbd> (Windows/Linux)
 
     If text is selected, it sends the text to the program selected. If no text is selected, then it sends the current block (if found). Finally, it moves the cursor to the next line.
 
 
-- <kbd>cmd</kbd>+<kbd>\\</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>\\</kbd> (Windows/Linux): change working directory (R, Julia and Python only)
+- <kbd>cmd</kbd>+<kbd>\\</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>\\</kbd> (Windows/Linux): change working directory (R, Julia and Python (IPython) only)
 
 
-- <kbd>cmd</kbd>+<kbd>b</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>b</kbd> (Windows/Linux): source current file (R, Julia and Python only)
+- <kbd>cmd</kbd>+<kbd>b</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>b</kbd> (Windows/Linux): source current file (R, Julia and Python (IPython) only)
 
     SendREPL uses Sublime build system to source files, you might have to choose the `Source File` option in a pop up window.
 
