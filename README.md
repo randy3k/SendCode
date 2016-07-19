@@ -14,15 +14,11 @@ Following Programs are supported
 
 ### Installation
 
-You should use Package Control to install SendREPL and its (Linux and Windows) dependency.
-In the development stage, you have to add the following repository to Package Control.
-Run `Package Control: Add Repository` and add
-
-```
-https://raw.githubusercontent.com/randy3k/SendREPL/repo/packages.json
-```
-
-Then you should be able to install SendREPL via Package Control as usual. If you are using Linux or Windows, the corresponding platform dependency will also be installed automatically.
+You could install SendREPL via Package Control. If you are using Linux
+(Windows), the corresponding platform dependency
+[xdotool](https://github.com/randy3k/sublime-xdotool)
+([pywin32](https://github.com/randy3k/sublime-pywin32)) will also be installed
+automatically.
 
 ### Usage
 
