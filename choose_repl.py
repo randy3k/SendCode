@@ -22,6 +22,7 @@ class SendReplChooseProgramCommand(sublime_plugin.WindowCommand):
         else:
             sublime.error_message("Platform not supported!")
 
+        self.app_list.append("SublimeREPL")
         self.show_quick_panel(self.app_list, self.on_done)
 
     def on_done(self, action):

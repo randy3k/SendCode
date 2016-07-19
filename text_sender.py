@@ -10,6 +10,7 @@ from .tmux import send_to_tmux
 from .screen import send_to_screen
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
 from .safari import send_to_safari_jupyter, send_to_safari_rstudio
+from .sublimerepl import send_to_sublimerepl
 
 
 class TextSender:
@@ -58,6 +59,9 @@ class TextSender:
     def send_to_safari_jupyter(self, cmd):
         send_to_safari_jupyter(cmd)
 
+    def send_to_sublimerepl(self, cmd):
+        send_to_sublimerepl(cmd)
+
     def send_text(self, cmd):
         cmd = cmd.rstrip()
         prog = self.prog.lower()
@@ -75,6 +79,8 @@ class TextSender:
             self.send_to_chrome_jupyter(cmd)
         elif prog == "safari-jupyter":
             self.send_to_safari_jupyter(cmd)
+        elif prog == "sublimerepl":
+            self.send_to_sublimerepl(cmd)
         else:
             sublime.message_dialog("%s is not supported for current syntax." % prog)
 

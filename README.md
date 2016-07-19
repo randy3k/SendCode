@@ -7,10 +7,10 @@ This is a rewrite of [SendTextPlus](https://github.com/randy3k/SendTextPlus) whi
 
 Following Programs are supported
 
-- Mac: Terminal, iTerm (>=2.9), RStudio Desktop, R GUI, RStudio and Jupyter running on Chrome and Safari
-- Linux: Tmux, Screen, RStudio Desktop
+- Mac: Terminal, iTerm (>=2.9), Tmux, Screen, RStudio Desktop, R GUI, RStudio and Jupyter running on Chrome and Safari
 - Windows: Cmder, ConEmu, R GUI, RStudio Desktop
-
+- Linux: Tmux, Screen, RStudio Desktop
+- Others: SublimeREPL
 
 ### Installation
 
