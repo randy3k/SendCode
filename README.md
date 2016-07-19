@@ -46,13 +46,13 @@ Use the command `SendREPL: Choose REPL Program` in command palette to quickly ch
 It is fairly easy to create your own keybinds for commands which you frequently use. For example, the following keybind run the `R` command `source("<the current file>")` in the active program.
 
 ```json
-    {
-        "keys": ["super+shift+e"], "command": "send_repl",
-        "args": {"cmd": "source(\"$file\")"},
-        "context": [
-            { "key": "selector", "operator": "equal", "operand": "source.r" }
-        ]
-    },
+{
+    "keys": ["super+shift+e"], "command": "send_repl",
+    "args": {"cmd": "source(\"$file\")"},
+    "context": [
+        { "key": "selector", "operator": "equal", "operand": "source.r" }
+    ]
+}
 ```
 
 SendREPL understands the following variables in the `cmd` field: 
