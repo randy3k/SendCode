@@ -67,6 +67,8 @@ class RTextGetter(TextGetter):
 
     def expand_line(self, s):
         view = self.view
+        if view.score_selector(s.begin(), "string"):
+            return s
         thiscmd = view.substr(s)
         if re.match(r".*\{\s*$", thiscmd):
             es = view.find(
@@ -82,6 +84,8 @@ class PythonTextGetter(TextGetter):
 
     def expand_line(self, s):
         view = self.view
+        if view.score_selector(s.begin(), "string"):
+            return s
         thiscmd = view.substr(s)
         row = view.rowcol(s.begin())[0]
         prevline = view.line(s.begin())
@@ -120,6 +124,8 @@ class JuliaTextGetter(TextGetter):
 
     def expand_line(self, s):
         view = self.view
+        if view.score_selector(s.begin(), "string"):
+            return s
         thiscmd = view.substr(s)
         if (re.match(r"^\s*(?:function|if|for|while|let|quote|try)", thiscmd) and
                 not re.match(r".*end\s*$", thiscmd)) or \
