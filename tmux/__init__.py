@@ -14,5 +14,5 @@ def send_to_tmux(cmd, tmux="tmux", bracketed_paste_mode=False):
             cmd = cmd + "\n"
         chunks = [cmd[i:i+n] for i in range(0, len(cmd), n)]
         for chunk in chunks:
-            subprocess.check_call([tmux, 'set-buffer', chunk])
+            subprocess.check_call([tmux, 'set-buffer', '--', chunk])
             subprocess.check_call([tmux, 'paste-buffer', '-d'])
