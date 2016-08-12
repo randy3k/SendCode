@@ -64,6 +64,7 @@ class TextSender:
 
     def send_text(self, cmd):
         cmd = cmd.rstrip()
+        cmd = cmd.expandtabs(self.view.settings().get("tab_size", 4))
         prog = self.prog.lower()
         if prog == "terminal":
             self.send_to_terminal(cmd)
@@ -89,6 +90,7 @@ class RTextSender(TextSender):
 
     def send_text(self, cmd):
         cmd = cmd.rstrip()
+        cmd = cmd.expandtabs(self.view.settings().get("tab_size", 4))
         prog = self.prog.lower()
         if prog == "r":
             self.send_to_r(cmd)
