@@ -5,22 +5,22 @@
 
     // do not override the default settings
     "default" : {
-        "prog": "gnome-terminal",
+        "prog": "tmux",
         "auto_expand_line": true,
         "auto_advance" : true,
         "auto_advance_non_empty": false,
         "bracketed_paste_mode": false,
 
         "r" : {
-            "prog": "gnome-terminal"
+            "prog": "tmux"
         },
 
         "python" : {
-            "prog": "gnome-terminal"
+            "prog": "tmux"
         },
 
         "julia" : {
-            "prog": "gnome-terminal",
+            "prog": "tmux",
             "bracketed_paste_mode": true
         }
     },
