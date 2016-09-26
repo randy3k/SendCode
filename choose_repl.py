@@ -20,11 +20,11 @@ class SendReplChooseProgramCommand(sublime_plugin.TextCommand):
                 app_list = app_list + ["Chrome-Jupyter", "Safari-Jupyter"]
 
         elif plat == "windows":
-            app_list = ["[Reset]", "Cmder", "ConEmu"]
+            app_list = ["[Reset]", "Cmder", "ConEmu", "tmux", "screen"]
             if syntax == "r":
                 app_list = app_list + ["R", "RStudio"]
         elif plat == "linux":
-            app_list = ["[Reset]", "tmux", "screen", "RStudio"]
+            app_list = ["[Reset]", "tmux", "screen"]
             if syntax == "r":
                 app_list = app_list + ["RStudio"]
         else:
