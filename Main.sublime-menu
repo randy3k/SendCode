@@ -1,0 +1,55 @@
+[
+  {
+    "caption": "Preferences",
+    "mnemonic": "n",
+    "id": "preferences",
+    "children": [
+      {
+        "caption": "Package Settings",
+        "mnemonic": "P",
+        "id": "package-settings",
+        "children": [
+          {
+            "caption": "SendREPL",
+            "children": [
+              {
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/SendREPL/SendREPL (OSX).sublime-settings",
+                  "platform": "OSX"
+                },
+                "caption": "Settings – Default"
+              },
+              {
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/SendREPL/SendREPL (Linux).sublime-settings",
+                  "platform": "Linux"
+                },
+                "caption": "Settings – Default"
+              },
+              {
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/SendREPL/SendREPL (Windows).sublime-settings",
+                  "platform": "Windows"
+                },
+                "caption": "Settings – Default"
+              },
+              {
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/User/SendREPL.sublime-settings"
+                },
+                "caption": "Settings – User"
+              },
+              {
+                "caption": "-"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
