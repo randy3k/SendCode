@@ -23,5 +23,13 @@
             "prog": "cmder",
             "bracketed_paste_mode": true
         }
-    }
+    },
+
+    // path related settings
+
+    // path to tmux
+    // "tmux": "tmux",
+
+    // path to screen
+    // "screen": "screen"
 }
