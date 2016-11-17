@@ -31,5 +31,8 @@
     // "tmux": "tmux",
 
     // path to screen
-    // "screen": "screen"
+    // "screen": "screen",
+
+    // path to ComEmuC.exe
+    // "conemuc": "ComEmuC.exe"
 }

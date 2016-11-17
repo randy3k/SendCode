@@ -59,21 +59,25 @@ def escape_dquote(cmd):
     return cmd
 
 
-def send_to_conemu(cmd, bracketed=False):
-    conemu_setup()
-    _send_to_conemu(cmd, bracketed)
+def send_to_conemu(cmd, conemuc, bracketed=False):
+    if not conemuc:
+        conemuc = "ConEmuC"
+        conemu_setup()
+    _send_to_conemu(cmd, conemuc, bracketed)
 
 
-def send_to_cmder(cmd, bracketed=False):
-    cmder_setup()
-    _send_to_conemu(cmd, bracketed)
+def send_to_cmder(cmd, conemuc, bracketed=False):
+    if not conemuc:
+        conemuc = "ConEmuC"
+        cmder_setup()
+    _send_to_conemu(cmd, conemuc, bracketed)
 
 
-def _send_to_conemu(cmd, bracketed=False):
+def _send_to_conemu(cmd, conemuc, bracketed=False):
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     try:
-        subprocess.check_call("ConEmuC /ConInfo", startupinfo=startupinfo)
+        subprocess.check_call("{} /ConInfo".formate(conemuc), startupinfo=startupinfo)
     except:
         print("ConEmuC.exe not found. Edit PATH variable and add path to ConEmuC.exe.")
 

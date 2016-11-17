@@ -43,10 +43,12 @@ class TextSender:
         send_to_iterm(cmd, self.bracketed_paste_mode)
 
     def send_to_conemu(self, cmd):
-        send_to_conemu(cmd, self.bracketed_paste_mode)
+        conemuc = self.settings.get("conemuc")
+        send_to_conemu(cmd, conemuc, self.bracketed_paste_mode)
 
     def send_to_cmder(self, cmd):
-        send_to_cmder(cmd, self.bracketed_paste_mode)
+        conemuc = self.settings.get("conemuc")
+        send_to_cmder(cmd, conemuc, self.bracketed_paste_mode)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
