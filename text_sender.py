@@ -5,7 +5,7 @@ from .terminal import send_to_terminal
 from .iterm import send_to_iterm
 from .r import send_to_r
 from .rstudio import send_to_rstudio
-from .conemu import send_to_conemu
+from .conemu import send_to_conemu, send_to_cmder
 from .tmux import send_to_tmux
 from .screen import send_to_screen
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
@@ -45,6 +45,9 @@ class TextSender:
     def send_to_conemu(self, cmd):
         send_to_conemu(cmd, self.bracketed_paste_mode)
 
+    def send_to_cmder(self, cmd):
+        send_to_cmder(cmd, self.bracketed_paste_mode)
+
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
         send_to_tmux(cmd, tmux, self.bracketed_paste_mode)
@@ -70,7 +73,9 @@ class TextSender:
             self.send_to_terminal(cmd)
         elif prog == "iterm":
             self.send_to_iterm(cmd)
-        elif prog == "cmder" or prog == "conemu":
+        elif prog == "cmder":
+            self.send_to_cmder(cmd)
+        elif prog == "conemu":
             self.send_to_conemu(cmd)
         elif prog == "tmux":
             self.send_to_tmux(cmd)

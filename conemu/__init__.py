@@ -6,37 +6,51 @@ import re
 
 RE_CMDER = re.compile(r"\"(.*?)\\Cmder\.exe\"")
 RE_CONEMU = re.compile(r"\"(.*?)\\ConEmu(?:64)?\.exe\"")
+CMDER_SETUP = False
+CONEMU_SETUP = False
 
 
 def cmder_setup():
+    global CMDER_SETUP
+
+    if CMDER_SETUP:
+        return
+
     try:
         akey = winreg.OpenKey(
             winreg.HKEY_CLASSES_ROOT, "Directory\\shell\\Cmder\command", 0, winreg.KEY_READ)
         command = winreg.QueryValueEx(akey, "")[0]
         conemu_base_dir = os.path.join(
             RE_CMDER.match(command).group(1), "vendor", "conemu-maximus5", "ConEmu")
-        if conemu_base_dir not in os.environ["PATH"]:
-            os.environ["PATH"] = os.environ["PATH"] + ";" + conemu_base_dir
+        if os.path.exists(conemu_base_dir):
+            if conemu_base_dir not in os.environ["PATH"]:
+                os.environ["PATH"] = conemu_base_dir + ";" + os.environ["PATH"]
+                CMDER_SETUP = True
     except:
         return
 
 
 def conemu_setup():
+    global CONEMU_SETUP
+
+    if CONEMU_SETUP:
+        return
+
     try:
         akey = winreg.OpenKey(
             winreg.HKEY_CLASSES_ROOT, "Directory\\shell\\ConEmu Here\command", 0, winreg.KEY_READ)
         command = winreg.QueryValueEx(akey, "")[0]
         conemu_base_dir = os.path.join(RE_CONEMU.match(command).group(1), "ConEmu")
-        if conemu_base_dir not in os.environ["PATH"]:
-            os.environ["PATH"] = os.environ["PATH"] + ";" + conemu_base_dir
+        if os.path.exists(conemu_base_dir):
+            if conemu_base_dir not in os.environ["PATH"]:
+                os.environ["PATH"] = conemu_base_dir + ";" + os.environ["PATH"]
+                CONEMU_SETUP = True
     except:
         return
 
 
 if sublime.platform() == "windows":
     import winreg
-    cmder_setup()
-    conemu_setup()
 
 
 def escape_dquote(cmd):
@@ -46,11 +60,22 @@ def escape_dquote(cmd):
 
 
 def send_to_conemu(cmd, bracketed=False):
+    conemu_setup()
+    _send_to_conemu(cmd, bracketed)
+
+
+def send_to_cmder(cmd, bracketed=False):
+    cmder_setup()
+    _send_to_conemu(cmd, bracketed)
+
+
+def _send_to_conemu(cmd, bracketed=False):
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    ret = subprocess.call("ConEmuC /ConInfo", startupinfo=startupinfo)
-    if ret != 0:
-        sublime.error_message("ConEmuC.exe not found.")
+    try:
+        subprocess.check_call("ConEmuC /ConInfo", startupinfo=startupinfo)
+    except:
+        print("ConEmuC.exe not found. Edit PATH variable and add path to ConEmuC.exe.")
 
     if bracketed:
         subprocess.check_call(
