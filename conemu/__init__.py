@@ -77,7 +77,7 @@ def _send_to_conemu(cmd, conemuc, bracketed=False):
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     try:
-        subprocess.check_call("{} /ConInfo".formate(conemuc), startupinfo=startupinfo)
+        subprocess.check_call("{} /ConInfo".format(conemuc), startupinfo=startupinfo)
     except:
         print("ConEmuC.exe not found. "
               "Specify the path to ConEmuC.exe in SendREPL.sublime-settings.")
