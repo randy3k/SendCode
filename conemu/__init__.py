@@ -80,6 +80,7 @@ def _send_to_conemu(cmd, conemuc, bracketed=False):
         subprocess.check_call("{} /ConInfo".formate(conemuc), startupinfo=startupinfo)
     except:
         print("ConEmuC.exe not found. Edit PATH variable and add path to ConEmuC.exe.")
+        return
 
     if bracketed:
         subprocess.check_call(
