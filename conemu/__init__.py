@@ -85,7 +85,7 @@ def _send_to_conemu(cmd, conemuc, bracketed=False):
 
     if bracketed:
         subprocess.check_call(
-            '{}} -GuiMacro:0 Paste(2,"\x1b[200~{}\x1b[201~")'.format(conemuc, escape_dquote(cmd)),
+            '{} -GuiMacro:0 Paste(2,"\x1b[200~{}\x1b[201~")'.format(conemuc, escape_dquote(cmd)),
             startupinfo=startupinfo)
     else:
         subprocess.check_call(
