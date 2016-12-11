@@ -149,6 +149,14 @@ class PythonTextSender(TextSender):
         else:
             send_to_conemu(cmd)
 
+    def send_to_cmder(self, cmd):
+        if len(re.findall("\n", cmd)) > 0:
+            send_to_cmder(r"%cpaste -q")
+            send_to_cmder(cmd)
+            send_to_cmder("--")
+        else:
+            send_to_cmder(cmd)
+
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
         if len(re.findall("\n", cmd)) > 0:
