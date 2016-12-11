@@ -93,4 +93,4 @@ def _send_to_conemu(cmd, conemuc, bracketed=False):
             startupinfo=startupinfo)
 
     subprocess.check_call(
-        '{} -GuiMacro:0 Keys("Return")'.format(conemuc, startupinfo=startupinfo))
+        '{} -GuiMacro:0 Keys("Return")'.format(conemuc), startupinfo=startupinfo)
