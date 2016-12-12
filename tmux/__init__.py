@@ -1,8 +1,8 @@
 import subprocess
 
 
-def send_to_tmux(cmd, tmux="tmux", bracketed_paste_mode=False):
-    if bracketed_paste_mode:
+def send_to_tmux(cmd, tmux="tmux", bracketed=False):
+    if bracketed:
         subprocess.check_call([tmux, 'set-buffer', "\x1b[200~"])
         subprocess.check_call([tmux, 'paste-buffer', '-d'])
         send_to_tmux(cmd, tmux, False)

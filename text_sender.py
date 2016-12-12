@@ -1,5 +1,6 @@
 import sublime
 import re
+from functools import wraps
 from .settings import Settings
 from .terminal import send_to_terminal
 from .iterm import send_to_iterm
@@ -127,53 +128,80 @@ class PythonTextSender(TextSender):
 
     def send_to_terminal(self, cmd):
         if len(re.findall("\n", cmd)) > 0:
-            send_to_terminal(r"%cpaste -q")
-            send_to_terminal(cmd)
-            send_to_terminal("--")
+            if self.bracketed_paste_mode:
+                send_to_terminal(cmd, bracketed=True)
+                send_to_terminal("", bracketed=False)
+            else:
+                send_to_terminal(r"%cpaste -q")
+                send_to_terminal(cmd)
+                send_to_terminal("--")
         else:
             send_to_terminal(cmd)
 
     def send_to_iterm(self, cmd):
         if len(re.findall("\n", cmd)) > 0:
-            send_to_iterm(r"%cpaste -q")
-            send_to_iterm(cmd)
-            send_to_iterm("--")
+            if self.bracketed_paste_mode:
+                send_to_iterm(cmd, bracketed=True)
+                send_to_iterm("", bracketed=False)
+            else:
+                send_to_iterm(r"%cpaste -q")
+                send_to_iterm(cmd)
+                send_to_iterm("--")
         else:
             send_to_iterm(cmd)
 
     def send_to_conemu(self, cmd):
+        conemuc = self.settings.get("conemuc")
         if len(re.findall("\n", cmd)) > 0:
-            send_to_conemu(r"%cpaste -q")
-            send_to_conemu(cmd)
-            send_to_conemu("--")
+            if self.bracketed_paste_mode:
+                send_to_conemu(cmd, conemuc, bracketed=False)
+                send_to_conemu("", conemuc, bracketed=False)
+            else:
+                send_to_conemu(r"%cpaste -q", conemuc)
+                send_to_conemu(cmd, conemuc)
+                send_to_conemu("--", conemuc)
         else:
-            send_to_conemu(cmd)
+            send_to_conemu(cmd, conemuc)
 
     def send_to_cmder(self, cmd):
+        conemuc = self.settings.get("conemuc")
         if len(re.findall("\n", cmd)) > 0:
-            send_to_cmder(r"%cpaste -q")
-            send_to_cmder(cmd)
-            send_to_cmder("--")
+            if self.bracketed_paste_mode:
+                send_to_cmder(cmd, conemuc, bracketed=False)
+                send_to_cmder("", conemuc, bracketed=False)
+            else:
+                send_to_cmder(r"%cpaste -q", conemuc)
+                send_to_cmder(cmd, conemuc)
+                send_to_cmder("--", conemuc)
         else:
-            send_to_cmder(cmd)
+            send_to_cmder(cmd, conemuc)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
         if len(re.findall("\n", cmd)) > 0:
-            send_to_tmux(r"%cpaste -q", tmux)
-            send_to_tmux(cmd, tmux)
-            # send ctrl-D instead of "--" since `set-buffer` does not work properly
-            send_to_tmux("\x04", tmux)
+            if self.bracketed_paste_mode:
+                send_to_tmux(cmd, tmux, bracketed=True)
+                send_to_tmux("", tmux, bracketed=False)
+            else:
+                send_to_tmux(r"%cpaste -q", tmux)
+                send_to_tmux(cmd, tmux)
+                # send ctrl-D instead of "--" since `set-buffer` does not work properly
+                send_to_tmux("\x04", tmux)
         else:
             send_to_tmux(cmd, tmux)
 
     def send_to_screen(self, cmd):
+        screen = self.settings.get("screen", "screen")
         if len(re.findall("\n", cmd)) > 0:
-            send_to_screen(r"%cpaste -q")
-            send_to_screen(cmd)
-            send_to_screen("--")
+            if self.bracketed_paste_mode:
+                send_to_screen(cmd, screen, bracketed=True)
+                send_to_screen("", screen, bracketed=False)
+            else:
+                send_to_screen(r"%cpaste -q", screen)
+                send_to_screen(cmd, screen)
+                send_to_screen("--", screen)
         else:
-            send_to_screen(cmd)
+            send_to_screen(cmd, screen)
 
 
 class JuliaTextSender(TextSender):

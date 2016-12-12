@@ -2,8 +2,8 @@ import sublime
 import subprocess
 
 
-def send_to_screen(cmd, screen="screen", bracketed_paste_mode=False):
-    if bracketed_paste_mode:
+def send_to_screen(cmd, screen="screen", bracketed=False):
+    if bracketed:
         subprocess.check_call([screen, '-X', 'stuff', "\x1b[200~"])
         send_to_screen(cmd, screen, False)
         subprocess.check_call([screen, '-X', 'stuff', "\x1b[201~"])
