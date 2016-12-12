@@ -71,6 +71,22 @@ SendREPL understands the following variables in the `cmd` field:
 - `$selection`, the text selected, or the word under cursor
 
 
+### User settings
+
+User setttings should go into the `user` key in the `SendREPL.sublime-settings`. For example
+
+```json
+{
+    "user":{
+        "python" : {
+            "prog": "terminal",
+            "bracketed_paste_mode": true
+        }
+    }
+}
+
+```
+
 ### Some details about block detection
 
 SendREPL uses the following logic to expand cursor when sending text.
