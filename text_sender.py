@@ -37,26 +37,26 @@ class TextSender:
             return TextSender(view, **kwargs)
 
     def send_to_terminal(self, cmd):
-        send_to_terminal(cmd, self.bracketed_paste_mode)
+        send_to_terminal(cmd, bracketed=self.bracketed_paste_mode)
 
     def send_to_iterm(self, cmd):
-        send_to_iterm(cmd, self.bracketed_paste_mode)
+        send_to_iterm(cmd, bracketed=self.bracketed_paste_mode)
 
     def send_to_conemu(self, cmd):
         conemuc = self.settings.get("conemuc")
-        send_to_conemu(cmd, conemuc, self.bracketed_paste_mode)
+        send_to_conemu(cmd, conemuc, bracketed=self.bracketed_paste_mode)
 
     def send_to_cmder(self, cmd):
         conemuc = self.settings.get("conemuc")
-        send_to_cmder(cmd, conemuc, self.bracketed_paste_mode)
+        send_to_cmder(cmd, conemuc, bracketed=self.bracketed_paste_mode)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
-        send_to_tmux(cmd, tmux, self.bracketed_paste_mode)
+        send_to_tmux(cmd, tmux, bracketed=self.bracketed_paste_mode)
 
     def send_to_screen(self, cmd):
         screen = self.settings.get("screen", "screen")
-        send_to_screen(cmd, screen, self.bracketed_paste_mode)
+        send_to_screen(cmd, screen, bracketed=self.bracketed_paste_mode)
 
     def send_to_chrome_jupyter(self, cmd):
         send_to_chrome_jupyter(cmd)
