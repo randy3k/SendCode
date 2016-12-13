@@ -1,6 +1,5 @@
 import sublime
 import re
-from functools import wraps
 from .settings import Settings
 from .terminal import send_to_terminal
 from .iterm import send_to_iterm
