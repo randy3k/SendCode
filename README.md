@@ -20,14 +20,6 @@ You could install SendREPL via Package Control. If you are using Linux
 ([pywin32](https://github.com/randy3k/sublime-pywin32)) will also be installed
 automatically.
 
-If you have the following error on Windows, please remove the folder 
-`python-pywin32` under `Sublime Text 3/Pacakges` and run the command 
-`Package Control: Satisfy Dependencies.`
-
-```
-import win32clipboard
-ImportError: DLL load failed: The specified module could not be found.
-```
 
 ### Usage
 
