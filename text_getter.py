@@ -70,6 +70,9 @@ class RTextGetter(TextGetter):
         if view.score_selector(s.begin(), "string"):
             return s
         thiscmd = view.substr(s)
+        row = view.rowcol(s.begin())[0]
+        prevline = view.line(s.begin())
+        lastrow = view.rowcol(view.size())[0]
         if re.match(r".*\{\s*$", thiscmd):
             es = view.find(
                 r"""^(?:.*(\{(?:(["\'])(?:[^\\]|\\.)*?\2|#.*$|[^\{\}]|(?1))*\})[^\{\}\n]*)+""",
@@ -77,6 +80,20 @@ class RTextGetter(TextGetter):
             )
             if s.begin() == es.begin():
                 s = es
+
+        elif re.match(r"^(#\+.*)$", thiscmd):
+            while row < lastrow:
+                row = row + 1
+                line = view.line(view.text_point(row, 0))
+                m = re.match(r"^(#'|#\+).*$", view.substr(line))
+                if m:
+                    s = sublime.Region(s.begin(), prevline.end())
+                    break
+                else:
+                    prevline = line
+
+            if row == lastrow:
+                s = sublime.Region(s.begin(), prevline.end())
         return s
 
 

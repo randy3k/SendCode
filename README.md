@@ -83,7 +83,7 @@ User setttings should go into the `user` key in the `SendREPL.sublime-settings`.
 
 SendREPL uses the following logic to expand cursor when sending text.
 
-- R blocks are detected by `{`,`}` pairs. 
+- R blocks are detected by `{`,`}` pairs or knitr-spin `#+` decorators.
 - Julia blocks are detected by `begin`, `end` pairs and indentations. 
 - Python blocks are detected by indentations or by `# %%`/`# In[]` decorators.
 - Markdown fenced code of [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended) and [R Markdown](https://github.com/randy3k/R-Box) is also supported.
