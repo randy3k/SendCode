@@ -23,7 +23,7 @@ automatically.
 
 ### Usage
 
-Select a program using the command `SendREPL: Choose REPL Program` in command palette. The default program is Terminal for Mac, Cmder for Windows and tmux for Linux. 
+Select a program using the command `SendREPL: Choose REPL Program` in command palette. The default program is Terminal for Mac, Cmder for Windows and tmux for Linux.
 
 - <kbd>cmd</kbd>+<kbd>enter</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>enter</kbd> (Windows/Linux)
 
@@ -52,7 +52,7 @@ It is fairly easy to create your own keybinds for commands which you frequently 
 }
 ```
 
-SendREPL understands the following variables in the `cmd` field: 
+SendREPL understands the following variables in the `cmd` field:
 
 - `$file`, the full path to the file
 - `$file_path`, the directory contains the file
@@ -61,6 +61,7 @@ SendREPL understands the following variables in the `cmd` field:
 - `$file_extension`, the file extension
 - `$project_path`, the active folder, if not found, use the directory of current file
 - `$selection`, the text selected, or the word under cursor
+- `$line`, the current line number
 
 
 ### User settings
@@ -84,6 +85,6 @@ User setttings should go into the `user` key in the `SendREPL.sublime-settings`.
 SendREPL uses the following logic to expand cursor when sending text.
 
 - R blocks are detected by `{`,`}` pairs or knitr-spin `#+` decorators.
-- Julia blocks are detected by `begin`, `end` pairs and indentations. 
+- Julia blocks are detected by `begin`, `end` pairs and indentations.
 - Python blocks are detected by indentations or by `# %%`/`# In[]` decorators.
 - Markdown fenced code of [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended) and [R Markdown](https://github.com/randy3k/R-Box) is also supported.
