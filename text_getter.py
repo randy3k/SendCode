@@ -30,6 +30,18 @@ class TextGetter:
             s = self.expand_line(s)
         return s
 
+    def find(self, pattern, pt, inline=False):
+        while True:
+            result = self.view.find(pattern, pt)
+            if result.begin() == -1 or (
+                    inline and self.view.rowcol(result.begin())[0] != self.view.rowcol(pt)[0]):
+                return sublime.Region(-1, -1)
+            else:
+                if not self.view.score_selector(result.begin(), "string, comment"):
+                    return result
+                else:
+                    pt = result.end()
+
     def expand_line(self, s):
         return s
 
@@ -71,29 +83,49 @@ class RTextGetter(TextGetter):
             return s
         thiscmd = view.substr(s)
         row = view.rowcol(s.begin())[0]
-        prevline = view.line(s.begin())
         lastrow = view.rowcol(view.size())[0]
-        if re.match(r".*\{\s*$", thiscmd) or re.match(r".*(?:[+\-*/]|%.{1,2}%)\s*$", thiscmd):
-            es = view.find(
-                r"""^(?:.*?((["\'])(?:[^\\]|\\.)*?\2|#.*$|\{(?:[^\{\}]|(?1))*\}|.*(?:[+\-*/]|%.{1,2}%)\s*\n)+.*$)""",
-                view.line(s).begin()
-            )
-            if s.begin() == es.begin():
-                s = es
-
-        elif re.match(r"^(#\+.*)$", thiscmd):
+        if re.match(r"#\+", thiscmd):
+            prevline = view.line(s.begin())
             while row < lastrow:
                 row = row + 1
                 line = view.line(view.text_point(row, 0))
-                m = re.match(r"^(#'|#\+).*$", view.substr(line))
+                m = re.match(r"#'|#\+", view.substr(line))
                 if m:
                     s = sublime.Region(s.begin(), prevline.end())
                     break
-                else:
+                elif len(view.substr(line).strip()) > 0:
                     prevline = line
 
             if row == lastrow:
                 s = sublime.Region(s.begin(), prevline.end())
+
+        elif re.match(r".*([{\[(]|[+\-*/]|%[+<>$:a-zA-Z]+%)\s*$", thiscmd):
+            level = 0
+            while row <= lastrow:
+                line = view.line(view.text_point(row, 0))
+                pt = line.begin()
+                while True:
+                    res = self.find(r"[{}\[\]()]", pt, inline=True)
+                    if res.begin() == -1:
+                        break
+                    if view.substr(res) in ["{", "[", "("]:
+                        level += 1
+                    elif view.substr(res) in ["}", "]", ")"]:
+                        level -= 1
+                    pt = res.end()
+
+                if level > 0:
+                    row = row + 1
+                else:
+                    res = self.find(r"\S(?=\s*$)", pt, inline=True)
+                    if res.begin() != -1 and \
+                            self.view.score_selector(res.begin(), "keyword.operator"):
+                        row = row + 1
+                    else:
+                        s = sublime.Region(s.begin(), line.end())
+                        break
+            if row == lastrow:
+                s = sublime.Region(s.begin(), line.end())
         return s
 
 
@@ -115,7 +147,7 @@ class PythonTextGetter(TextGetter):
                 if m:
                     s = sublime.Region(s.begin(), prevline.end())
                     break
-                else:
+                elif len(view.substr(line).strip()) > 0:
                     prevline = line
 
         elif re.match(r"^[ \t]*\S", thiscmd):
