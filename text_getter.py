@@ -73,9 +73,9 @@ class RTextGetter(TextGetter):
         row = view.rowcol(s.begin())[0]
         prevline = view.line(s.begin())
         lastrow = view.rowcol(view.size())[0]
-        if re.match(r".*\{\s*$", thiscmd):
+        if re.match(r".*\{\s*$", thiscmd) or re.match(r".*(?:[+\-*/]|%.{1,2}%)\s*$", thiscmd):
             es = view.find(
-                r"""^(?:.*(\{(?:(["\'])(?:[^\\]|\\.)*?\2|#.*$|[^\{\}]|(?1))*\})[^\{\}\n]*)+""",
+                r"""^(?:.*?((["\'])(?:[^\\]|\\.)*?\2|#.*$|\{(?:[^\{\}]|(?1))*\}|.*(?:[+\-*/]|%.{1,2}%)\s*\n)+.*$)""",
                 view.line(s).begin()
             )
             if s.begin() == es.begin():
