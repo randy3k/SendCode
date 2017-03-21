@@ -30,6 +30,41 @@ class TextGetter:
             s = self.expand_line(s)
         return s
 
+    def expand_line(self, s):
+        return s
+
+    def advance(self, s):
+        view = self.view
+        view.sel().subtract(s)
+        pt = view.text_point(view.rowcol(s.end())[0]+1, 0)
+        if self.auto_advance_non_empty:
+            nextpt = view.find(r"\S", pt)
+            if nextpt.begin() != -1:
+                pt = view.text_point(view.rowcol(nextpt.begin())[0], 0)
+        view.sel().add(sublime.Region(pt, pt))
+
+    def get_text(self):
+        view = self.view
+        cmd = ''
+        moved = False
+        sels = [s for s in view.sel()]
+        for s in sels:
+            if s.empty():
+                s = self.expand_cursor(s)
+                if self.auto_advance:
+                    self.advance(s)
+                    moved = True
+
+            cmd += view.substr(s) + '\n'
+
+        if moved:
+            view.show(view.sel())
+
+        return cmd
+
+
+class GetterMixin:
+
     def find_inline(self, pattern, pt):
         while True:
             result = self.view.find(pattern, pt)
@@ -74,40 +109,9 @@ class TextGetter:
 
         return s
 
-    def expand_line(self, s):
-        return s
-
-    def advance(self, s):
-        view = self.view
-        view.sel().subtract(s)
-        pt = view.text_point(view.rowcol(s.end())[0]+1, 0)
-        if self.auto_advance_non_empty:
-            nextpt = view.find(r"\S", pt)
-            if nextpt.begin() != -1:
-                pt = view.text_point(view.rowcol(nextpt.begin())[0], 0)
-        view.sel().add(sublime.Region(pt, pt))
-
-    def get_text(self):
-        view = self.view
-        cmd = ''
-        moved = False
-        sels = [s for s in view.sel()]
-        for s in sels:
-            if s.empty():
-                s = self.expand_cursor(s)
-                if self.auto_advance:
-                    self.advance(s)
-                    moved = True
-
-            cmd += view.substr(s) + '\n'
-
-        if moved:
-            view.show(view.sel())
-
-        return cmd
 
 
-class RTextGetter(TextGetter):
+class RTextGetter(TextGetter, GetterMixin):
 
     def expand_line(self, s):
         view = self.view
@@ -137,7 +141,7 @@ class RTextGetter(TextGetter):
         return s
 
 
-class PythonTextGetter(TextGetter):
+class PythonTextGetter(TextGetter, GetterMixin):
 
     def expand_line(self, s):
         view = self.view
@@ -181,7 +185,7 @@ class PythonTextGetter(TextGetter):
         return s
 
 
-class JuliaTextGetter(TextGetter):
+class JuliaTextGetter(TextGetter, GetterMixin):
 
     def expand_line(self, s):
         view = self.view
