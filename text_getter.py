@@ -30,17 +30,49 @@ class TextGetter:
             s = self.expand_line(s)
         return s
 
-    def find(self, pattern, pt, inline=False):
+    def find_inline(self, pattern, pt):
         while True:
             result = self.view.find(pattern, pt)
-            if result.begin() == -1 or (
-                    inline and self.view.rowcol(result.begin())[0] != self.view.rowcol(pt)[0]):
+            if result.begin() == -1 or \
+                    self.view.rowcol(result.begin())[0] != self.view.rowcol(pt)[0]:
                 return sublime.Region(-1, -1)
             else:
                 if not self.view.score_selector(result.begin(), "string, comment"):
                     return result
                 else:
                     pt = result.end()
+
+    def continue_line(self, s):
+        level = 0
+        row = self.view.rowcol(s.begin())[0]
+        lastrow = self.view.rowcol(self.view.size())[0]
+        while row <= lastrow:
+            line = self.view.line(self.view.text_point(row, 0))
+            pt = line.begin()
+            while True:
+                res = self.find_inline(r"[{}\[\]()]", pt)
+                if res.begin() == -1:
+                    break
+                if self.view.substr(res) in ["{", "[", "("]:
+                    level += 1
+                elif self.view.substr(res) in ["}", "]", ")"]:
+                    level -= 1
+                pt = res.end()
+
+            if level > 0:
+                row = row + 1
+            else:
+                res = self.find_inline(r"\S(?=\s*$)", pt)
+                if res.begin() != -1 and \
+                        self.view.score_selector(res.begin(), "keyword.operator"):
+                    row = row + 1
+                else:
+                    s = sublime.Region(s.begin(), line.end())
+                    break
+        if row == lastrow:
+            s = sublime.Region(s.begin(), line.end())
+
+        return s
 
     def expand_line(self, s):
         return s
@@ -99,33 +131,9 @@ class RTextGetter(TextGetter):
             if row == lastrow:
                 s = sublime.Region(s.begin(), prevline.end())
 
-        elif re.match(r".*([{\[(]|[+\-*/]|%[+<>$:a-zA-Z]+%)\s*$", thiscmd):
-            level = 0
-            while row <= lastrow:
-                line = view.line(view.text_point(row, 0))
-                pt = line.begin()
-                while True:
-                    res = self.find(r"[{}\[\]()]", pt, inline=True)
-                    if res.begin() == -1:
-                        break
-                    if view.substr(res) in ["{", "[", "("]:
-                        level += 1
-                    elif view.substr(res) in ["}", "]", ")"]:
-                        level -= 1
-                    pt = res.end()
+        elif re.match(r".*([{\[(+\-*/]|%[+<>$:a-zA-Z]+%)\s*$", thiscmd):
+            s = self.continue_line(s)
 
-                if level > 0:
-                    row = row + 1
-                else:
-                    res = self.find(r"\S(?=\s*$)", pt, inline=True)
-                    if res.begin() != -1 and \
-                            self.view.score_selector(res.begin(), "keyword.operator"):
-                        row = row + 1
-                    else:
-                        s = sublime.Region(s.begin(), line.end())
-                        break
-            if row == lastrow:
-                s = sublime.Region(s.begin(), line.end())
         return s
 
 
@@ -150,22 +158,26 @@ class PythonTextGetter(TextGetter):
                 elif len(view.substr(line).strip()) > 0:
                     prevline = line
 
-        elif re.match(r"^[ \t]*\S", thiscmd):
-            indentation = re.match(r"^([ \t]*)", thiscmd).group(1)
+            if row == lastrow:
+                s = sublime.Region(s.begin(), prevline.end())
+
+        elif re.match(r"[ \t]*\S", thiscmd):
+            indentation = re.match(r"[ \t]*", thiscmd).group(0)
             while row < lastrow:
                 row = row + 1
                 line = view.line(view.text_point(row, 0))
-                m = re.match(r"^([ \t]*)([^\n\s]+)", view.substr(line))
+                m = re.match(r"([ \t]*)([^\n\s]+)", view.substr(line))
                 if m and len(m.group(1)) <= len(indentation) and \
                         (len(m.group(1)) < len(indentation) or
                             not re.match(r"else|elif|except|finally", m.group(2))):
                     s = sublime.Region(s.begin(), prevline.end())
                     break
-                elif re.match(r"^[ \t]*\S", view.substr(line)):
+                elif re.match(r"[ \t]*\S", view.substr(line)):
                     prevline = line
 
-        if row == lastrow:
-            s = sublime.Region(s.begin(), prevline.end())
+            if row == lastrow:
+                s = sublime.Region(s.begin(), prevline.end())
+
         return s
 
 
@@ -176,12 +188,30 @@ class JuliaTextGetter(TextGetter):
         if view.score_selector(s.begin(), "string"):
             return s
         thiscmd = view.substr(s)
-        if (re.match(r"^\s*(?:function|if|for|while|let|quote|try)", thiscmd) and
+        keywords = [
+            "function", "macro", "if", "for", "while", "let", "quote",
+            "try", "module", "abstruct", "type", "struct", "immutable", "mutable"
+        ]
+        if (re.match(r"\s*(?:{})".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*end\s*$", thiscmd)) or \
                 (re.match(r".*begin\s*$", thiscmd)):
             indentation = re.match("^(\s*)", thiscmd).group(1)
-            end = view.find("^"+indentation+"end", s.begin())
-            s = sublime.Region(s.begin(), view.line(end.end()).end())
+            endline = view.find("^"+indentation+"end", s.begin())
+            s = sublime.Region(s.begin(), view.line(endline.end()).end())
+
+        elif re.match(r"\s*(using|import|export)", thiscmd):
+            row = view.rowcol(s.begin())[0]
+            lastrow = view.rowcol(view.size())[0]
+            while row <= lastrow:
+                line = view.line(view.text_point(row, 0))
+                if re.match(r".*[:,]\s*$", view.substr(line)):
+                    row = row + 1
+                else:
+                    s = sublime.Region(s.begin(), line.end())
+                    break
+
+        elif re.match(r".*[{\[(+\-*/]\s*$", thiscmd):
+            s = self.continue_line(s)
 
         return s
 
