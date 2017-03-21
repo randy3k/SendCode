@@ -13,38 +13,12 @@
             "caption": "SendREPL",
             "children": [
               {
-                "command": "open_file",
+                "command": "edit_settings",
                 "args": {
-                  "file": "${packages}/SendREPL/SendREPL (OSX).sublime-settings",
-                  "platform": "OSX"
+                  "base_file": "${packages}/SendREPL/SendREPL ($platform).sublime-settings",
+                  "user_file": "${packages}/User/SendREPL.sublime-settings"
                 },
-                "caption": "Settings – Default"
-              },
-              {
-                "command": "open_file",
-                "args": {
-                  "file": "${packages}/SendREPL/SendREPL (Linux).sublime-settings",
-                  "platform": "Linux"
-                },
-                "caption": "Settings – Default"
-              },
-              {
-                "command": "open_file",
-                "args": {
-                  "file": "${packages}/SendREPL/SendREPL (Windows).sublime-settings",
-                  "platform": "Windows"
-                },
-                "caption": "Settings – Default"
-              },
-              {
-                "command": "open_file",
-                "args": {
-                  "file": "${packages}/User/SendREPL.sublime-settings"
-                },
-                "caption": "Settings – User"
-              },
-              {
-                "caption": "-"
+                "caption": "Settings"
               }
             ]
           }
