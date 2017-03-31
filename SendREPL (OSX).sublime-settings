@@ -16,7 +16,8 @@
         },
 
         "python" : {
-            "prog": "terminal"
+            "prog": "terminal",
+            "bracketed_paste_mode": true
         },
 
         "julia" : {

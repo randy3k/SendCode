@@ -1,9 +1,9 @@
 # SendREPL for Sublime Text
 
-Send Text to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython REPL.
+Send Text to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython/ptpython REPL.
 This is a rewrite of [SendTextPlus](https://github.com/randy3k/SendTextPlus) which aims for higher extensibility and higher self-containedness.
 
-*Note*: IPython console is assumed for Python syntax.
+*Important*: For Python, [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
 
 Following Programs are supported
 
