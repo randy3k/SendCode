@@ -17,6 +17,7 @@
 
         "python" : {
             "prog": "terminal",
+            // ipython is assumed when `bracketed_paste_mode `is false,
             "bracketed_paste_mode": true
         },
 
