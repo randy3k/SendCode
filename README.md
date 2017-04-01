@@ -1,13 +1,10 @@
 # SendREPL for Sublime Text
 
 Send Text to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython/ptpython REPL.
-This is a rewrite of [SendTextPlus](https://github.com/randy3k/SendTextPlus) which aims for higher extensibility and higher self-containedness.
-
-*Important*: For Python, [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
 
 Following Programs are supported
 
-- Mac: Terminal, iTerm (>=2.9), Tmux, Screen, RStudio Desktop, R GUI, RStudio and Jupyter running on Chrome and Safari
+- Mac: Terminal, iTerm (>=2.9), R GUI, RStudio Desktop, RStudio and Jupyter running on Chrome and Safari
 - Windows: Cmder, ConEmu, R GUI, RStudio Desktop
 - Linux: Tmux, Screen, RStudio Desktop
 - Others: SublimeREPL
@@ -38,6 +35,10 @@ Select a program using the command `SendREPL: Choose REPL Program` in command pa
     SendREPL uses Sublime build system to source files, you might have to choose the `Source File` option in a pop up window.
 
 
+### Troubleshoot
+
+*Important*: For Python, [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
+
 ### Custom Keybind
 
 It is fairly easy to create your own keybinds for commands which you frequently use. For example, the following keybind run the `R` command `source("<the current file>")` in the active program.
@@ -66,7 +67,7 @@ SendREPL understands the following variables in the `cmd` field:
 
 ### User settings
 
-User setttings should go into the `user` key in the `SendREPL.sublime-settings`. For example
+User settings should go into the `user` key in the `SendREPL.sublime-settings`. For example
 
 ```json
 {
@@ -80,7 +81,7 @@ User setttings should go into the `user` key in the `SendREPL.sublime-settings`.
 
 ```
 
-### Some details about block detection
+### Some details about block expansion
 
 SendREPL uses the following logic to expand cursor when sending text.
 
