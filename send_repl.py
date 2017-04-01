@@ -27,7 +27,7 @@ class SendReplCommand(sublime_plugin.TextCommand):
     def resolve(self, cmd):
         view = self.view
         file = view.file_name()
-        (row,col) = view.rowcol(view.sel()[0].begin())
+        (row, col) = view.rowcol(view.sel()[0].begin())
         if file:
             file_name = os.path.basename(file)
             file_path = os.path.dirname(file)

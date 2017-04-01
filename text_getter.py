@@ -110,7 +110,6 @@ class GetterMixin:
         return s
 
 
-
 class RTextGetter(TextGetter, GetterMixin):
 
     def expand_line(self, s):
