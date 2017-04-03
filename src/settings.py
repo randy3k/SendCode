@@ -9,12 +9,12 @@ class Settings:
     }
 
     def __init__(self, view):
-        self.s = sublime.load_settings("SendREPL.sublime-settings")
+        self.s = sublime.load_settings("SendCode.sublime-settings")
         self.view = view
 
     def syntax(self):
         """
-        SendREPL.settings.Settings(view).syntax()
+        SendCode.settings.Settings(view).syntax()
         """
         pt = self.view.sel()[0].begin() if len(self.view.sel()) > 0 else 0
         scores = [self.view.score_selector(pt, s) for s, lang in self.scope_mapping.items()]

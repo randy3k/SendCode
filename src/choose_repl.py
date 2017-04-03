@@ -3,7 +3,7 @@ import sublime_plugin
 from .settings import Settings
 
 
-class SendReplChooseProgramCommand(sublime_plugin.TextCommand):
+class SendCodeChooseReplCommand(sublime_plugin.TextCommand):
 
     def show_quick_panel(self, options, done):
         sublime.set_timeout(lambda: self.view.window().show_quick_panel(options, done), 10)
@@ -35,11 +35,11 @@ class SendReplChooseProgramCommand(sublime_plugin.TextCommand):
         def on_done(action):
             if action == -1:
                 return
-            s = sublime.load_settings('SendREPL.sublime-settings')
+            s = sublime.load_settings('SendCode.sublime-settings')
             if action > 0:
                 s.set("prog", app_list[action].lower())
             elif action == 0:
                 s.erase("prog")
-            sublime.save_settings('SendREPL.sublime-settings')
+            sublime.save_settings('SendCode.sublime-settings')
 
         self.show_quick_panel(app_list, on_done)

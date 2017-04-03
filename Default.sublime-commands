@@ -1,6 +1,6 @@
 [
     {
-        "caption": "SendREPL: Choose REPL Program",
-        "command": "send_repl_choose_program"
+        "caption": "SendCode: Choose REPL Program",
+        "command": "send_code_choose_repl"
     }
 ]

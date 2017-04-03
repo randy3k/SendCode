@@ -80,7 +80,7 @@ def _send_to_conemu(cmd, conemuc, bracketed=False):
         subprocess.check_call("{} /ConInfo".format(conemuc), startupinfo=startupinfo)
     except:
         print("ConEmuC.exe not found. "
-              "Specify the path to ConEmuC.exe in SendREPL.sublime-settings.")
+              "Specify the path to ConEmuC.exe in SendCode.sublime-settings.")
         return
 
     if bracketed:

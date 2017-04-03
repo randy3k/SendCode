@@ -1,6 +1,6 @@
-# SendREPL for Sublime Text
+# SendCode for Sublime Text
 
-Send Text to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython/ptpython REPL.
+Send Code to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython/ptpython REPL.
 
 Following Programs are supported
 
@@ -11,7 +11,7 @@ Following Programs are supported
 
 ### Installation
 
-You could install SendREPL via Package Control. If you are using Linux
+You could install SendCode via Package Control. If you are using Linux
 (Windows), the corresponding platform dependency
 [xdotool](https://github.com/randy3k/sublime-xdotool)
 ([pywin32](https://github.com/randy3k/sublime-pywin32)) will also be installed
@@ -20,7 +20,7 @@ automatically.
 
 ### Usage
 
-Select a program using the command `SendREPL: Choose REPL Program` in command palette. The default program is Terminal for Mac, Cmder for Windows and tmux for Linux.
+Select a program using the command `SendCode: Choose REPL Program` in command palette. The default program is Terminal for Mac, Cmder for Windows and tmux for Linux.
 
 - <kbd>cmd</kbd>+<kbd>enter</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>enter</kbd> (Windows/Linux)
 
@@ -32,7 +32,7 @@ Select a program using the command `SendREPL: Choose REPL Program` in command pa
 
 - <kbd>cmd</kbd>+<kbd>b</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>b</kbd> (Windows/Linux): source current file (R, Julia and Python (IPython) only)
 
-    SendREPL uses Sublime build system to source files, you might have to choose the `Source File` option in a pop up window.
+    SendCode uses Sublime build system to source files, you might have to choose the `Source File` option in a pop up window.
 
 
 ### Troubleshoot
@@ -53,7 +53,7 @@ It is fairly easy to create your own keybinds for commands which you frequently 
 }
 ```
 
-SendREPL understands the following variables in the `cmd` field:
+SendCode understands the following variables in the `cmd` field:
 
 - `$file`, the full path to the file
 - `$file_path`, the directory contains the file
@@ -67,7 +67,7 @@ SendREPL understands the following variables in the `cmd` field:
 
 ### User settings
 
-User settings should go into the `user` key in the `SendREPL.sublime-settings`. For example
+User settings should go into the `user` key in the `SendCode.sublime-settings`. For example
 
 ```json
 {
@@ -83,7 +83,7 @@ User settings should go into the `user` key in the `SendREPL.sublime-settings`. 
 
 ### Some details about block expansion
 
-SendREPL uses the following logic to expand cursor when sending text.
+SendCode uses the following logic to expand cursor when sending text.
 
 - R blocks are detected by `{`,`}` pairs or knitr-spin `#+` decorators.
 - Julia blocks are detected by `begin`, `end` pairs and indentations.
