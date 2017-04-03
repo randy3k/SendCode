@@ -1,6 +1,6 @@
 # SendCode for Sublime Text
 
-Send Code to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython/ptpython REPL.
+Send code and text to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython/ptpython REPL.
 
 Following Programs are supported
 
@@ -35,7 +35,7 @@ Select a program using the command `SendCode: Choose REPL Program` in command pa
     SendCode uses Sublime build system to source files, you might have to choose the `Source File` option in a pop up window.
 
 
-### Troubleshoot
+### Troubleshooting
 
 *Important*: For Python, [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
 
