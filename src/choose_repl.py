@@ -15,18 +15,18 @@ class SendCodeChooseReplCommand(sublime_plugin.TextCommand):
             app_list = [
                 "[Reset]", "Terminal", "iTerm", "tmux", "screen"]
             if syntax == "r":
-                app_list = app_list + ["R", "RStudio", "Chrome-RStudio", "Safari-RStudio"]
+                app_list = app_list + ["R GUI", "RStudio Desktop", "Chrome-RStudio", "Safari-RStudio"]
             if syntax in ["r", "python", "julia"]:
                 app_list = app_list + ["Chrome-Jupyter", "Safari-Jupyter"]
 
         elif plat == "windows":
             app_list = ["[Reset]", "Cmder", "ConEmu", "tmux", "screen"]
             if syntax == "r":
-                app_list = app_list + ["R", "RStudio"]
+                app_list = app_list + ["R GUI", "RStudio Desktop"]
         elif plat == "linux":
             app_list = ["[Reset]", "tmux", "screen"]
             if syntax == "r":
-                app_list = app_list + ["RStudio"]
+                app_list = app_list + ["RStudio Desktop"]
         else:
             sublime.error_message("Platform not supported!")
 
@@ -37,7 +37,11 @@ class SendCodeChooseReplCommand(sublime_plugin.TextCommand):
                 return
             s = sublime.load_settings('SendCode.sublime-settings')
             if action > 0:
-                s.set("prog", app_list[action].lower())
+                result = app_list[action]
+                result = "R" if result == "R GUI" else result
+                result = "RStudio" if result == "RStudio Desktop" else result
+                result = result.lower()
+                s.set("prog", result)
             elif action == 0:
                 s.erase("prog")
             sublime.save_settings('SendCode.sublime-settings')
