@@ -26,15 +26,25 @@ elif plat == "windows":
 
         if rid:
             clipboard.set_clipboard(cmd + "\n")
-            mid = win32gui.GetMenu(rid)
+
+            menuitems = win32gui.GetMenu(rid)
             buf, extras = win32gui_struct.EmptyMENUITEMINFO()
-            win32gui.GetMenuItemInfo(mid, 1, True, buf)
-            eid = win32gui_struct.UnpackMENUITEMINFO(buf).hSubMenu
+            win32gui.GetMenuItemInfo(menuitems, 0, True, buf)
+
+            if win32gui_struct.UnpackMENUITEMINFO(buf).text == "":
+                editid = 2
+            else:
+                editid = 1
             buf, extras = win32gui_struct.EmptyMENUITEMINFO()
-            win32gui.GetMenuItemInfo(eid, 1, True, buf)
-            pid = win32gui_struct.UnpackMENUITEMINFO(buf).wID
-            win32api.PostMessage(rid, win32con.WM_SETFOCUS, pid, 0)
-            sublime.set_timeout(lambda: win32api.PostMessage(rid, win32con.WM_COMMAND, pid, 0), 50)
+            win32gui.GetMenuItemInfo(menuitems, editid, True, buf)
+            editmenu = win32gui_struct.UnpackMENUITEMINFO(buf).hSubMenu
+
+            buf, extras = win32gui_struct.EmptyMENUITEMINFO()
+            win32gui.GetMenuItemInfo(editmenu, 1, True, buf)
+            pasteid = win32gui_struct.UnpackMENUITEMINFO(buf).wID
+            win32api.PostMessage(rid, win32con.WM_SETFOCUS, pasteid, 0)
+
+            sublime.set_timeout(lambda: win32api.PostMessage(rid, win32con.WM_COMMAND, pasteid, 0), 50)
             clipboard.reset_clipboard()
 
 else:
