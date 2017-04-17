@@ -19,20 +19,25 @@ elif plat == "windows":
     import time
 
     def send_to_rstudio(cmd):
+
         rid = win32gui.FindWindow("Qt5QWindowIcon", "RStudio")
         if rid:
             clipboard.set_clipboard(cmd)
-            time.sleep(0.001)
+            time.sleep(0.01)
+
             win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0)
             win32api.PostMessage(rid, win32con.WM_KEYDOWN, ord("V"), 0)
-            time.sleep(0.001)
-            control_state = win32api.GetKeyState(win32con.VK_CONTROL)
+            time.sleep(0.1)
+
+            control_was_released = win32api.GetAsyncKeyState(win32con.VK_CONTROL) >= 0
+
             win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
             win32api.PostMessage(rid, win32con.WM_KEYDOWN, win32con.VK_RETURN, 0)
-            time.sleep(0.001)
-            if control_state < 0:
+
+            if not control_was_released:
                 win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0)
 
+            time.sleep(0.01)
             clipboard.reset_clipboard()
 
 elif plat == "linux":
