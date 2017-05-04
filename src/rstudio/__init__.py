@@ -35,6 +35,7 @@ elif plat == "windows":
             win32api.PostMessage(rid, win32con.WM_KEYDOWN, win32con.VK_RETURN, 0)
 
             if not control_was_released:
+                time.sleep(0.1)
                 win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0)
 
             time.sleep(0.01)

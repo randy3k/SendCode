@@ -1,3 +1,4 @@
+import sublime
 import sublime_plugin
 import os
 from .text_getter import TextGetter
@@ -66,7 +67,7 @@ class SendReplCommand(sublime_plugin.TextCommand):
             cmd = getter.get_text()
 
         sender = TextSender.initialize(self.view, prog=prog)
-        sender.send_text(cmd)
+        sublime.set_timeout_async(lambda: sender.send_text(cmd))
 
 
 class SendReplBuild(sublime_plugin.WindowCommand):
