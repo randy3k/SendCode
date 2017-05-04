@@ -9,9 +9,12 @@ if plat == "windows":
 
 def get_clipboard():
     if plat == "windows":
-        win32clipboard.OpenClipboard()
-        cb = win32clipboard.GetClipboardData()
-        win32clipboard.CloseClipboard()
+        try:
+            win32clipboard.OpenClipboard()
+            cb = win32clipboard.GetClipboardData()
+            win32clipboard.CloseClipboard()
+        except:
+            cb = ""
     else:
         cb = sublime.get_clipboard()
     return cb
