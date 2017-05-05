@@ -27,7 +27,7 @@ elif plat == "windows":
 
             win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0)
             win32api.PostMessage(rid, win32con.WM_KEYDOWN, ord("V"), 0)
-            time.sleep(0.2)
+            time.sleep(0.1)
 
             control_was_released = win32api.GetAsyncKeyState(win32con.VK_CONTROL) >= 0
 
@@ -36,7 +36,7 @@ elif plat == "windows":
             time.sleep(0.001)
 
             if not control_was_released:
-                win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0)
+                win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
 
             clipboard.reset_clipboard()
 
