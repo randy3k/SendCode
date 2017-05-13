@@ -37,7 +37,17 @@ Select a program using the command `SendCode: Choose REPL Program` in command pa
 
 ### Troubleshooting
 
-*Important*: For Python, [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
+1. Sending code to Python console
+
+   [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
+
+2. Safari-Jupyter send does not work
+   
+   Most likely you haven't enabled JavaScript for AppleScript. Check the option "Allow JavaScript from Apple Events" in the Develop menu (the develope menu needs to be enabled in the preferences).
+
+3. Nothing happens
+   
+   Make sure the corresponding program is opened when you are sending the text.
 
 ### Custom Keybind
 
