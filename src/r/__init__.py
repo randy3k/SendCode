@@ -18,11 +18,22 @@ elif plat == "windows":
     import win32api
     import win32con
 
+    def child_window_callback(wid, _):
+        if "R Console" in win32gui.GetWindowText(wid):
+            win32gui.BringWindowToTop(wid)
+
     def send_to_r(cmd):
 
-        rid = win32gui.FindWindow("Rgui", None)
-        if not rid:
-            rid = win32gui.FindWindow("Rgui Workspace", None)
+        rid = win32gui.FindWindow("Rgui Workspace", None)
+        if rid:
+            # mdi
+            win32gui.EnumChildWindows(rid, child_window_callback, None)
+        else:
+            # sdi
+            rid = win32gui.FindWindow("Rgui", "R Console (64-bit)")
+            if rid:
+                win32gui.BringWindowToTop(rid)
+
 
         if rid:
             clipboard.set_clipboard(cmd + "\n")
