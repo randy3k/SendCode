@@ -31,9 +31,10 @@ elif plat == "windows":
         else:
             # sdi
             rid = win32gui.FindWindow("Rgui", "R Console (64-bit)")
+            if not rid:
+                rid = win32gui.FindWindow("Rgui", "R Console (32-bit)")
             if rid:
                 win32gui.BringWindowToTop(rid)
-
 
         if rid:
             clipboard.set_clipboard(cmd + "\n")
