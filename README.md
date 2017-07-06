@@ -37,15 +37,19 @@ Select a program using the command `SendCode: Choose REPL Program` in command pa
 
 ### Troubleshooting
 
-1. Sending code to Python console
+1. RStudio on Windows
+
+   If the code is pasted on the console but it is not being executed, you will need to open an empty RScript file by `File -> New File -> R Script`. This is a quick fix to the RStudio issue: https://support.rstudio.com/hc/en-us/community/posts/208160308-ctrl-enter-doesn-t-work-in-R-console-without-a-source-file-opened
+
+2. Sending code to Python console
 
    [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
 
-2. Safari-Jupyter send does not work
+3. Safari-Jupyter send does not work
    
    Most likely you haven't enabled JavaScript for AppleScript. Check the option "Allow JavaScript from Apple Events" in the Develop menu (the develope menu needs to be enabled in the preferences).
 
-3. Nothing happens
+4. Nothing happens
    
    Make sure the corresponding program is opened when you are sending the text.
 
