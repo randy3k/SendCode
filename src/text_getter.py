@@ -17,6 +17,8 @@ class TextGetter:
         syntax = Settings(view).syntax()
         if syntax == "r":
             return RTextGetter(view)
+        elif syntax == "md" or syntax == "rmd":
+            return MarkDownTextGetter(view)
         elif syntax == "python":
             return PythonTextGetter(view)
         elif syntax == "julia":

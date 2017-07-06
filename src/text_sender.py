@@ -27,7 +27,7 @@ class TextSender:
     @classmethod
     def initialize(cls, view, **kwargs):
         syntax = Settings(view).syntax()
-        if syntax == "r":
+        if syntax == "r" or syntax == "rmd":
             return RTextSender(view, **kwargs)
         elif syntax == "python":
             return PythonTextSender(view, **kwargs)

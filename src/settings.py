@@ -4,6 +4,8 @@ import sublime
 class Settings:
     scope_mapping = {
         "source.r": "r",
+        "text.html.markdown.rmarkdown": "rmd",
+        "text.html.markdown": "md",
         "source.python": "python",
         "source.julia": "julia"
     }
