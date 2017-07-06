@@ -28,6 +28,10 @@ elif plat == "windows":
             win32api.PostMessage(rid, win32con.WM_KEYDOWN, ord("V"), 0)
             time.sleep(0.01)
 
+            # set focus
+            win32api.PostMessage(rid, win32con.WM_SETFOCUS, 0, 0)
+            time.sleep(0.01)
+
             win32api.PostMessage(rid, win32con.WM_KEYDOWN, win32con.VK_RETURN, 0)
             time.sleep(0.01)
 
