@@ -11,6 +11,7 @@ from .screen import send_to_screen
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
 from .safari import send_to_safari_jupyter, send_to_safari_rstudio
 from .sublimerepl import send_to_sublimerepl
+from .terminalview import send_to_terminalview
 
 
 class TextSender:
@@ -67,6 +68,9 @@ class TextSender:
     def send_to_sublimerepl(self, cmd):
         send_to_sublimerepl(cmd)
 
+    def send_to_terminalview(self, cmd):
+        send_to_terminalview(cmd, bracketed=self.bracketed_paste_mode)
+
     def send_text(self, cmd):
         cmd = cmd.rstrip()
         cmd = cmd.expandtabs(self.view.settings().get("tab_size", 4))
@@ -89,6 +93,8 @@ class TextSender:
             self.send_to_safari_jupyter(cmd)
         elif prog == "sublimerepl":
             self.send_to_sublimerepl(cmd)
+        elif prog == "terminalview":
+            self.send_to_terminalview(cmd)
         else:
             sublime.message_dialog("%s is not supported for current syntax." % prog)
 
@@ -201,6 +207,18 @@ class PythonTextSender(TextSender):
                 send_to_screen("--", screen)
         else:
             send_to_screen(cmd, screen)
+
+    def send_to_terminalview(self, cmd):
+        if len(re.findall("\n", cmd)) > 0:
+            if self.bracketed_paste_mode:
+                send_to_terminalview(cmd, bracketed=True)
+                send_to_terminalview("", bracketed=False)
+            else:
+                send_to_terminalview(r"%cpaste -q")
+                send_to_terminalview(cmd)
+                send_to_terminalview("--")
+        else:
+            send_to_terminalview(cmd)
 
 
 class JuliaTextSender(TextSender):
