@@ -2,12 +2,15 @@
 
 Send code and text to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython/ptpython REPL.
 
+![](https://user-images.githubusercontent.com/1690993/28198891-4ebe5eaa-682f-11e7-8173-10b64faef9b4.png)
+
+
 Following Programs are supported
 
 - Mac: Terminal, iTerm (>=2.9), R GUI, RStudio Desktop, RStudio and Jupyter running on Chrome and Safari
 - Windows: Cmder, ConEmu, R GUI, RStudio Desktop
 - Linux: Tmux, Screen, RStudio Desktop
-- Others: SublimeREPL
+- Others: TerminalView (required this [PR](https://github.com/Wramberg/TerminalView/pull/35)), SublimeREPL (deprecating)
 
 ### Installation
 
