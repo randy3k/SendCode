@@ -2,5 +2,23 @@
     {
         "caption": "SendCode: Choose REPL Program",
         "command": "send_code_choose_repl"
+    },
+    {
+        "caption": "Preferences: SendCode Settings",
+        "command": "edit_settings",
+        "args":
+        {
+            "base_file": "${packages}/SendCode/SendCode (${platform}).sublime-settings",
+            "default": "{\n\t$0\n}\n"
+        }
+    },
+    {
+        "caption": "Preferences: SendCode Key Bindings",
+        "command": "edit_settings",
+        "args":
+        {
+            "base_file": "${packages}/SendCode/Default (${platform}).sublime-keymap",
+            "default": "[\n\t$0\n]\n"
+        }
     }
 ]

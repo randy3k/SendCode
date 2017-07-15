@@ -1,29 +1,37 @@
 [
-  {
-    "caption": "Preferences",
-    "mnemonic": "n",
-    "id": "preferences",
-    "children": [
-      {
-        "caption": "Package Settings",
-        "mnemonic": "P",
-        "id": "package-settings",
+    {
+        "caption": "Preferences",
+        "mnemonic": "n",
+        "id": "preferences",
         "children": [
-          {
-            "caption": "SendCode",
-            "children": [
-              {
-                "command": "edit_settings",
-                "args": {
-                  "base_file": "${packages}/SendCode/SendCode ($platform).sublime-settings",
-                  "user_file": "${packages}/User/SendCode.sublime-settings"
-                },
-                "caption": "Settings"
-              }
-            ]
-          }
+            {
+                "caption": "Package Settings",
+                "mnemonic": "P",
+                "id": "package-settings",
+                "children": [
+                    {
+                        "caption": "SendCode",
+                        "children": [
+                            {
+                                "command": "edit_settings",
+                                "args": {
+                                    "base_file": "${packages}/SendCode/SendCode ($platform).sublime-settings"
+                                },
+                                "caption": "Settings"
+                            },
+                            {
+                                "caption": "Key Bindings",
+                                "command": "edit_settings",
+                                "args":
+                                {
+                                    "base_file": "${packages}/SendCode/Default (${platform}).sublime-keymap",
+                                    "default": "[\n\t$0\n]\n"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  }
+    }
 ]
