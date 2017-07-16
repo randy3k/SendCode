@@ -9,6 +9,7 @@
         "args":
         {
             "base_file": "${packages}/SendCode/SendCode (${platform}).sublime-settings",
+            "user_file": "${packages}/User/SendCode.sublime-settings",
             "default": "{\n\t$0\n}\n"
         }
     },

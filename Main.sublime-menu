@@ -15,7 +15,8 @@
                             {
                                 "command": "edit_settings",
                                 "args": {
-                                    "base_file": "${packages}/SendCode/SendCode ($platform).sublime-settings"
+                                    "base_file": "${packages}/SendCode/SendCode ($platform).sublime-settings",
+                                    "user_file": "${packages}/User/SendCode.sublime-settings"
                                 },
                                 "caption": "Settings"
                             },
