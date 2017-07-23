@@ -19,6 +19,8 @@ class Settings:
         SendCode.settings.Settings(view).syntax()
         """
         pt = self.view.sel()[0].begin() if len(self.view.sel()) > 0 else 0
+        # to go beginning of the line
+        pt = self.view.line(pt).begin()
         scores = [self.view.score_selector(pt, s) for s, lang in self.scope_mapping.items()]
         max_score = max(scores)
         if max_score > 0:

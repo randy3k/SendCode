@@ -225,13 +225,17 @@ class MarkDownTextGetter(TextGetter):
 
     def advance(self, s):
         view = self.view
-        view.sel().subtract(view.line(s.begin()-1))
-        pt = view.text_point(view.rowcol(s.end())[0]+2, 0)
-        if self.auto_advance_non_empty:
-            nextpt = view.find(r"\S", pt)
-            if nextpt.begin() != -1:
-                pt = view.text_point(view.rowcol(nextpt.begin())[0], 0)
-        view.sel().add(sublime.Region(pt, pt))
+        nextline = view.substr(view.line(s.end() + 1))
+        if re.match(r"^```", nextline):
+            view.sel().subtract(view.line(s.begin()-1))
+            pt = view.text_point(view.rowcol(s.end())[0]+2, 0)
+            if self.auto_advance_non_empty:
+                nextpt = view.find(r"\S", pt)
+                if nextpt.begin() != -1:
+                    pt = view.text_point(view.rowcol(nextpt.begin())[0], 0)
+            view.sel().add(sublime.Region(pt, pt))
+        else:
+            super().advance(s)
 
     def expand_line(self, s):
         view = self.view
