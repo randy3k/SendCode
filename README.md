@@ -1,5 +1,38 @@
 # SendCode for Sublime Text
 
+---
+## Imporatant notice
+
+Starting from next release (0.3.0), SendCode will no longer define the keybind for change working directory. 
+User should define their own keybinds in the user settings. Somethings like
+
+```json
+    {
+        "keys": ["ctrl+shift+h"], "command": "send_repl",
+        "args": {"cmd": "setwd(\"$file_path\")"},
+        "context": [
+            { "key": "selector", "operator": "equal", "operand": "source.r" }
+        ]
+    },
+    {
+        "keys": ["ctrl+shift+h"], "command": "send_repl",
+        "args": {"cmd": "%cd \"$file_path\""},
+        "context": [
+            { "key": "selector", "operator": "equal", "operand": "source.python" }
+        ]
+    },
+    {
+        "keys": ["ctrl+shift+h"], "command": "send_repl",
+        "args": {"cmd": "cd(\"$file_path\")"},
+        "context": [
+            { "key": "selector", "operator": "equal", "operand": "source.julia" }
+        ]
+    }
+```
+
+---
+
+
 Send code and text to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython/ptpython REPL.
 
 ![](https://user-images.githubusercontent.com/1690993/28198891-4ebe5eaa-682f-11e7-8173-10b64faef9b4.png)
@@ -28,9 +61,6 @@ Select a program using the command `SendCode: Choose REPL Program` in command pa
 - <kbd>cmd</kbd>+<kbd>enter</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>enter</kbd> (Windows/Linux)
 
     If text is selected, it sends the text to the program selected. If no text is selected, then it sends the current block (if found). Finally, it moves the cursor to the next line.
-
-
-- <kbd>cmd</kbd>+<kbd>\\</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>\\</kbd> (Windows/Linux): change working directory (R, Julia and Python (IPython) only)
 
 
 - <kbd>cmd</kbd>+<kbd>b</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>b</kbd> (Windows/Linux): source current file (R, Julia and Python (IPython) only)
@@ -62,7 +92,7 @@ It is fairly easy to create your own keybinds for commands which you frequently 
 
 ```json
 {
-    "keys": ["super+shift+e"], "command": "send_repl",
+    "keys": ["ctrl+shift+h"], "command": "send_repl",
     "args": {"cmd": "source(\"$file\")"},
     "context": [
         { "key": "selector", "operator": "equal", "operand": "source.r" }
