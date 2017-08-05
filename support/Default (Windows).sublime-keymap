@@ -11,25 +11,25 @@
             { "key": "selector", "operator": "equal", "operand": "markup.raw.code-fence.markdown, markup.raw.block.fenced.markdown" }
         ]
     },
-    // {
-    //     "keys": ["ctrl+shift+h"], "command": "send_code",
-    //     "args": {"cmd": "setwd(\"$file_path\")"},
-    //     "context": [
-    //         { "key": "selector", "operator": "equal", "operand": "source.r" }
-    //     ]
-    // },
-    // {
-    //     "keys": ["ctrl+shift+h"], "command": "send_code",
-    //     "args": {"cmd": "%cd \"$file_path\""},
-    //     "context": [
-    //         { "key": "selector", "operator": "equal", "operand": "source.python" }
-    //     ]
-    // },
-    // {
-    //     "keys": ["ctrl+shift+h"], "command": "send_code",
-    //     "args": {"cmd": "cd(\"$file_path\")"},
-    //     "context": [
-    //         { "key": "selector", "operator": "equal", "operand": "source.julia" }
-    //     ]
-    // }
+    {
+        "keys": ["ctrl+\\"], "command": "send_code",
+        "args": {"cmd": "setwd(\"$file_path\")"},
+        "context": [
+            { "key": "selector", "operator": "equal", "operand": "source.r" }
+        ]
+    },
+    {
+        "keys": ["ctrl+\\"], "command": "send_code",
+        "args": {"cmd": "%cd \"$file_path\""},
+        "context": [
+            { "key": "selector", "operator": "equal", "operand": "source.python" }
+        ]
+    },
+    {
+        "keys": ["ctrl+\\"], "command": "send_code",
+        "args": {"cmd": "cd(\"$file_path\")"},
+        "context": [
+            { "key": "selector", "operator": "equal", "operand": "source.julia" }
+        ]
+    }
 ]
