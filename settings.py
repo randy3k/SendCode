@@ -39,7 +39,6 @@ def plugin_loaded():
                         d["prog"] = prog
                         s.set("r", d)
 
-                s.erase("prog")
                 sublime.save_settings('SendCode.sublime-settings')
     except:
         pass
