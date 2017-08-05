@@ -3,7 +3,7 @@
 ---
 ## Imporatant notice
 
-Starting from next release (0.3.1), SendCode will no longer define the keybind for change working directory. 
+Starting from release 0.3.1, SendCode will no longer define the keybind for change working directory. 
 User should define their own keybinds in the user settings. Somethings like
 
 ```json
