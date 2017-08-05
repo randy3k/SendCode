@@ -25,7 +25,7 @@
                                 "command": "edit_settings",
                                 "args":
                                 {
-                                    "base_file": "${packages}/SendCode/Default (${platform}).sublime-keymap",
+                                    "base_file": "${packages}/SendCode/support/Default (${platform}).sublime-keymap",
                                     "default": "[\n\t$0\n]\n"
                                 }
                             }

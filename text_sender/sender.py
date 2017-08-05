@@ -1,6 +1,6 @@
 import sublime
 import re
-from .settings import Settings
+from ..settings import Settings
 from .terminal import send_to_terminal
 from .iterm import send_to_iterm
 from .r import send_to_r
@@ -28,7 +28,7 @@ class TextSender:
     @classmethod
     def initialize(cls, view, **kwargs):
         syntax = Settings(view).syntax()
-        if syntax == "r" or syntax == "rmd":
+        if syntax == "r" or syntax == "rmd" or syntax == "rnw":
             return RTextSender(view, **kwargs)
         elif syntax == "python":
             return PythonTextSender(view, **kwargs)

@@ -1,32 +1,32 @@
 [
     {
-        "keys": ["super+enter"], "command": "send_repl",
+        "keys": ["super+enter"], "command": "send_code",
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source" }
         ]
     },
     {
-        "keys": ["super+enter"], "command": "send_repl",
+        "keys": ["super+enter"], "command": "send_code",
         "context": [
             { "key": "selector", "operator": "equal", "operand": "markup.raw.code-fence.markdown, markup.raw.block.fenced.markdown" }
         ]
     },
     // {
-    //     "keys": ["super+shift+h"], "command": "send_repl",
+    //     "keys": ["super+shift+h"], "command": "send_code",
     //     "args": {"cmd": "setwd(\"$file_path\")"},
     //     "context": [
     //         { "key": "selector", "operator": "equal", "operand": "source.r" }
     //     ]
     // },
     // {
-    //     "keys": ["super+shift+h"], "command": "send_repl",
+    //     "keys": ["super+shift+h"], "command": "send_code",
     //     "args": {"cmd": "%cd \"$file_path\""},
     //     "context": [
     //         { "key": "selector", "operator": "equal", "operand": "source.python" }
     //     ]
     // },
     // {
-    //     "keys": ["super+shift+h"], "command": "send_repl",
+    //     "keys": ["super+shift+h"], "command": "send_code",
     //     "args": {"cmd": "cd(\"$file_path\")"},
     //     "context": [
     //         { "key": "selector", "operator": "equal", "operand": "source.julia" }

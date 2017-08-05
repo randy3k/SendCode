@@ -5,21 +5,21 @@ User should define their own keybins in the user settings. Somethings like
 
 ```json
     {
-        "keys": ["ctrl+shift+h"], "command": "send_repl",
+        "keys": ["ctrl+shift+h"], "command": "send_code",
         "args": {"cmd": "setwd(\"$file_path\")"},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.r" }
         ]
     },
     {
-        "keys": ["ctrl+shift+h"], "command": "send_repl",
+        "keys": ["ctrl+shift+h"], "command": "send_code",
         "args": {"cmd": "%cd \"$file_path\""},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.python" }
         ]
     },
     {
-        "keys": ["ctrl+shift+h"], "command": "send_repl",
+        "keys": ["ctrl+shift+h"], "command": "send_code",
         "args": {"cmd": "cd(\"$file_path\")"},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.julia" }

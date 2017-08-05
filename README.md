@@ -3,26 +3,26 @@
 ---
 ## Imporatant notice
 
-Starting from next release (0.3.0), SendCode will no longer define the keybind for change working directory. 
+Starting from this release (0.3.0), SendCode will no longer define the keybind for change working directory. 
 User should define their own keybinds in the user settings. Somethings like
 
 ```json
     {
-        "keys": ["ctrl+shift+h"], "command": "send_repl",
+        "keys": ["ctrl+shift+h"], "command": "send_code",
         "args": {"cmd": "setwd(\"$file_path\")"},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.r" }
         ]
     },
     {
-        "keys": ["ctrl+shift+h"], "command": "send_repl",
+        "keys": ["ctrl+shift+h"], "command": "send_code",
         "args": {"cmd": "%cd \"$file_path\""},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.python" }
         ]
     },
     {
-        "keys": ["ctrl+shift+h"], "command": "send_repl",
+        "keys": ["ctrl+shift+h"], "command": "send_code",
         "args": {"cmd": "cd(\"$file_path\")"},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.julia" }
@@ -47,16 +47,16 @@ Following Programs are supported
 
 ### Installation
 
-You could install SendCode via Package Control. If you are using Linux
-(Windows), the corresponding platform dependency
-[xdotool](https://github.com/randy3k/sublime-xdotool)
-([pywin32](https://github.com/randy3k/sublime-pywin32)) will also be installed
+You could install SendCode via Package Control. If you are using Linux or
+Windows, the respective platform dependency
+[xdotool](https://github.com/randy3k/sublime-xdotool) and
+[pywin32](https://github.com/randy3k/sublime-pywin32) will also be installed
 automatically.
 
 
 ### Usage
 
-Select a program using the command `SendCode: Choose REPL Program` in command palette. The default program is Terminal for Mac, Cmder for Windows and tmux for Linux.
+Select a program using the command `SendCode: Choose Program` in command palette. The default program on macOS, windows and linux are Terminal, Cmder and tmux respectively.
 
 - <kbd>cmd</kbd>+<kbd>enter</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>enter</kbd> (Windows/Linux)
 
@@ -92,7 +92,7 @@ It is fairly easy to create your own keybinds for commands which you frequently 
 
 ```json
 {
-    "keys": ["ctrl+shift+h"], "command": "send_repl",
+    "keys": ["ctrl+shift+h"], "command": "send_code",
     "args": {"cmd": "source(\"$file\")"},
     "context": [
         { "key": "selector", "operator": "equal", "operand": "source.r" }

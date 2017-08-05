@@ -1,5 +1,5 @@
 {
-    "target": "send_repl_build",
+    "target": "send_code_build",
     "cmd": "%run \"${file/\\\\/\\\\\\\\/g}\"",
     "selector": "source.python"
 }

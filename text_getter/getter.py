@@ -1,6 +1,6 @@
 import sublime
 import re
-from .settings import Settings
+from ..settings import Settings
 
 
 class TextGetter:

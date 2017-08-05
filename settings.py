@@ -4,7 +4,7 @@ import sublime
 class Settings:
     scope_mapping = {
         "source.r": "r",
-        "text.tex.latex.rsweave": "r",
+        "text.tex.latex.rsweave": "rnw",
         "text.html.markdown.rmarkdown": "rmd",
         "text.html.markdown": "md",
         "source.python": "python",
@@ -32,31 +32,15 @@ class Settings:
     def get(self, key, default=None):
         # return top most setting
         if self.s.has(key) and self.s.get(key):
-            return self.s.get(key, default)
+            return self.s.get(key)
 
         syntax = self.syntax()
 
-        # check user settings
-        usettings = self.s.get("user", {})
-        #  check user syntax settings
-        if syntax and syntax in usettings and usettings[syntax]:
-            syntax_settings = usettings[syntax]
+        #  check syntax settings
+        if syntax and self.s.get(syntax):
+            syntax_settings = self.s.get(syntax)
             if key in syntax_settings:
                 return syntax_settings[key]
-        # check user default settings
-        if key in usettings and usettings[key]:
-            return usettings[key]
-
-        # check default settings
-        dsettings = self.s.get("default", {})
-        #  check default syntax settings
-        if syntax and syntax in dsettings and dsettings[syntax]:
-            syntax_settings = dsettings[syntax]
-            if key in syntax_settings:
-                return syntax_settings[key]
-        # check default default settings
-        if key in dsettings and dsettings[key]:
-            return dsettings[key]
 
         # fallback
         return default

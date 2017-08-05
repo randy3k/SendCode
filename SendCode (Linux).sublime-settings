@@ -1,31 +1,24 @@
 {
-    "user" : {
-        // customize your settings here
+    "prog": "tmux",
+    "auto_expand_line": true,
+    "auto_advance" : true,
+    "auto_advance_non_empty": false,
+    "bracketed_paste_mode": false,
+
+    "r" : {
+        "prog": "tmux"
     },
 
-    // do not override the default settings
-    "default" : {
+    "python" : {
         "prog": "tmux",
-        "auto_expand_line": true,
-        "auto_advance" : true,
-        "auto_advance_non_empty": false,
-        "bracketed_paste_mode": false,
-
-        "r" : {
-            "prog": "tmux"
-        },
-
-        "python" : {
-            "prog": "tmux",
-            // ipython is assumed when `bracketed_paste_mode `is false,
-            "bracketed_paste_mode": true
-        },
-
-        "julia" : {
-            "prog": "tmux",
-            "bracketed_paste_mode": true
-        }
+        // ipython is assumed when `bracketed_paste_mode `is false,
+        "bracketed_paste_mode": true
     },
+
+    "julia" : {
+        "prog": "tmux",
+        "bracketed_paste_mode": true
+    }
 
     // path related settings
 
