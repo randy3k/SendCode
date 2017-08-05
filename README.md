@@ -88,16 +88,32 @@ Select a program using the command `SendCode: Choose Program` in command palette
 
 ### Custom Keybind
 
-It is fairly easy to create your own keybinds for commands which you frequently use. For example, the following keybind run the `R` command `source("<the current file>")` in the active program.
+It is fairly easy to create your own keybinds for commands which you frequently use. For example, the following keybind run the changing working directory command for R, Python and Julia.
 
 ```json
-{
-    "keys": ["ctrl+shift+h"], "command": "send_code",
-    "args": {"cmd": "source(\"$file\")"},
-    "context": [
-        { "key": "selector", "operator": "equal", "operand": "source.r" }
-    ]
-}
+[
+    {
+        "keys": ["ctrl+shift+h"], "command": "send_code",
+        "args": {"cmd": "setwd(\"$file_path\")"},
+        "context": [
+            { "key": "selector", "operator": "equal", "operand": "source.r" }
+        ]
+    },
+    {
+        "keys": ["ctrl+shift+h"], "command": "send_code",
+        "args": {"cmd": "%cd \"$file_path\""},
+        "context": [
+            { "key": "selector", "operator": "equal", "operand": "source.python" }
+        ]
+    },
+    {
+        "keys": ["ctrl+shift+h"], "command": "send_code",
+        "args": {"cmd": "cd(\"$file_path\")"},
+        "context": [
+            { "key": "selector", "operator": "equal", "operand": "source.julia" }
+        ]
+    }
+]
 ```
 
 SendCode understands the following variables in the `cmd` field:
