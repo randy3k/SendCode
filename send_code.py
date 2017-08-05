@@ -28,7 +28,6 @@ class SendCodeCommand(sublime_plugin.TextCommand):
     def resolve(self, cmd):
         view = self.view
         file = view.file_name()
-        (row, col) = view.rowcol(view.sel()[0].begin())
         if file:
             file_name = os.path.basename(file)
             file_path = os.path.dirname(file)
@@ -38,6 +37,9 @@ class SendCodeCommand(sublime_plugin.TextCommand):
             cmd = replace_variable(cmd, "$file_base_name", file_base_name)
             cmd = replace_variable(cmd, "$file_extension", file_ext)
             cmd = replace_variable(cmd, "$file", file)
+
+        if len(view.sel()) == 1:
+            row, _ = view.rowcol(view.sel()[0].begin())
             cmd = replace_variable(cmd, "$line", str(row+1))
 
         pd = view.window().project_data()
