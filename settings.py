@@ -20,6 +20,27 @@ def plugin_loaded():
 
                 s.erase("user")
                 sublime.save_settings('SendCode.sublime-settings')
+
+            if s.has("prog"):
+                prog = s.get("prog")
+                if prog:
+                    if s.has("julia") and "prog" not in s.get("julia"):
+                        d = s.get("julia")
+                        d["prog"] = prog
+                        s.set("julia", d)
+
+                    if s.has("python") and "prog" not in s.get("python"):
+                        d = s.get("python")
+                        d["prog"] = prog
+                        s.set("python", d)
+
+                    if s.has("r") and "prog" not in s.get("r"):
+                        d = s.get("r")
+                        d["prog"] = prog
+                        s.set("r", d)
+
+                s.erase("prog")
+                sublime.save_settings('SendCode.sublime-settings')
     except:
         pass
 
@@ -53,10 +74,6 @@ class Settings:
             return None
 
     def get(self, key, default=None):
-        # return top most setting
-        if self.s.has(key) and self.s.get(key):
-            return self.s.get(key)
-
         syntax = self.syntax()
 
         #  check syntax settings
@@ -65,5 +82,22 @@ class Settings:
             if key in syntax_settings:
                 return syntax_settings[key]
 
+        # check global settings
+        if self.s.has(key) and self.s.get(key):
+            return self.s.get(key)
+
         # fallback
         return default
+
+    def set(self, key, value):
+        syntax = self.syntax()
+
+        #  check syntax settings
+        if syntax and self.s.get(syntax):
+            syntax_settings = self.s.get(syntax)
+            syntax_settings[key] = value
+            self.s.set(syntax, syntax_settings)
+        else:
+            self.s.set(key, value)
+
+        sublime.save_settings('SendCode.sublime-settings')
