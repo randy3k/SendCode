@@ -15,7 +15,7 @@ class SendCodeChooseProgCommand(sublime_plugin.TextCommand):
         if plat == 'osx':
             app_list = [
                 "[Reset]", "Terminal", "iTerm", "tmux", "screen"]
-            if syntax == "r":
+            if syntax == "r" or syntax == "rmd" or syntax == "rnw":
                 app_list = app_list + [
                     "R GUI", "RStudio Desktop", "Chrome-RStudio", "Safari-RStudio"]
             if syntax in ["r", "python", "julia"]:
@@ -23,11 +23,11 @@ class SendCodeChooseProgCommand(sublime_plugin.TextCommand):
 
         elif plat == "windows":
             app_list = ["[Reset]", "Cmder", "ConEmu", "tmux", "screen"]
-            if syntax == "r":
+            if syntax == "r" or syntax == "rmd" or syntax == "rnw":
                 app_list = app_list + ["R GUI", "RStudio Desktop"]
         elif plat == "linux":
             app_list = ["[Reset]", "tmux", "screen"]
-            if syntax == "r":
+            if syntax == "r" or syntax == "rmd" or syntax == "rnw":
                 app_list = app_list + ["RStudio Desktop"]
         else:
             sublime.error_message("Platform not supported!")

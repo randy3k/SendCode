@@ -77,8 +77,8 @@ class Settings:
         syntax = self.syntax()
 
         #  check syntax settings
-        if syntax and self.s.get(syntax):
-            syntax_settings = self.s.get(syntax)
+        if syntax:
+            syntax_settings = self.s.get(syntax, {})
             if key in syntax_settings:
                 return syntax_settings[key]
 
@@ -93,8 +93,8 @@ class Settings:
         syntax = self.syntax()
 
         #  check syntax settings
-        if syntax and self.s.get(syntax):
-            syntax_settings = self.s.get(syntax)
+        if syntax:
+            syntax_settings = self.s.get(syntax, {})
             syntax_settings[key] = value
             self.s.set(syntax, syntax_settings)
         else:
