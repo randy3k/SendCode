@@ -114,19 +114,7 @@ SendCode understands the following variables in the `cmd` field:
 
 ### User settings
 
-User settings should go into the `user` key in the `SendCode.sublime-settings`. For example
-
-```json
-{
-    "user":{
-        "python" : {
-            "prog": "terminal",
-            "bracketed_paste_mode": true
-        }
-    }
-}
-
-```
+A couple of settings can be found `Preferences: SendCode Settings`
 
 ### Some details about block expansion
 
@@ -135,4 +123,4 @@ SendCode uses the following logic to expand cursor when sending text.
 - R blocks are detected by `{`,`}` pairs or knitr-spin `#+` decorators.
 - Julia blocks are detected by `begin`, `end` pairs and indentations.
 - Python blocks are detected by indentations or by `# %%`/`# In[]` decorators.
-- Markdown fenced code of [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended) and [R Markdown](https://github.com/randy3k/R-Box) is also supported.
+- Markdown fenced code blocks of [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended) and [R Markdown](https://github.com/randy3k/R-Box) are also supported.
