@@ -147,7 +147,9 @@ def paste_to_rgui(rid):
     pasteid = get_menu_item_info(submenu, 1).wID
 
     PostMessage(rid, 7, pasteid, 0)  # set forcues
+    time.sleep(0.01)
     PostMessage(rid, 273, pasteid, 0)  # click
+    time.sleep(0.01)
 
 
 def find_rstudio():
