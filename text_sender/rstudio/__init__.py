@@ -13,29 +13,13 @@ if plat == "osx":
         osascript(RSTUDIOAPPLESCRIPT, cmd)
 
 elif plat == "windows":
-    import win32gui
-    import win32api
-    import win32con
-    import time
+    from .. import winauto
 
     def send_to_rstudio(cmd):
-
-        rid = win32gui.FindWindow("Qt5QWindowIcon", "RStudio")
-        if rid:
-            clipboard.set_clipboard(cmd)
-            time.sleep(0.01)
-
-            win32api.PostMessage(rid, win32con.WM_KEYDOWN, ord("V"), 0)
-            time.sleep(0.01)
-
-            # set focus
-            win32api.PostMessage(rid, win32con.WM_SETFOCUS, 0, 0)
-            time.sleep(0.01)
-
-            win32api.PostMessage(rid, win32con.WM_KEYDOWN, win32con.VK_RETURN, 0)
-            time.sleep(0.01)
-
-            clipboard.reset_clipboard()
+        rid = winauto.find_rstudio()
+        clipboard.set_clipboard(cmd)
+        winauto.paste_to_rstudio(rid)
+        clipboard.reset_clipboard()
 
 elif plat == "linux":
     from xdotool import xdotool
