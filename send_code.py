@@ -75,7 +75,7 @@ class SendCodeCommand(sublime_plugin.TextCommand):
 # historial reason
 class SendReplCommand(SendCodeCommand):
     def run(self, *args, **kargs):
-        print("The `send_repl` command has been deprecated, please use `send_code` command.")
+        # print("The `send_repl` command has been deprecated, please use `send_code` command.")
         super(SendReplCommand, self).run(*args, **kargs)
 
 
