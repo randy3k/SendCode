@@ -1,7 +1,7 @@
 import ctypes
 import time
 
-from ctypes import c_int, c_uint, c_size_t, c_wchar
+from ctypes import c_bool, c_int, c_uint, c_size_t, c_wchar
 
 # most of them are derived from pywinauto
 
@@ -24,8 +24,8 @@ class MENUITEMINFOW(ctypes.Structure):
 
 
 FindWindow = ctypes.windll.user32.FindWindowW
-EnumWindowsProc = ctypes.CFUNCTYPE(c_int, ctypes.POINTER(c_int), ctypes.POINTER(c_int))
-EnumChildWindowsProc = ctypes.CFUNCTYPE(c_int, ctypes.POINTER(c_int), ctypes.POINTER(c_int))
+EnumWindowsProc = ctypes.CFUNCTYPE(c_bool, c_size_t, c_size_t)
+EnumChildWindowsProc = ctypes.CFUNCTYPE(c_bool, c_size_t, c_size_t)
 IsWindowVisible = ctypes.windll.user32.IsWindowVisible
 GetWindowText = ctypes.windll.user32.GetWindowTextW
 GetWindowTextLength = ctypes.windll.user32.GetWindowTextLengthW
@@ -98,10 +98,7 @@ def find_rgui():
     rgui_windows = []
 
     def loop_over_windows(hwnd, _):
-        if rgui_windows:
-            return False
-
-        if not IsWindowVisible(hwnd):
+        if rgui_windows or not IsWindowVisible(hwnd):
             return True
 
         if get_window_text(hwnd).startswith("R Console") and get_class(hwnd) == "Rgui":
@@ -111,7 +108,10 @@ def find_rgui():
 
         return True
 
-    enum_windows(loop_over_windows)
+    try:
+        enum_windows(loop_over_windows)
+    except:
+        pass
 
     if rgui_windows:
         rgui = rgui_windows[0]
@@ -128,11 +128,13 @@ def bring_rgui_to_top(rid):
         def bring_child(hwnd, _):
             if get_window_text(hwnd).startswith("R Console"):
                 BringWindowToTop(hwnd)
-                return False
-            else:
-                return True
 
-        enum_child_windows(rid, bring_child)
+            return True
+
+        try:
+            enum_child_windows(rid, bring_child)
+        except:
+            pass
 
 
 def paste_to_rgui(rid):
