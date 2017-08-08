@@ -28,6 +28,8 @@
     // path to screen
     // "screen": "screen",
 
-    // path to ComEmuC.exe
-    // "conemuc": "ComEmuC.exe"
+    // path to ConEmuC.exe
+    // for cmder, the file is located at
+    // <path to cmder folder>\\vendor\\conemu-maximus5\\ConEmu\\ConEmuC.exe
+    // "conemuc": "ConEmuC.exe"
 }
