@@ -1,9 +1,9 @@
 # SendCode for Sublime Text
 
 ---
-## Imporatant notice
+## Important notice
 
-SendCode no longer defines the keybind for change working directory. 
+SendCode no longer defines the keybinds for change working directory. 
 User should define their own keybinds in the user settings. Somethings like
 
 ```json
@@ -33,7 +33,7 @@ User should define their own keybinds in the user settings. Somethings like
 ---
 
 
-Send code and text to Terminal, ITerm, ConEmu, Cmder, Tmux; R (RStudio), Julia, IPython/ptpython REPL.
+Send code and text to Terminal, ITerm, ConEmu, Cmder, Tmux, TerminalView; R (RStudio), Julia, IPython/ptpython REPL.
 
 ![](https://user-images.githubusercontent.com/1690993/28198891-4ebe5eaa-682f-11e7-8173-10b64faef9b4.png)
 
@@ -69,13 +69,13 @@ Select a program using the command `SendCode: Choose Program` in command palette
 
 1. RStudio on Windows
 
-   If the code is pasted on the console but it is not being executed, you will need to open an empty RScript file by `File -> New File -> R Script`. This is a quick fix to the RStudio issue: https://support.rstudio.com/hc/en-us/community/posts/208160308-ctrl-enter-doesn-t-work-in-R-console-without-a-source-file-opened
+   If the code is pasted on the console but it is not being executed, you need to open an empty RScript file from the menu `File -> New File -> R Script`. This is a quick fix to a RStudio issue: https://support.rstudio.com/hc/en-us/community/posts/208160308-ctrl-enter-doesn-t-work-in-R-console-without-a-source-file-opened
 
 2. Sending code to Python console
 
    [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
 
-3. Safari-Jupyter send does not work
+3. Safari-Jupyter does not work
    
    Most likely you haven't enabled JavaScript for AppleScript. Check the option "Allow JavaScript from Apple Events" in the Develop menu (the develope menu needs to be enabled in the preferences).
 
@@ -83,9 +83,9 @@ Select a program using the command `SendCode: Choose Program` in command palette
    
    Make sure the corresponding program is opened when you are sending the text.
 
-### Custom Keybind
+### Custom Keybinds
 
-It is fairly easy to create your own keybinds for commands which you frequently use. For example, the following keybind run the changing working directory command for R, Python and Julia.
+It is fairly easy to create your own keybinds for commands which you frequently use. For example, the following keybinds execute changing working directory commands for R, Python and Julia.
 
 ```json
 [
