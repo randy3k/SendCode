@@ -7,7 +7,7 @@ plat = sublime.platform()
 if plat == "linux":
     from xdotool import xdotool
 
-    def send_to_gnome_terminal(cmd_list, bracketed=False):
+    def send_to_gnome_terminal(cmd_list):
         wid = xdotool("search", "--onlyvisible", "--class", "gnome-terminal")
         if not wid:
             raise Exception("gnome-terminal not found.")
@@ -16,6 +16,8 @@ if plat == "linux":
 
         if isinstance(cmd_list, str):
             cmd_list = [cmd_list]
+
+        sublime_id = xdotool("getactivewindow")
 
         xdotool("windowfocus", wid)
 
@@ -30,7 +32,7 @@ if plat == "linux":
 
             clipboard.reset_clipboard()
 
-        xdotool("key", "--clearmodifiers", "alt+Tab")
+        xdotool("windowfocus", sublime_id)
 
 
 else:
