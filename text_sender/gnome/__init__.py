@@ -25,9 +25,9 @@ if plat == "linux":
             clipboard.set_clipboard(cmd)
 
             if cmd:
-                xdotool("key", "--clearmodifiers", "ctrl+shift+v")
+                xdotool("key", "ctrl+shift+v")
                 time.sleep(0.1)
-            xdotool("key", "--clearmodifiers", "Return")
+            xdotool("key", "Return")
             time.sleep(0.1)
 
             clipboard.reset_clipboard()
