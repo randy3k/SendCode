@@ -1,34 +1,11 @@
 # SendCode for Sublime Text
 
 ---
-## Important notice
+## SendCode v0.3.x
 
 SendCode no longer defines the keybinds for change working directory. 
-User should define their own keybinds in the user settings. Somethings like
+User should define their [own keybinds](#custom-keybinds) in the user settings.
 
-```json
-    {
-        "keys": ["ctrl+shift+h"], "command": "send_code",
-        "args": {"cmd": "setwd(\"$file_path\")"},
-        "context": [
-            { "key": "selector", "operator": "equal", "operand": "source.r" }
-        ]
-    },
-    {
-        "keys": ["ctrl+shift+h"], "command": "send_code",
-        "args": {"cmd": "%cd \"$file_path\""},
-        "context": [
-            { "key": "selector", "operator": "equal", "operand": "source.python" }
-        ]
-    },
-    {
-        "keys": ["ctrl+shift+h"], "command": "send_code",
-        "args": {"cmd": "cd(\"$file_path\")"},
-        "context": [
-            { "key": "selector", "operator": "equal", "operand": "source.julia" }
-        ]
-    }
-```
 
 ---
 
@@ -67,21 +44,29 @@ Select a program using the command `SendCode: Choose Program` in command palette
 
 ### Troubleshooting
 
-1. RStudio on Windows
 
-   If the code is pasted on the console but it is not being executed, you need to open an empty RScript file from the menu `File -> New File -> R Script`. This is a quick fix to a RStudio issue: https://support.rstudio.com/hc/en-us/community/posts/208160308-ctrl-enter-doesn-t-work-in-R-console-without-a-source-file-opened
-
-2. Sending code to Python console
+1. Python console
 
    [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
 
-3. Safari-Jupyter does not work
+1. RStudio on Windows
+
+   If the code is pasted on the console but it is not being executed, you need to open an empty RScript file from the menu `File -> New File -> R Script`. This is a quick fix to a RStudio [issue](https://support.rstudio.com/hc/en-us/community/posts/208160308-ctrl-enter-doesn-t-work-in-R-console-without-a-source-file-opened0) on Windows.
+
+1. R Gui on Windows
+   
+   Make sure the corresponding R program is opened when you are sending the text.
+
+1. Cmder/ Conemu on Windows
+
+   You might need to set the path to `ConEmuC.exe` in SendCode settings. For Cmder, the file is located at 
+   `<path to cmder folder>\\vendor\\conemu-maximus5\\ConEmu\\ConEmuC.exe`.
+
+
+1. Safari-Jupyter on macOS
    
    Most likely you haven't enabled JavaScript for AppleScript. Check the option "Allow JavaScript from Apple Events" in the Develop menu (the develope menu needs to be enabled in the preferences).
 
-4. Nothing happens
-   
-   Make sure the corresponding program is opened when you are sending the text.
 
 ### Custom Keybinds
 
@@ -129,7 +114,7 @@ SendCode understands the following variables in the `cmd` field:
 
 A couple of settings can be found `Preferences: SendCode Settings`
 
-### Some details about block expansion
+### Block expansion
 
 SendCode uses the following logic to expand cursor when sending text.
 
