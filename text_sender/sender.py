@@ -6,6 +6,7 @@ from .iterm import send_to_iterm
 from .r import send_to_r
 from .rstudio import send_to_rstudio
 from .conemu import send_to_conemu, send_to_cmder
+from .gnome import send_to_gnome_terminal
 from .tmux import send_to_tmux
 from .screen import send_to_screen
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
@@ -51,6 +52,9 @@ class TextSender:
         conemuc = self.settings.get("conemuc")
         send_to_cmder(cmd, conemuc, bracketed=self.bracketed_paste_mode)
 
+    def send_to_gnome_terminal(self, cmd):
+        send_to_gnome_terminal(cmd)
+
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
         send_to_tmux(cmd, tmux, bracketed=self.bracketed_paste_mode)
@@ -83,6 +87,8 @@ class TextSender:
             self.send_to_cmder(cmd)
         elif prog == "conemu":
             self.send_to_conemu(cmd)
+        elif prog == "gnome-terminal":
+            self.send_to_gnome_terminal(cmd)
         elif prog == "tmux":
             self.send_to_tmux(cmd)
         elif prog == "screen":
@@ -180,6 +186,15 @@ class PythonTextSender(TextSender):
                 send_to_cmder("--", conemuc)
         else:
             send_to_cmder(cmd, conemuc)
+
+    def send_to_gnome_terminal(self, cmd):
+        if len(re.findall("\n", cmd)) > 0:
+            if self.bracketed_paste_mode:
+                send_to_gnome_terminal([cmd, ""])
+            else:
+                send_to_gnome_terminal([r"%cpaste -q", cmd, "--"])
+        else:
+            send_to_gnome_terminal(cmd)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
