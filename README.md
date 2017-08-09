@@ -47,11 +47,8 @@ Following Programs are supported
 
 ### Installation
 
-You could install SendCode via Package Control. If you are using Linux or
-Windows, the respective platform dependency
-[xdotool](https://github.com/randy3k/sublime-xdotool) and
-[pywin32](https://github.com/randy3k/sublime-pywin32) will also be installed
-automatically.
+You could install SendCode via Package Control. If you are using Linux, the respective platform dependency
+[xdotool](https://github.com/randy3k/sublime-xdotool) will also be installed automatically.
 
 
 ### Usage
