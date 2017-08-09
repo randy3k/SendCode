@@ -43,7 +43,7 @@ Following Programs are supported
 - Mac: Terminal, iTerm (>=2.9), R GUI, RStudio Desktop, RStudio and Jupyter running on Chrome and Safari
 - Windows: Cmder, ConEmu, R GUI, RStudio Desktop
 - Linux: Tmux, Screen, RStudio Desktop
-- Others: TerminalView (requires [devel](https://github.com/Wramberg/TerminalView/tree/devel) branch), SublimeREPL (deprecating)
+- Others: TerminalView (requires [v0.5.0](https://github.com/Wramberg/TerminalView/tree/0.5.0) or above), SublimeREPL (deprecating)
 
 ### Installation
 
