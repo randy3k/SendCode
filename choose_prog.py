@@ -26,7 +26,7 @@ class SendCodeChooseProgCommand(sublime_plugin.TextCommand):
             if syntax == "r" or syntax == "rmd" or syntax == "rnw":
                 app_list = app_list + ["R GUI", "RStudio Desktop"]
         elif plat == "linux":
-            app_list = ["[Reset]", "tmux", "screen", "gnome-terminal"]
+            app_list = ["[Reset]", "tmux", "screen", "GNOME-Terminal"]
             if syntax == "r" or syntax == "rmd" or syntax == "rnw":
                 app_list = app_list + ["RStudio Desktop"]
         else:
