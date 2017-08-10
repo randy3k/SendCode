@@ -10,7 +10,7 @@ User should define their [own keybinds](#custom-keybinds) in the user settings.
 ---
 
 
-Send code and text to Terminal, ITerm, ConEmu, Cmder, Tmux, GNOME-Terminal, TerminalView; R (RStudio), Julia, IPython/ptpython REPL.
+Send code and text to Terminal, ITerm, ConEmu, Cmder, Tmux, Gnome-Terminal, Pantheon-Terminal, TerminalView; R (RStudio), Julia, IPython/ptpython REPL.
 
 ![](https://user-images.githubusercontent.com/1690993/28198891-4ebe5eaa-682f-11e7-8173-10b64faef9b4.png)
 
@@ -19,7 +19,7 @@ Following Programs are supported
 
 - Mac: Terminal, iTerm (>=2.9), R GUI, RStudio Desktop, RStudio and Jupyter running on Chrome and Safari
 - Windows: Cmder, ConEmu, R GUI, RStudio Desktop
-- Linux: Tmux, Screen, GNOME-Terminal, RStudio Desktop
+- Linux: Tmux, Screen, Gnome-Terminal, Pantheon-Terminal, RStudio Desktop
 - Others: TerminalView (requires [v0.5.0](https://github.com/Wramberg/TerminalView/tree/0.5.0) or above), SublimeREPL (deprecating)
 
 ### Installation
