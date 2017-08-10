@@ -22,6 +22,7 @@
 
     // the name of linux terminal
     // e.g., "gnome-terminal", "pantheon-terminal", "mate-terminal" and "konsole"
+    // other terminals may be supported as well.
     "linux_terminal": "gnome-terminal"
 
     // path related settings
