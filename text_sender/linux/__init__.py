@@ -10,7 +10,7 @@ if plat == "linux":
     def send_to_linux_terminal(linux_terminal, cmd_list):
         wid = xdotool("search", "--onlyvisible", "--class", linux_terminal)
         if not wid:
-            raise Exception("gnome-terminal not found.")
+            raise Exception("{} not found.".format(linux_terminal))
 
         wid = wid.decode("utf-8").strip().split("\n")[-1]
 
