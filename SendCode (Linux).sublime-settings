@@ -18,7 +18,11 @@
     "julia" : {
         "prog": "tmux",
         "bracketed_paste_mode": true
-    }
+    },
+
+    // the name of linux terminal
+    // e.g., "gnome-terminal", "pantheon-terminal", "mate-terminal" and "konsole"
+    "linux_terminal": "gnome-terminal"
 
     // path related settings
 

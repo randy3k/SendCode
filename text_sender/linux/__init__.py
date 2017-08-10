@@ -7,8 +7,8 @@ plat = sublime.platform()
 if plat == "linux":
     from xdotool import xdotool
 
-    def send_to_pantheon_terminal(cmd_list):
-        wid = xdotool("search", "--onlyvisible", "--class", "pantheon-terminal")
+    def send_to_linux_terminal(linux_terminal, cmd_list):
+        wid = xdotool("search", "--onlyvisible", "--class", linux_terminal)
         if not wid:
             raise Exception("gnome-terminal not found.")
 
@@ -36,5 +36,5 @@ if plat == "linux":
 
 
 else:
-    def send_to_pantheon_terminal(cmd):
+    def send_to_linux_terminal(cmd):
         pass
