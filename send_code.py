@@ -62,13 +62,15 @@ class SendCodeCommand(sublime_plugin.TextCommand):
         return cmd
 
     def run(self, edit, cmd=None, prog=None):
+        # set TextGetter before get_text() because get_text may change cursor locations.
+
+        sender = TextSender.initialize(self.view, prog=prog)
         if cmd:
             cmd = self.resolve(cmd)
         else:
             getter = TextGetter.initialize(self.view)
             cmd = getter.get_text()
 
-        sender = TextSender.initialize(self.view, prog=prog)
         sublime.set_timeout_async(lambda: sender.send_text(cmd))
 
 
