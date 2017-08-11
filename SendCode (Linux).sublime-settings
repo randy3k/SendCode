@@ -20,10 +20,13 @@
         "bracketed_paste_mode": true
     },
 
-    // the name of linux terminal
-    // e.g., "gnome-terminal", "gnome-terminal-server"
-    // "pantheon-terminal", "mate-terminal" and "konsole"
-    // other terminals may be supported as well.
+    // the window class of linux terminal
+    // e.g., "gnome-terminal", "gnome-terminal-server", "pantheon-terminal",
+    //       "mate-terminal", "konsole" and "tilix".
+    //       other terminals may work as well.
+    //
+    // run `xprop | grep WM_CLASS` and click the active terminal to identify the terminal class
+    //
     "linux_terminal": "gnome-terminal"
 
     // path related settings
