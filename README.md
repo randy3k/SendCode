@@ -3,7 +3,7 @@
 ---
 ## SendCode v0.3.x
 
-SendCode no longer defines the keybinds for change working directory. 
+SendCode no longer defines keybinds for changing working directory. 
 User should define their [own keybinds](#custom-keybinds) in the user settings.
 
 
