@@ -1,10 +1,10 @@
 # SendCode for Sublime Text
 
 ---
-## SendCode v0.3.x
+## SendCode v0.3
 
 SendCode no longer defines keybinds for changing working directory. 
-User should define their [own keybinds](#custom-keybinds) in the user settings.
+User should define their [own keybindings](#custom-keybindings) in the user settings.
 
 
 ---
@@ -31,6 +31,8 @@ You could install SendCode via Package Control. If you are using Linux, the resp
 ### Usage
 
 Select a program using the command `SendCode: Choose Program` in command palette. The default program on macOS, windows and linux are Terminal, Cmder and tmux respectively. Each syntax binds to its own program. For instance, you could bind `R` to r files and `tmux` to python files.
+
+There are two main keybindings:
 
 - <kbd>cmd</kbd>+<kbd>enter</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>enter</kbd> (Windows/Linux)
 
@@ -65,10 +67,10 @@ Select a program using the command `SendCode: Choose Program` in command palette
 
 1. Safari-Jupyter on macOS
    
-   Most likely you haven't enabled JavaScript for AppleScript. Check the option "Allow JavaScript from Apple Events" in the Develop menu (the develope menu needs to be enabled in the preferences).
+   Most likely you haven't enabled JavaScript for AppleScript. Check the option "Allow JavaScript from Apple Events" in the `Develop` menu (the `Develope` menu needs to be enabled in the preferences).
 
 
-### Custom Keybinds
+### Custom Keybindings
 
 It is fairly easy to create your own keybinds for commands which you frequently use. For example, the following keybinds execute changing working directory commands for R, Python and Julia.
 
@@ -98,14 +100,14 @@ It is fairly easy to create your own keybinds for commands which you frequently 
 ]
 ```
 
-SendCode understands the following variables in the `cmd` field:
+SendCode expands following variables in the `cmd` field:
 
 - `$file`, the full path to the file
 - `$file_path`, the directory contains the file
 - `$file_name`, the file name
 - `$file_basename`, the file name without extension
 - `$file_extension`, the file extension
-- `$project_path`, the active folder, if not found, use the directory of current file
+- `$project_path`, the first folder of the current window, if not found, use the directory of current file
 - `$selection`, the text selected, or the word under cursor
 - `$line`, the current line number
 
