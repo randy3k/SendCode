@@ -42,15 +42,17 @@ class SendCodeCommand(sublime_plugin.TextCommand):
             row, _ = view.rowcol(view.sel()[0].begin())
             cmd = replace_variable(cmd, "$line", str(row+1))
 
-        pd = view.window().project_data()
-        if pd and "folders" in pd and len(pd["folders"]) > 0:
-            project_path = pd["folders"][0].get("path")
-            if project_path:
-                cmd = replace_variable(cmd, "$project_path", project_path)
+        if view.window():
+            pd = view.window().project_data()
+            if pd and "folders" in pd and len(pd["folders"]) > 0:
+                folder = pd["folders"][0].get("path")
+                if folder:
+                    cmd = replace_variable(cmd, "$folder", folder)
 
-        # resolve $project_path again
-        if file and file_path:
-            cmd = replace_variable(cmd, "$project_path", file_path)
+            pfn = view.window().project_file_name()
+            if pfn:
+                project_path = os.path.dirname(file)
+                cmd = replace_variable(cmd, "$project_path", project_path)
 
         if len(view.sel()) == 1:
             word = view.substr(view.sel()[0])
