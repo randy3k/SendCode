@@ -51,7 +51,7 @@ class SendCodeCommand(sublime_plugin.TextCommand):
 
             pfn = view.window().project_file_name()
             if pfn:
-                project_path = os.path.dirname(file)
+                project_path = os.path.dirname(pfn)
                 cmd = replace_variable(cmd, "$project_path", project_path)
 
         if len(view.sel()) == 1:
