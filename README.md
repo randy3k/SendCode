@@ -112,6 +112,9 @@ SendCode expands following variables in the `cmd` field:
 - `$selection`, the text selected, or the word under cursor
 - `$line`, the current line number
 
+You don't have to worry about escaping quotes and backslashes, SendCode will
+handle them for you. You could also specify which `prog` to use in the
+arguments.
 
 ### User settings
 
