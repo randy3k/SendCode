@@ -78,21 +78,21 @@ It is fairly easy to create your own keybinds for commands which you frequently 
 [
     {
         "keys": ["ctrl+shift+h"], "command": "send_code",
-        "args": {"cmd": "setwd(\"${file_path:$folder}\")"},
+        "args": {"cmd": "setwd(\"$file_path\")"},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.r" }
         ]
     },
     {
         "keys": ["ctrl+shift+h"], "command": "send_code",
-        "args": {"cmd": "%cd \"${file_path:$folder}\""},
+        "args": {"cmd": "%cd \"$file_path\""},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.python" }
         ]
     },
     {
         "keys": ["ctrl+shift+h"], "command": "send_code",
-        "args": {"cmd": "cd(\"${file_path:$folder}\")"},
+        "args": {"cmd": "cd(\"$file_path\")"},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.julia" }
         ]
