@@ -49,7 +49,7 @@ There are two main keybindings:
 
 1. Python console
 
-   [IPython 5.0](https://ipython.org) or [ptpython](https://github.com/jonathanslenders/ptpython) (or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
+   [IPython](https://ipython.org) (5.0 or above, or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
 
 1. RStudio on Windows
 
@@ -78,21 +78,21 @@ It is fairly easy to create your own keybinds for commands which you frequently 
 [
     {
         "keys": ["ctrl+shift+h"], "command": "send_code",
-        "args": {"cmd": "setwd(\"$file_path\")"},
+        "args": {"cmd": "setwd(\"${file_path:$folder}\")"},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.r" }
         ]
     },
     {
         "keys": ["ctrl+shift+h"], "command": "send_code",
-        "args": {"cmd": "%cd \"$file_path\""},
+        "args": {"cmd": "%cd \"${file_path:$folder}\""},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.python" }
         ]
     },
     {
         "keys": ["ctrl+shift+h"], "command": "send_code",
-        "args": {"cmd": "cd(\"$file_path\")"},
+        "args": {"cmd": "cd(\"${file_path:$folder}\")"},
         "context": [
             { "key": "selector", "operator": "equal", "operand": "source.julia" }
         ]
@@ -112,9 +112,26 @@ SendCode expands following variables in the `cmd` field:
 - `$selection`, the text selected, or the word under cursor
 - `$line`, the current line number
 
-You don't have to worry about escaping quotes and backslashes, SendCode will
-handle them for you. You could also specify which `prog` to use in the
-arguments.
+It also supports placeholders for variables, details can be found in the [unofficial documentation](http://docs.sublimetext.info/en/latest/reference/build_systems/configuration.html#placeholders-for-variables).
+
+```
+${file_path:$folder}
+```
+This will emit the directory of current file if there is one, otherwise the first folder of the current window.
+
+You also don't have to worry about escaping quotes and backslashes between quotes, SendCode will
+handle them for you.
+
+The `prog` argument determines which program to use
+
+```json
+[
+    {
+        "keys": ["ctrl+shift+enter"], "command": "send_code",
+        "args": {"cmd": "\n", "prog": "tmux"}
+    }
+]
+```
 
 ### User settings
 
