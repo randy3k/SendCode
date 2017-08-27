@@ -99,6 +99,9 @@ class Settings:
         else:
             self.s.set(key, value)
 
+        if key == "prog":
+            self.s.set(key, value)
+
         sublime.save_settings('SendCode.sublime-settings')
 
     def erase(self, key):

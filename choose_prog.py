@@ -5,8 +5,15 @@ from .settings import Settings
 
 class SendCodeChooseProgCommand(sublime_plugin.TextCommand):
 
-    def show_quick_panel(self, options, done):
-        sublime.set_timeout(lambda: self.view.window().show_quick_panel(options, done), 10)
+    def show_quick_panel(self, options, done, **kwargs):
+        sublime.set_timeout(
+            lambda: self.view.window().show_quick_panel(options, done, **kwargs), 10)
+
+    def normalize(self, prog):
+        prog = "R" if prog == "R GUI" else prog
+        prog = "RStudio" if prog == "RStudio Desktop" else prog
+        prog = prog.lower()
+        return prog
 
     def run(self, edit):
         plat = sublime.platform()
@@ -14,7 +21,7 @@ class SendCodeChooseProgCommand(sublime_plugin.TextCommand):
         syntax = settings.syntax()
         if plat == 'osx':
             app_list = [
-                "[Reset]", "Terminal", "iTerm", "tmux", "screen"]
+                "Terminal", "iTerm", "tmux", "screen"]
             if syntax == "r" or syntax == "rmd" or syntax == "rnw":
                 app_list = app_list + [
                     "R GUI", "RStudio Desktop", "Chrome-RStudio", "Safari-RStudio"]
@@ -22,11 +29,11 @@ class SendCodeChooseProgCommand(sublime_plugin.TextCommand):
                 app_list = app_list + ["Chrome-Jupyter", "Safari-Jupyter"]
 
         elif plat == "windows":
-            app_list = ["[Reset]", "Cmder", "ConEmu", "tmux", "screen"]
+            app_list = ["Cmder", "ConEmu", "tmux", "screen"]
             if syntax == "r" or syntax == "rmd" or syntax == "rnw":
                 app_list = app_list + ["R GUI", "RStudio Desktop"]
         elif plat == "linux":
-            app_list = ["[Reset]", "tmux", "screen", "linux-terminal"]
+            app_list = ["tmux", "screen", "linux-terminal"]
             if syntax == "r" or syntax == "rmd" or syntax == "rnw":
                 app_list = app_list + ["RStudio Desktop"]
         else:
@@ -37,13 +44,14 @@ class SendCodeChooseProgCommand(sublime_plugin.TextCommand):
         def on_done(action):
             if action == -1:
                 return
-            elif action > 0:
+            else:
                 result = app_list[action]
-                result = "R" if result == "R GUI" else result
-                result = "RStudio" if result == "RStudio Desktop" else result
-                result = result.lower()
-                settings.set("prog", result)
-            elif action == 0:
-                settings.erase("prog")
+                settings.set("prog", self.normalize(result))
 
-        self.show_quick_panel(app_list, on_done)
+        prog = settings.get("prog")
+        try:
+            selected_index = [self.normalize(p) for p in app_list].index(prog)
+        except:
+            selected_index = 0
+
+        self.show_quick_panel(app_list, on_done, selected_index=selected_index)
