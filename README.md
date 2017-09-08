@@ -3,7 +3,7 @@
 ---
 ## SendCode v0.3
 
-SendCode no longer defines keybinds for changing working directory. 
+SendCode no longer defines keybinds for changing working directory.
 User should define their [own keybindings](#custom-keybindings) in the user settings.
 
 
@@ -53,20 +53,26 @@ There are two main keybindings:
 
 1. RStudio on Windows
 
-   If the code is pasted on the console but it is not being executed, you need to open an empty RScript file from the menu `File -> New File -> R Script`. This is a quick fix to a RStudio [issue](https://support.rstudio.com/hc/en-us/community/posts/208160308-ctrl-enter-doesn-t-work-in-R-console-without-a-source-file-opened0) on Windows.
+   If the code is pasted on the console but it is not being executed, you need
+   to open an empty RScript file from the menu `File -> New File -> R Script`.
+   This is a quick fix to a RStudio [issue](https://support.rstudio.com/hc/en-us/community/posts/208160308-ctrl-enter-doesn-t-work-in-R-console-without-a-source-file-opened0) on Windows.
+
+   Alternatively, you could upgrade to [RStudio
+   preview](https://www.rstudio.com/products/rstudio/download/preview/) in
+   which this bug has been fixed.
 
 1. R Gui on Windows
-   
+
    Make sure the corresponding R program is opened when you are sending the text.
 
 1. Cmder/ Conemu on Windows
 
-   You might need to set the path to `ConEmuC.exe` in SendCode settings. For Cmder, the file is located at 
+   You might need to set the path to `ConEmuC.exe` in SendCode settings. For Cmder, the file is located at
    `<path to cmder folder>\\vendor\\conemu-maximus5\\ConEmu\\ConEmuC.exe`.
 
 
 1. Safari-Jupyter on macOS
-   
+
    Most likely you haven't enabled JavaScript for AppleScript. Check the option "Allow JavaScript from Apple Events" in the `Develop` menu (the `Develope` menu needs to be enabled in the preferences).
 
 
