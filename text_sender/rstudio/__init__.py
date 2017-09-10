@@ -15,10 +15,10 @@ if plat == "osx":
 elif plat == "windows":
     from .. import winauto
 
-    def send_to_rstudio(cmd):
+    def send_to_rstudio(cmd, from_view):
         rid = winauto.find_rstudio()
         clipboard.set_clipboard(cmd)
-        winauto.paste_to_rstudio(rid)
+        winauto.paste_to_rstudio(rid, press_ctrl=not from_view)
         clipboard.reset_clipboard()
 
 elif plat == "linux":

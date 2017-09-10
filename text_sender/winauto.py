@@ -38,6 +38,7 @@ EnumWindows = ctypes.windll.user32.EnumWindows
 EnumChildWindows = ctypes.windll.user32.EnumChildWindows
 
 PostMessage = ctypes.windll.user32.PostMessageA
+keybd_event = ctypes.windll.user32.keybd_event
 
 
 def get_menu_item_info(menu, index):
@@ -161,10 +162,16 @@ def find_rstudio():
     return rid
 
 
-def paste_to_rstudio(rid):
+def paste_to_rstudio(rid, press_ctrl=False):
     time.sleep(0.01)
+    if press_ctrl:
+        keybd_event(17, 0, 0, 0)  # ctrl down
+        time.sleep(0.01)
     PostMessage(rid, 256, ord("V"), 0)
     time.sleep(0.01)
+    if press_ctrl:
+        keybd_event(17, 0, 2, 0)  # ctrl up
+        time.sleep(0.01)
     PostMessage(rid, 7, 0, 0)
     time.sleep(0.01)
     PostMessage(rid, 256, 13, 0)

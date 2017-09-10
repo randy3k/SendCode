@@ -17,13 +17,14 @@ from .terminalview import send_to_terminalview
 
 class TextSender:
 
-    def __init__(self, view, cmd=None, prog=None):
+    def __init__(self, view, cmd=None, prog=None, from_view=True):
         self.view = view
         self.settings = Settings(view)
         if prog:
             self.prog = prog
         else:
             self.prog = self.settings.get("prog")
+        self.from_view = from_view
         self.bracketed_paste_mode = self.settings.get("bracketed_paste_mode")
 
     @classmethod
@@ -76,6 +77,12 @@ class TextSender:
     def send_to_terminalview(self, cmd):
         send_to_terminalview(cmd, bracketed=self.bracketed_paste_mode)
 
+    def send_to_rstudio(self, cmd):
+        if sublime.platform() == "windows":
+            send_to_rstudio(cmd, from_view=self.from_view)
+        else:
+            send_to_rstudio(cmd)
+
     def send_text(self, cmd):
         cmd = cmd.rstrip()
         cmd = cmd.expandtabs(self.view.settings().get("tab_size", 4))
@@ -102,6 +109,8 @@ class TextSender:
             self.send_to_sublimerepl(cmd)
         elif prog == "terminalview":
             self.send_to_terminalview(cmd)
+        elif prog == "rstudio":
+            self.send_to_rstudio(cmd)
         else:
             sublime.message_dialog("%s is not supported for current syntax." % prog)
 
@@ -114,8 +123,6 @@ class RTextSender(TextSender):
         prog = self.prog.lower()
         if prog == "r":
             self.send_to_r(cmd)
-        elif prog == "rstudio":
-            self.send_to_rstudio(cmd)
         elif prog == "chrome-rstudio":
             self.send_to_chrome_rstudio(cmd)
         elif prog == "safari-rstudio":
@@ -125,9 +132,6 @@ class RTextSender(TextSender):
 
     def send_to_r(self, cmd):
         send_to_r(cmd)
-
-    def send_to_rstudio(self, cmd):
-        send_to_rstudio(cmd)
 
     def send_to_chrome_rstudio(self, cmd):
         send_to_chrome_rstudio(cmd)

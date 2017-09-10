@@ -39,7 +39,7 @@ class SendCodeCommand(sublime_plugin.TextCommand):
         extracted_variables = window.extract_variables()
         if len(view.sel()) == 1:
             row, _ = view.rowcol(view.sel()[0].begin())
-            extracted_variables["line"] = str(row+1)
+            extracted_variables["line"] = str(row + 1)
 
             word = view.substr(view.sel()[0])
             if not word:
@@ -69,7 +69,7 @@ class SendCodeCommand(sublime_plugin.TextCommand):
             if not ok:
                 return
 
-        sender = TextSender.initialize(self.view, prog=prog)
+        sender = TextSender.initialize(self.view, prog=prog, from_view=cmd is None)
         if cmd:
             cmd = self.resolve(cmd)
         else:
