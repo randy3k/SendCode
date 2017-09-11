@@ -1,13 +1,6 @@
 # SendCode for Sublime Text
 
 ---
-## SendCode v0.3
-
-SendCode no longer defines keybinds for changing working directory.
-User should define their [own keybindings](#custom-keybindings) in the user settings.
-
-
----
 
 
 Send code and text to macOS and Linux Terminals, iTerm, ConEmu, Cmder, Tmux, TerminalView; R (RStudio), Julia, IPython.
