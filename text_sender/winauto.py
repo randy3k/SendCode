@@ -1,7 +1,7 @@
 import ctypes
 import time
 
-from ctypes import c_bool, c_int, c_uint, c_size_t, c_wchar
+from ctypes import c_bool, c_uint, c_long, c_size_t, c_wchar
 
 # most of them are derived from pywinauto
 
@@ -45,7 +45,7 @@ def get_menu_item_info(menu, index):
     info = MENUITEMINFOW()
     info.cbSize = ctypes.sizeof(info)
     info.fMask = 31
-    ret = GetMenuItemInfo(menu, index, True, ctypes.byref(info))
+    ret = GetMenuItemInfo(menu, c_long(index), True, ctypes.byref(info))
     if not ret:
         raise Exception("menu item not found.")
     return info
@@ -56,13 +56,13 @@ def get_menu_item_text(menu, index, info=None):
         info = get_menu_item_info(menu, index)
 
     if info.cch:
-        buffer_size = info.cch+1
+        buffer_size = info.cch + 1
         text = ctypes.create_unicode_buffer(buffer_size)
 
         info.dwTypeData = ctypes.addressof(text)
         info.cch = buffer_size
 
-        GetMenuItemInfo(menu, index, True, ctypes.byref(info))
+        GetMenuItemInfo(menu, c_long(index), True, ctypes.byref(info))
 
         return text.value
     else:
@@ -111,7 +111,7 @@ def find_rgui():
 
     try:
         enum_windows(loop_over_windows)
-    except:
+    except Exception:
         pass
 
     if rgui_windows:
@@ -134,7 +134,7 @@ def bring_rgui_to_top(rid):
 
         try:
             enum_child_windows(rid, bring_child)
-        except:
+        except Exception:
             pass
 
 
