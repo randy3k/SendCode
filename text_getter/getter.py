@@ -64,9 +64,6 @@ class TextGetter:
 
         return cmd
 
-
-class GetterMixin:
-
     def find_inline(self, pattern, pt):
         while True:
             result = self.view.find(pattern, pt)
@@ -111,24 +108,33 @@ class GetterMixin:
 
         return s
 
+    def backtrack(self, s, pattern=r"[+\-*/]", scope="keyword.operator"):
+        # backtrack previous lines ending with operators
 
-class RTextGetter(TextGetter, GetterMixin):
+        view = self.view
+        row = view.rowcol(s.begin())[0]
+        while row > 0:
+            row = row - 1
+            line = view.line(view.text_point(row, 0))
+            if re.match(pattern, view.substr(line)):
+                endpt = self.find_inline(r"\S(?=\s*$)", line.begin()).begin()
+                print(endpt)
+                if self.view.score_selector(endpt, scope):
+                    s = line
+                    continue
+            break
+
+        return s
+
+
+class RTextGetter(TextGetter):
 
     def expand_line(self, s):
         view = self.view
         if view.score_selector(s.begin(), "string"):
             return s
 
-        # back track previous line to check if it ends in a operator
-        row = view.rowcol(s.begin())[0]
-        while row > 0:
-            row = row - 1
-            line = view.line(view.text_point(row, 0))
-            if re.match(r".*([+\-*/]|%[+<>$:a-zA-Z]+%)\s*$", view.substr(line)) and \
-                    self.view.score_selector(line.end() - 1, "keyword.operator"):
-                s = line
-            else:
-                break
+        s = self.backtrack(s, r".*([+\-*/]|%[+<>$:a-zA-Z]+%)\s*$")
 
         thiscmd = view.substr(s)
         row = view.rowcol(s.begin())[0]
@@ -154,7 +160,7 @@ class RTextGetter(TextGetter, GetterMixin):
         return s
 
 
-class PythonTextGetter(TextGetter, GetterMixin):
+class PythonTextGetter(TextGetter):
 
     def expand_line(self, s):
         view = self.view
@@ -198,7 +204,7 @@ class PythonTextGetter(TextGetter, GetterMixin):
         return s
 
 
-class JuliaTextGetter(TextGetter, GetterMixin):
+class JuliaTextGetter(TextGetter):
 
     def expand_line(self, s):
         view = self.view
