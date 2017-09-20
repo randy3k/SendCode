@@ -124,7 +124,8 @@ class RTextGetter(TextGetter, GetterMixin):
         while row > 0:
             row = row - 1
             line = view.line(view.text_point(row, 0))
-            if re.match(r".*([+\-*/]|%[+<>$:a-zA-Z]+%)\s*$", view.substr(line)):
+            if re.match(r".*([+\-*/]|%[+<>$:a-zA-Z]+%)\s*$", view.substr(line)) and \
+                    self.view.score_selector(line.end() - 1, "keyword.operator"):
                 s = line
             else:
                 break
