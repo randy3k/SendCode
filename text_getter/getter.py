@@ -38,7 +38,7 @@ class TextGetter:
     def advance(self, s):
         view = self.view
         view.sel().subtract(s)
-        pt = view.text_point(view.rowcol(s.end())[0]+1, 0)
+        pt = view.text_point(view.rowcol(s.end())[0] + 1, 0)
         if self.auto_advance_non_empty:
             nextpt = view.find(r"\S", pt)
             if nextpt.begin() != -1:
@@ -201,7 +201,7 @@ class JuliaTextGetter(TextGetter, GetterMixin):
                 not re.match(r".*end\s*$", thiscmd)) or \
                 (re.match(r".*begin\s*$", thiscmd)):
             indentation = re.match("^(\s*)", thiscmd).group(1)
-            endline = view.find("^"+indentation+"end", s.begin())
+            endline = view.find("^" + indentation + "end", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
         elif re.match(r"\s*(using|import|export)", thiscmd):
@@ -227,8 +227,8 @@ class MarkDownTextGetter(TextGetter):
         view = self.view
         nextline = view.substr(view.line(s.end() + 1))
         if re.match(r"^```", nextline):
-            view.sel().subtract(view.line(s.begin()-1))
-            pt = view.text_point(view.rowcol(s.end())[0]+2, 0)
+            view.sel().subtract(view.line(s.begin() - 1))
+            pt = view.text_point(view.rowcol(s.end())[0] + 2, 0)
             if self.auto_advance_non_empty:
                 nextpt = view.find(r"\S", pt)
                 if nextpt.begin() != -1:
@@ -242,5 +242,5 @@ class MarkDownTextGetter(TextGetter):
         thisline = view.substr(s)
         if re.match(r"^```", thisline):
             end = view.find("^```$", s.end())
-            s = sublime.Region(s.end()+1, end.begin()-1)
+            s = sublime.Region(s.end() + 1, end.begin() - 1)
         return s
