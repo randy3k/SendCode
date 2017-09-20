@@ -119,6 +119,7 @@ class RTextGetter(TextGetter, GetterMixin):
         if view.score_selector(s.begin(), "string"):
             return s
 
+        # back track previous line to check if it ends in a operator
         row = view.rowcol(s.begin())[0]
         while row > 0:
             row = row - 1
