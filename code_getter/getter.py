@@ -3,7 +3,7 @@ import re
 from ..settings import Settings
 
 
-class TextGetter:
+class CodeGetter:
 
     def __init__(self, view):
         self.view = view
@@ -16,15 +16,15 @@ class TextGetter:
     def initialize(cls, view):
         syntax = Settings(view).syntax()
         if syntax == "r":
-            return RTextGetter(view)
+            return RCodeGetter(view)
         elif syntax == "md" or syntax == "rmd":
-            return MarkDownTextGetter(view)
+            return MarkDownCodeGetter(view)
         elif syntax == "python":
-            return PythonTextGetter(view)
+            return PythonCodeGetter(view)
         elif syntax == "julia":
-            return JuliaTextGetter(view)
+            return JuliaCodeGetter(view)
         else:
-            return TextGetter(view)
+            return CodeGetter(view)
 
     def expand_cursor(self, s):
         s = self.view.line(s)
@@ -127,7 +127,7 @@ class TextGetter:
         return s
 
 
-class RTextGetter(TextGetter):
+class RCodeGetter(CodeGetter):
 
     def expand_line(self, s):
         view = self.view
@@ -160,7 +160,7 @@ class RTextGetter(TextGetter):
         return s
 
 
-class PythonTextGetter(TextGetter):
+class PythonCodeGetter(CodeGetter):
 
     def expand_line(self, s):
         view = self.view
@@ -204,7 +204,7 @@ class PythonTextGetter(TextGetter):
         return s
 
 
-class JuliaTextGetter(TextGetter):
+class JuliaCodeGetter(CodeGetter):
 
     def expand_line(self, s):
         view = self.view
@@ -239,7 +239,7 @@ class JuliaTextGetter(TextGetter):
         return s
 
 
-class MarkDownTextGetter(TextGetter):
+class MarkDownCodeGetter(CodeGetter):
 
     def advance(self, s):
         view = self.view

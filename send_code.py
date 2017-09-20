@@ -2,8 +2,8 @@ import sublime
 import sublime_plugin
 import re
 
-from .text_getter import TextGetter
-from .text_sender import TextSender
+from .code_getter import CodeGetter
+from .code_sender import CodeSender
 
 
 def escape_dquote(cmd):
@@ -62,18 +62,18 @@ class SendCodeCommand(sublime_plugin.TextCommand):
         return cmd
 
     def run(self, edit, cmd=None, prog=None, confirmation=None):
-        # set TextGetter before get_text() because get_text may change cursor locations.
+        # set CodeGetter before get_text() because get_text may change cursor locations.
 
         if confirmation:
             ok = sublime.ok_cancel_dialog(confirmation)
             if not ok:
                 return
 
-        sender = TextSender.initialize(self.view, prog=prog, from_view=cmd is None)
+        sender = CodeSender.initialize(self.view, prog=prog, from_view=cmd is None)
         if cmd:
             cmd = self.resolve(cmd)
         else:
-            getter = TextGetter.initialize(self.view)
+            getter = CodeGetter.initialize(self.view)
             cmd = getter.get_text()
 
         sublime.set_timeout_async(lambda: sender.send_text(cmd))

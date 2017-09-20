@@ -1,1 +1,0 @@
-from .getter import TextGetter

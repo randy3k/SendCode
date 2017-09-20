@@ -15,7 +15,7 @@ from .sublimerepl import send_to_sublimerepl
 from .terminalview import send_to_terminalview
 
 
-class TextSender:
+class CodeSender:
 
     def __init__(self, view, cmd=None, prog=None, from_view=True):
         self.view = view
@@ -31,13 +31,13 @@ class TextSender:
     def initialize(cls, view, **kwargs):
         syntax = Settings(view).syntax()
         if syntax == "r" or syntax == "rmd" or syntax == "rnw":
-            return RTextSender(view, **kwargs)
+            return RCodeSender(view, **kwargs)
         elif syntax == "python":
-            return PythonTextSender(view, **kwargs)
+            return PythonCodeSender(view, **kwargs)
         elif syntax == "julia":
-            return JuliaTextSender(view, **kwargs)
+            return JuliaCodeSender(view, **kwargs)
         else:
-            return TextSender(view, **kwargs)
+            return CodeSender(view, **kwargs)
 
     def send_to_terminal(self, cmd):
         send_to_terminal(cmd, bracketed=self.bracketed_paste_mode)
@@ -115,7 +115,7 @@ class TextSender:
             sublime.message_dialog("%s is not supported for current syntax." % prog)
 
 
-class RTextSender(TextSender):
+class RCodeSender(CodeSender):
 
     def send_text(self, cmd):
         cmd = cmd.rstrip()
@@ -128,7 +128,7 @@ class RTextSender(TextSender):
         elif prog == "safari-rstudio":
             self.send_to_safari_rstudio(cmd)
         else:
-            super(RTextSender, self).send_text(cmd)
+            super(RCodeSender, self).send_text(cmd)
 
     def send_to_r(self, cmd):
         send_to_r(cmd)
@@ -140,7 +140,7 @@ class RTextSender(TextSender):
         send_to_safari_rstudio(cmd)
 
 
-class PythonTextSender(TextSender):
+class PythonCodeSender(CodeSender):
 
     def send_to_terminal(self, cmd):
         if len(re.findall("\n", cmd)) > 0:
@@ -243,6 +243,6 @@ class PythonTextSender(TextSender):
             send_to_terminalview(cmd)
 
 
-class JuliaTextSender(TextSender):
+class JuliaCodeSender(CodeSender):
 
     pass
