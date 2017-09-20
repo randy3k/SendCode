@@ -118,6 +118,16 @@ class RTextGetter(TextGetter, GetterMixin):
         view = self.view
         if view.score_selector(s.begin(), "string"):
             return s
+
+        row = view.rowcol(s.begin())[0]
+        while row > 0:
+            row = row - 1
+            line = view.line(view.text_point(row, 0))
+            if re.match(r".*([+\-*/]|%[+<>$:a-zA-Z]+%)\s*$", view.substr(line)):
+                s = line
+            else:
+                break
+
         thiscmd = view.substr(s)
         row = view.rowcol(s.begin())[0]
         lastrow = view.rowcol(view.size())[0]
