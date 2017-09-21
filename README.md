@@ -13,7 +13,7 @@ Following Programs are supported
 - Mac: Terminal, iTerm (>=2.9), R GUI, RStudio Desktop, RStudio and Jupyter running on Chrome and Safari
 - Windows: Cmder, ConEmu, R GUI, RStudio Desktop
 - Linux: Tmux, Screen, Gnome-Terminal, Pantheon-Terminal, Mate-Terminal, Konsole, RStudio Desktop
-- Others: TerminalView (requires [v0.5.0](https://github.com/Wramberg/TerminalView/tree/0.5.0) or above), SublimeREPL (deprecating)
+- Others: [TerminalView](https://github.com/Wramberg/TerminalView), SublimeREPL (deprecating)
 
 ### Installation
 
@@ -136,11 +136,13 @@ The `prog` argument determines which program to use
 
 A couple of settings can be found `Preferences: SendCode Settings`
 
+
 ### Block expansion
 
-SendCode uses the following logic to expand cursor when sending text.
+SendCode uses the following logics to expand cursor when sending code.
 
-- R blocks are detected by `{`,`}` pairs or knitr-spin `#+` decorators.
-- Julia blocks are detected by `begin`, `end` pairs and indentations.
-- Python blocks are detected by indentations or by `# %%`/`# In[]` decorators.
-- Markdown fenced code blocks of [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended) and [R Markdown](https://github.com/randy3k/R-Box) are also supported.
+- Expand current line to match `()`, `[]` and `{}`.
+- R: multiline code seperated by operators and knitr-spin `#+` decorators.
+- Julia: `begin`, `end` pairs with indentations.
+- Python: indentations or `# %%`/`# In[]` decorators.
+- Markdown fenced code blocks of [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended) and [R Markdown](https://github.com/randy3k/R-Box): put the cursor at the line of <kbd>\`\`\`</kbd> to send the whole block.
