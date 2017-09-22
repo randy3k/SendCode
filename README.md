@@ -108,6 +108,7 @@ SendCode expands following variables in the `cmd` field:
 - `$file_extension`, the file extension
 - `$folder`, the first folder of current window
 - `$project_path`, the directory where sublime-project is stored
+- `$current_folder`, the folder of the window which contains the current view
 - `$selection`, the text selected, or the word under cursor
 - `$line`, the current line number
 

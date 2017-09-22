@@ -1,5 +1,6 @@
 import sublime
 import sublime_plugin
+import os
 import re
 
 from .code_getter import CodeGetter
@@ -45,6 +46,15 @@ class SendCodeCommand(sublime_plugin.TextCommand):
             if not word:
                 word = view.substr(view.word(view.sel()[0].begin()))
             extracted_variables["selection"] = word
+
+        fname = view.file_name()
+        extracted_variables["current_folder"] = extracted_variables.get("folder", "")
+        if fname:
+            fname = os.path.realpath(fname)
+            for folder in window.folders():
+                if fname.startswith(os.path.realpath(folder) + os.sep):
+                    extracted_variables["current_folder"] = folder
+                    break
 
         def convert(m):
             quote = m.group("quote")
