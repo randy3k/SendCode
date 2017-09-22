@@ -169,14 +169,17 @@ def find_rstudio():
     return rgui
 
 
-def paste_to_rstudio(rid, press_ctrl=False):
+def paste_to_rstudio(rid, from_view=True):
     time.sleep(0.01)
-    if press_ctrl:
+    if not from_view:
+        keybd_event(18, 0, 2, 0)  # alt up
+        keybd_event(16, 0, 2, 0)  # shift up
+        time.sleep(0.01)
         keybd_event(17, 0, 0, 0)  # ctrl down
         time.sleep(0.01)
     PostMessage(rid, 256, ord("V"), 0)
     time.sleep(0.01)
-    if press_ctrl:
+    if not from_view:
         keybd_event(17, 0, 2, 0)  # ctrl up
         time.sleep(0.01)
     PostMessage(rid, 7, 0, 0)

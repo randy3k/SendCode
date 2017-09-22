@@ -18,7 +18,7 @@ elif plat == "windows":
     def send_to_rstudio(cmd, from_view):
         rid = winauto.find_rstudio()
         clipboard.set_clipboard(cmd)
-        winauto.paste_to_rstudio(rid, press_ctrl=not from_view)
+        winauto.paste_to_rstudio(rid, from_view=from_view)
         clipboard.reset_clipboard()
 
 elif plat == "linux":
