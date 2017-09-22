@@ -1,5 +1,6 @@
 import ctypes
 import time
+import re
 
 from ctypes import c_bool, c_uint, c_long, c_size_t, c_wchar
 
@@ -95,17 +96,16 @@ def enum_child_windows(hwnd, callback):
     EnumChildWindows(hwnd, proc, 0)
 
 
-def find_rgui():
-    rgui_windows = []
+def find_window(title=None, classname=None):
+    windows = []
 
     def loop_over_windows(hwnd, _):
-        if rgui_windows or not IsWindowVisible(hwnd):
+        if windows or not IsWindowVisible(hwnd):
             return True
 
-        if get_window_text(hwnd).startswith("R Console") and get_class(hwnd) == "Rgui":
-            rgui_windows.append(hwnd)
-        elif get_class(hwnd) == "Rgui Workspace":
-            rgui_windows.append(hwnd)
+        if (not title or re.match(title, get_window_text(hwnd))) and \
+                (not classname or get_class(hwnd) == classname):
+            windows.append(hwnd)
 
         return True
 
@@ -114,11 +114,18 @@ def find_rgui():
     except Exception:
         pass
 
-    if rgui_windows:
-        rgui = rgui_windows[0]
-        return rgui
+    if windows:
+        window = windows[0]
+        return window
 
-    raise Exception("rgui not found.")
+
+def find_rgui():
+    rgui = find_window(r"R Console.*", "Rgui")
+    if not rgui:
+        rgui = find_window(classname="Rgui Workspace")
+    if not rgui:
+        raise Exception("window not found.")
+    return rgui
 
 
 def bring_rgui_to_top(rid):
@@ -156,10 +163,10 @@ def paste_to_rgui(rid):
 
 
 def find_rstudio():
-    rid = FindWindow("Qt5QWindowIcon", "RStudio")
-    if not rid:
-        raise Exception("rstudio not found.")
-    return rid
+    rgui = find_window(r".*RStudio", "Qt5QWindowIcon")
+    if not rgui:
+        raise Exception("window not found.")
+    return rgui
 
 
 def paste_to_rstudio(rid, press_ctrl=False):
