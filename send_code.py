@@ -48,7 +48,7 @@ class SendCodeCommand(sublime_plugin.TextCommand):
             extracted_variables["selection"] = word
 
         fname = view.file_name()
-        extracted_variables["current_folder"] = extracted_variables.get("folder", "")
+        extracted_variables["current_folder"] = extracted_variables.get("file_path", "")
         if fname:
             fname = os.path.realpath(fname)
             for folder in window.folders():
