@@ -38,6 +38,13 @@ class Settings:
             if key in syntax_settings:
                 return syntax_settings[key]
 
+        # check global settings
+        if self.s.has(key) and self.s.get(key) is not None:
+            return self.s.get(key)
+
+        # fallback
+        return default
+
         return self.s.get(key, default)
 
     def set(self, key, value):
