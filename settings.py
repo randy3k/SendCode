@@ -1,47 +1,4 @@
 import sublime
-import os
-
-
-def plugin_loaded():
-
-    # update SendCode.sublime-settings
-
-    fpath = os.path.join(sublime.packages_path(), 'User', 'SendCode.sublime-settings')
-    s = sublime.load_settings("SendCode.sublime-settings")
-
-    try:
-        with open(fpath, mode='r', encoding="utf-8") as f:
-            content = f.read()
-            data = sublime.decode_value(content)
-            if "user" in data and data["user"]:
-                for k, v in data["user"].items():
-                    if k not in data:
-                        s.set(k, v)
-
-                s.erase("user")
-                sublime.save_settings('SendCode.sublime-settings')
-
-            if s.has("prog"):
-                prog = s.get("prog")
-                if prog:
-                    if s.has("julia") and "prog" not in s.get("julia"):
-                        d = s.get("julia")
-                        d["prog"] = prog
-                        s.set("julia", d)
-
-                    if s.has("python") and "prog" not in s.get("python"):
-                        d = s.get("python")
-                        d["prog"] = prog
-                        s.set("python", d)
-
-                    if s.has("r") and "prog" not in s.get("r"):
-                        d = s.get("r")
-                        d["prog"] = prog
-                        s.set("r", d)
-
-                sublime.save_settings('SendCode.sublime-settings')
-    except:
-        pass
 
 
 class Settings:
