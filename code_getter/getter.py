@@ -52,12 +52,12 @@ class CodeGetter:
         sels = [s for s in view.sel()]
         for s in sels:
             if s.empty():
-                s = self.expand_cursor(s)
+                es = self.expand_cursor(s)
                 if self.auto_advance:
                     self.advance(s)
                     moved = True
 
-            cmd += view.substr(s) + '\n'
+            cmd += view.substr(es) + '\n'
 
         if moved:
             view.show(view.sel())
@@ -243,15 +243,19 @@ class MarkDownCodeGetter(CodeGetter):
 
     def advance(self, s):
         view = self.view
-        nextline = view.substr(view.line(s.end() + 1))
-        if re.match(r"^```", nextline):
-            view.sel().subtract(view.line(s.begin() - 1))
-            pt = view.text_point(view.rowcol(s.end())[0] + 2, 0)
-            if self.auto_advance_non_empty:
-                nextpt = view.find(r"\S", pt)
-                if nextpt.begin() != -1:
-                    pt = view.text_point(view.rowcol(nextpt.begin())[0], 0)
-            view.sel().add(sublime.Region(pt, pt))
+        if re.match(r"^```", view.substr(view.line(s))):
+            end = view.find("^```$", view.line(s).end() + 1)
+            if end.begin() != -1:
+                pt = view.text_point(view.rowcol(end.begin())[0] + 1, 0)
+                print(pt)
+                view.sel().subtract(s)
+
+                if self.auto_advance_non_empty:
+                    nextpt = view.find(r"\S", pt)
+                    if nextpt.begin() != -1:
+                        pt = view.text_point(view.rowcol(nextpt.begin())[0], 0)
+
+                view.sel().add(sublime.Region(pt, pt))
         else:
             super().advance(s)
 
@@ -260,5 +264,6 @@ class MarkDownCodeGetter(CodeGetter):
         thisline = view.substr(s)
         if re.match(r"^```", thisline):
             end = view.find("^```$", s.end())
-            s = sublime.Region(s.end() + 1, end.begin() - 1)
+            if end.begin() != -1:
+                s = sublime.Region(s.end() + 1, end.begin() - 1)
         return s
