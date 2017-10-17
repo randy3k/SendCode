@@ -45,8 +45,6 @@ class Settings:
         # fallback
         return default
 
-        return self.s.get(key, default)
-
     def set(self, key, value):
         syntax = self.syntax()
 
