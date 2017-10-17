@@ -35,9 +35,9 @@ class CodeGetter:
     def expand_line(self, s):
         return s
 
-    def advance(self, s):
+    def advance(self, original, s):
         view = self.view
-        view.sel().subtract(s)
+        view.sel().subtract(original)
         pt = view.text_point(view.rowcol(s.end())[0] + 1, 0)
         if self.auto_advance_non_empty:
             nextpt = view.find(r"\S", pt)
@@ -52,9 +52,10 @@ class CodeGetter:
         sels = [s for s in view.sel()]
         for s in sels:
             if s.empty():
+                original = s
                 s = self.expand_cursor(s)
                 if self.auto_advance:
-                    self.advance(s)
+                    self.advance(original, s)
                     moved = True
 
             cmd += view.substr(s) + '\n'
@@ -241,11 +242,11 @@ class JuliaCodeGetter(CodeGetter):
 
 class MarkDownCodeGetter(CodeGetter):
 
-    def advance(self, s):
+    def advance(self, original, s):
         view = self.view
         nextline = view.substr(view.line(s.end() + 1))
         if re.match(r"^```", nextline):
-            view.sel().subtract(view.line(s.begin() - 1))
+            view.sel().subtract(original)
             pt = view.text_point(view.rowcol(s.end())[0] + 2, 0)
             if self.auto_advance_non_empty:
                 nextpt = view.find(r"\S", pt)
@@ -253,7 +254,7 @@ class MarkDownCodeGetter(CodeGetter):
                     pt = view.text_point(view.rowcol(nextpt.begin())[0], 0)
             view.sel().add(sublime.Region(pt, pt))
         else:
-            super().advance(s)
+            super().advance(original, s)
 
     def expand_line(self, s):
         view = self.view
