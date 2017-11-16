@@ -45,14 +45,8 @@ There are two main keybindings:
    [IPython](https://ipython.org) (5.0 or above, or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
 
 1. RStudio on Windows
-
-   If the code is pasted on the console but it is not being executed, you need
-   to open an empty RScript file from the menu `File -> New File -> R Script`.
-   This is a quick fix to a RStudio [issue](https://support.rstudio.com/hc/en-us/community/posts/208160308-ctrl-enter-doesn-t-work-in-R-console-without-a-source-file-opened0) on Windows.
-
-   Alternatively, you could upgrade to [RStudio
-   preview](https://www.rstudio.com/products/rstudio/download/preview/) in
-   which this bug has been fixed.
+    
+   Make sure [RStudio v1.1.383](https://www.rstudio.com/products/rstudio/download/) or above is used.
 
 1. R Gui on Windows
 
