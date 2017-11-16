@@ -18,7 +18,7 @@ def cmder_setup():
 
     try:
         akey = winreg.OpenKey(
-            winreg.HKEY_CLASSES_ROOT, "Directory\\shell\\Cmder\command", 0, winreg.KEY_READ)
+            winreg.HKEY_CLASSES_ROOT, "Directory\\shell\\Cmder\\command", 0, winreg.KEY_READ)
         command = winreg.QueryValueEx(akey, "")[0]
         conemu_base_dir = os.path.join(
             RE_CMDER.match(command).group(1), "vendor", "conemu-maximus5", "ConEmu")
@@ -26,7 +26,7 @@ def cmder_setup():
             if conemu_base_dir not in os.environ["PATH"]:
                 os.environ["PATH"] = conemu_base_dir + ";" + os.environ["PATH"]
                 CMDER_SETUP = True
-    except:
+    except Exception:
         return
 
 
@@ -38,14 +38,14 @@ def conemu_setup():
 
     try:
         akey = winreg.OpenKey(
-            winreg.HKEY_CLASSES_ROOT, "Directory\\shell\\ConEmu Here\command", 0, winreg.KEY_READ)
+            winreg.HKEY_CLASSES_ROOT, "Directory\\shell\\ConEmu Here\\command", 0, winreg.KEY_READ)
         command = winreg.QueryValueEx(akey, "")[0]
         conemu_base_dir = os.path.join(RE_CONEMU.match(command).group(1), "ConEmu")
         if os.path.exists(conemu_base_dir):
             if conemu_base_dir not in os.environ["PATH"]:
                 os.environ["PATH"] = conemu_base_dir + ";" + os.environ["PATH"]
                 CONEMU_SETUP = True
-    except:
+    except Exception:
         return
 
 
@@ -78,7 +78,7 @@ def _send_to_conemu(cmd, conemuc, bracketed=False):
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     try:
         subprocess.check_call("{} /ConInfo".format(conemuc), startupinfo=startupinfo)
-    except:
+    except Exception:
         print("ConEmuC.exe not found. "
               "Specify the path to ConEmuC.exe in SendCode.sublime-settings.")
         return
