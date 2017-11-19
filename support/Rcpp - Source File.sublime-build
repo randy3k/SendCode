@@ -1,0 +1,5 @@
+{
+    "target": "send_code_build",
+    "cmd": "Rcpp::sourceCpp(\"${file/\\\\/\\\\\\\\/g}\")",
+    "selector": "source.c++.rcpp"
+}
