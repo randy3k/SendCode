@@ -9,6 +9,10 @@
         "prog": "cmder"
     },
 
+    "rmd" : {
+        "prog": "cmder"
+    },
+
     "python" : {
         "prog": "cmder",
         // ipython is assumed when `bracketed_paste_mode `is false,

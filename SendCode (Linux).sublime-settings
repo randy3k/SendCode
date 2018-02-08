@@ -9,6 +9,10 @@
         "prog": "tmux"
     },
 
+    "rmd" : {
+        "prog": "tmux"
+    },
+
     "python" : {
         "prog": "tmux",
         // ipython is assumed when `bracketed_paste_mode `is false,
