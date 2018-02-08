@@ -49,7 +49,11 @@ There are two main keybindings:
 
 1. Python console
 
-   [IPython](https://ipython.org) (5.0 or above, or any repls which support bracketed paste mode) are assumed to be used. IPython 4.0 is still supported, but users need to disable `bracketed_paste_mode` in the settings.
+   [IPython](https://ipython.org) (5.0 or above, or any repls which support bracketed paste mode) are assumed to be used.
+
+1. Rice console
+
+   You might want to turn on `bracketed_paste_mode` if [rice](https://github.com/randy3k/rice) is used.
 
 1. RStudio on Windows
     
