@@ -77,14 +77,14 @@ class CodeGetter:
                 else:
                     pt = result.end()
 
-    def continue_line(self, s):
+    def forward_expand(self, s, pattern=r"\S(?=\s*$)", scope="keyword.operator", paren=True):
         level = 0
         row = self.view.rowcol(s.begin())[0]
         lastrow = self.view.rowcol(self.view.size())[0]
         while row <= lastrow:
             line = self.view.line(self.view.text_point(row, 0))
             pt = line.begin()
-            while True:
+            while paren:
                 res = self.find_inline(r"[{}\[\]()]", pt)
                 if res.begin() == -1:
                     break
@@ -97,9 +97,9 @@ class CodeGetter:
             if level > 0:
                 row = row + 1
             else:
-                res = self.find_inline(r"\S(?=\s*$)", pt)
+                res = self.find_inline(pattern, pt)
                 if res.begin() != -1 and \
-                        self.view.score_selector(res.begin(), "keyword.operator"):
+                        self.view.score_selector(res.begin(), scope):
                     row = row + 1
                 else:
                     s = sublime.Region(s.begin(), line.end())
@@ -109,17 +109,16 @@ class CodeGetter:
 
         return s
 
-    def backtrack(self, s, pattern=r"[+\-*/]", scope="keyword.operator"):
-        # backtrack previous lines ending with operators
+    def backward_expand(self, s, pattern=r"[+\-*/](?=\s*$)", scope="keyword.operator"):
+        # backward_expand previous lines ending with operators
 
         view = self.view
         row = view.rowcol(s.begin())[0]
         while row > 0:
             row = row - 1
             line = view.line(view.text_point(row, 0))
-            if re.match(pattern, view.substr(line)):
+            if re.search(pattern, view.substr(line)):
                 endpt = self.find_inline(r"\S(?=\s*$)", line.begin()).begin()
-                print(endpt)
                 if self.view.score_selector(endpt, scope):
                     s = line
                     continue
@@ -135,7 +134,7 @@ class RCodeGetter(CodeGetter):
         if view.score_selector(s.begin(), "string"):
             return s
 
-        s = self.backtrack(s, r".*([+\-*/]|%[+<>$:a-zA-Z]+%)\s*$")
+        s = self.backward_expand(s, r"([+\-*/]|%[+<>$:a-zA-Z]+%)(?=\s*$)")
 
         thiscmd = view.substr(s)
         row = view.rowcol(s.begin())[0]
@@ -155,8 +154,8 @@ class RCodeGetter(CodeGetter):
             if row == lastrow:
                 s = sublime.Region(s.begin(), prevline.end())
 
-        elif re.match(r".*([{\[(+\-*/]|%[+<>$:a-zA-Z]+%)\s*$", thiscmd):
-            s = self.continue_line(s)
+        else:
+            s = self.forward_expand(s, pattern=r"([+\-*/]|%[+<>$:a-zA-Z]+%)(?=\s*$)")
 
         return s
 
@@ -219,7 +218,7 @@ class JuliaCodeGetter(CodeGetter):
         if (re.match(r"\s*(?:{})".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*end\s*$", thiscmd)) or \
                 (re.match(r".*begin\s*$", thiscmd)):
-            indentation = re.match("^(\s*)", thiscmd).group(1)
+            indentation = re.match(r"^(\s*)", thiscmd).group(1)
             endline = view.find("^" + indentation + "end", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
@@ -234,8 +233,8 @@ class JuliaCodeGetter(CodeGetter):
                     s = sublime.Region(s.begin(), line.end())
                     break
 
-        elif re.match(r".*[{\[(+\-*/]\s*$", thiscmd):
-            s = self.continue_line(s)
+        else:
+            s = self.forward_expand(s, pattern=r"[+\-*/](?=\s*$)")
 
         return s
 
