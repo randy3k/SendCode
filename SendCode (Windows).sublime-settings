@@ -6,11 +6,15 @@
     "bracketed_paste_mode": false,
 
     "r" : {
-        "prog": "cmder"
+        "prog": "cmder",
+        // turn brackted paste mode on if rice or readline 7.0 is used
+        "bracketed_paste_mode": false
     },
 
     "rmd" : {
-        "prog": "cmder"
+        "prog": "cmder",
+        // turn brackted paste mode on if rice or readline 7.0 is used
+        "bracketed_paste_mode": false
     },
 
     "python" : {
