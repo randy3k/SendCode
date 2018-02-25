@@ -1,0 +1,3 @@
+## SendCode 0.4.0
+
+A lot of goodies. Ubuntu users may need to install xdotool to use some of the features.
