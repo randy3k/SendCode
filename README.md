@@ -22,8 +22,8 @@ You could install SendCode via Package Control.
 - In the Install Package window start typing `SendCode` and select the option when it pops up.
 - SendCode should then be installed.
 
-If you are using Linux, we need to have
-[xdotool](http://www.semicomplete.com/projects/xdotool/) installed. Ubuntu users can use
+If you are using Linux, we might need to install
+[xdotool](http://www.semicomplete.com/projects/xdotool/) to use some features. Ubuntu users can use
 ```
 sudo apt-get install xdotool
 ```
