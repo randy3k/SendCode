@@ -1,8 +1,5 @@
 # SendCode for Sublime Text
 
----
-
-
 Send code and text to macOS and Linux Terminals, iTerm, ConEmu, Cmder, Tmux, TerminalView; R (RStudio), Julia, IPython.
 
 ![](https://user-images.githubusercontent.com/1690993/28198891-4ebe5eaa-682f-11e7-8173-10b64faef9b4.png)
@@ -17,16 +14,21 @@ Following Programs are supported
 
 ### Installation
 
-You could install SendCode via Package Control. If you are using Linux, the respective platform dependency
-[xdotool](https://github.com/randy3k/sublime-xdotool) will also be installed automatically.
-
-Instructions for installation via Package Control:
+You could install SendCode via Package Control.
 
 - If you don't have Package Control installed, follow the [installation instructions on the Package Control website](https://packagecontrol.io/installation).
 - In Sublime Text, type <kbd>cmd</kbd>+<kbd>shift</kbd>+<kbd>p</kbd> (Mac) or <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>p</kbd> (Windows/Linux)  to bring up the command palette.
 - Into the command palette start typing `Package Control: Install Package` and select the option when in pops up.
 - In the Install Package window start typing `SendCode` and select the option when it pops up.
 - SendCode should then be installed.
+
+If you are using Linux, we need to have
+[xdotool](http://www.semicomplete.com/projects/xdotool/) installed. Ubuntu users can use
+```
+sudo apt-get install xdotool
+```
+If it cannot be found, you will be prompted
+to download a [binary distribution](https://github.com/randy3k/sublime-xdotool).
 
 ### Usage
 
@@ -51,9 +53,9 @@ There are two main keybindings:
 
    [IPython](https://ipython.org) (5.0 or above, or any repls which support bracketed paste mode) are assumed to be used.
 
-1. Rice console
+1. [rtichoke](https://github.com/randy3k/rtichoke) console
 
-   You might want to turn on `bracketed_paste_mode` if [rice](https://github.com/randy3k/rice) is used.
+   You might want to turn on `bracketed_paste_mode` if [rtichoke](https://github.com/randy3k/rtichoke) is used.
 
 1. RStudio on Windows
     
@@ -67,7 +69,6 @@ There are two main keybindings:
 
    You might need to set the path to `ConEmuC.exe` in SendCode settings. For Cmder, the file is located at
    `<path to cmder folder>\\vendor\\conemu-maximus5\\ConEmu\\ConEmuC.exe`.
-
 
 1. Safari-Jupyter on macOS
 

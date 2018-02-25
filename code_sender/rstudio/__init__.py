@@ -22,7 +22,7 @@ elif plat == "windows":
         clipboard.reset_clipboard()
 
 elif plat == "linux":
-    from xdotool import xdotool
+    from ..xdotool import xdotool
 
     def send_to_rstudio(cmd):
         wid = xdotool("search", "--onlyvisible", "--class", "rstudio")

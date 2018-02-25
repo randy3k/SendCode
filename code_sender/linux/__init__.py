@@ -5,7 +5,7 @@ from ..clipboard import clipboard
 plat = sublime.platform()
 
 if plat == "linux":
-    from xdotool import xdotool
+    from ..xdotool import xdotool
 
     def send_to_linux_terminal(linux_terminal, cmd_list):
         wid = xdotool("search", "--onlyvisible", "--class", linux_terminal)
