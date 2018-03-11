@@ -1,5 +1,6 @@
 import sublime
 import time
+import os
 from ..clipboard import clipboard
 
 plat = sublime.platform()
@@ -19,7 +20,11 @@ if plat == "linux":
 
         sublime_id = xdotool("getactivewindow")
 
-        xdotool("windowfocus", wid)
+        if os.environ.get("XDG_SESSION_DESKTOP") == "KDE":
+            xdotool("windowactivate", wid)
+            time.sleep(0.05)
+        else:
+            xdotool("windowfocus", wid)
 
         for cmd in cmd_list:
             clipboard.set_clipboard(cmd)
@@ -32,7 +37,10 @@ if plat == "linux":
 
             clipboard.reset_clipboard()
 
-        xdotool("windowfocus", sublime_id)
+        if os.environ.get("XDG_SESSION_DESKTOP") == "KDE":
+            xdotool("windowactivate", sublime_id)
+        else:
+            xdotool("windowfocus", sublime_id)
 
 
 else:
