@@ -17,7 +17,7 @@ def xdotool(*args):
             global prompt_installing_xdotool
             if not prompt_installing_xdotool:
                 sublime.active_window().run_command(
-                    "send_code_install_xdotool", {"path": xdotool_path})
+                    "send_code_install_xdotool", {"path": xdotool_install_path})
                 prompt_installing_xdotool = True
 
     if not xdotool_path:
