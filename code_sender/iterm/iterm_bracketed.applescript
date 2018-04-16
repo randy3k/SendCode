@@ -1,5 +1,5 @@
 on run argv
-    tell application "iTerm"
+    tell application "iTerm2"
         tell the current window to tell current session
             set cmd to (item 1 of argv) as string
             set start_pos to 1
