@@ -158,7 +158,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_iterm(cmd, bracketed=True)
-                # send_to_iterm("\x1B", bracketed=False)
+                send_to_iterm("\x1B", bracketed=False)
             else:
                 send_to_iterm(r"%cpaste -q")
                 send_to_iterm(cmd)
