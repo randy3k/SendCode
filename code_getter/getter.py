@@ -124,7 +124,7 @@ class CodeGetter:
             line = view.line(view.text_point(row, 0))
             if re.search(pattern, view.substr(line)):
                 endpt = self.find_inline(r"\S(?=\s*$)", line.begin()).begin()
-                if self.view.score_selector(endpt, scope):
+                if endpt != -1 and self.view.score_selector(endpt, scope):
                     s = line
                     continue
             break
