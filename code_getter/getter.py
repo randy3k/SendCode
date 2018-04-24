@@ -167,11 +167,11 @@ class RCodeGetter(CodeGetter):
 
     def substr(self, s):
         view = self.view
-        row = view.rowcol(s.begin())[0]
+        row, col = view.rowcol(s.begin())
         line = view.line(view.text_point(row, 0))
         line_content = view.substr(line)
 
-        if line_content.startswith("#' "):
+        if col == 0 and line_content.startswith("#' "):
             while row >= 0:
                 row = row - 1
                 line = view.line(view.text_point(row, 0))
