@@ -17,8 +17,10 @@ class CodeGetter:
         syntax = Settings(view).syntax()
         if syntax == "r":
             return RCodeGetter(view)
-        elif syntax == "md" or syntax == "rmd":
+        elif syntax == "md":
             return MarkDownCodeGetter(view)
+        elif syntax == "rmd":
+            return RMarkDownCodeGetter(view)
         elif syntax == "python":
             return PythonCodeGetter(view)
         elif syntax == "julia":
@@ -261,3 +263,8 @@ class MarkDownCodeGetter(CodeGetter):
             end = view.find("^```$", s.end())
             s = sublime.Region(s.end() + 1, end.begin() - 1)
         return s
+
+
+class RMarkDownCodeGetter(MarkDownCodeGetter):
+
+    pass
