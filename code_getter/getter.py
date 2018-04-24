@@ -37,6 +37,9 @@ class CodeGetter:
     def expand_line(self, s):
         return s
 
+    def render_selection(self, s):
+        return s
+
     def advance(self, s):
         view = self.view
         pt = view.text_point(view.rowcol(s.end())[0] + 1, 0)
@@ -60,7 +63,7 @@ class CodeGetter:
                     self.advance(s)
                     moved = True
 
-            cmd += view.substr(s) + '\n'
+            cmd += self.substr(s) + '\n'
 
         if moved:
             view.show(view.sel())
@@ -146,11 +149,12 @@ class RCodeGetter(CodeGetter):
             while row < lastrow:
                 row = row + 1
                 line = view.line(view.text_point(row, 0))
-                m = re.match(r"#'|#\+", view.substr(line))
+                line_content = view.substr(line)
+                m = re.match(r"#'|#\+", line_content)
                 if m:
                     s = sublime.Region(s.begin(), prevline.end())
                     break
-                elif len(view.substr(line).strip()) > 0:
+                elif len(line_content.strip()) > 0:
                     prevline = line
 
             if row == lastrow:
@@ -160,6 +164,31 @@ class RCodeGetter(CodeGetter):
             s = self.forward_expand(s, pattern=r"([+\-*/]|%[+<>$:a-zA-Z]+%)(?=\s*$)")
 
         return s
+
+    def substr(self, s):
+        view = self.view
+        row = view.rowcol(s.begin())[0]
+        line = view.line(view.text_point(row, 0))
+        line_content = view.substr(line)
+
+        if line_content.startswith("#' "):
+            while row >= 0:
+                row = row - 1
+                line = view.line(view.text_point(row, 0))
+                line_content = view.substr(line)
+                if not line_content.startswith("#'") and not line_content.strip():
+                    break
+                if line_content.startswith("#' @example"):
+                    cmd = ""
+                    for line in view.lines(s):
+                        line_content = view.substr(line)
+                        cmd += line_content[3:] if line_content.startswith("#' ") else line_content
+                        cmd += "\n"
+
+                    cmd = cmd[:-1]  # remove last newline
+                    return cmd
+
+        return view.substr(s)
 
 
 class PythonCodeGetter(CodeGetter):
