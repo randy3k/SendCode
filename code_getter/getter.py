@@ -37,8 +37,8 @@ class CodeGetter:
     def expand_line(self, s):
         return s
 
-    def render_selection(self, s):
-        return s
+    def substr(self, s):
+        return self.view.substr(s)
 
     def advance(self, s):
         view = self.view
