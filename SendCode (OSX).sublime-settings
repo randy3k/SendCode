@@ -7,13 +7,13 @@
 
     "r" : {
         "prog": "terminal",
-        // turn brackted paste mode on if rice or readline 7.0 is used
+        // turn brackted paste mode on if rtichoke or readline 7.0 is used
         "bracketed_paste_mode": false
     },
 
     "rmd" : {
         "prog": "terminal",
-        // turn brackted paste mode on if rice or readline 7.0 is used
+        // turn brackted paste mode on if rtichoke or readline 7.0 is used
         "bracketed_paste_mode": false
     },
 
