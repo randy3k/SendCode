@@ -102,13 +102,17 @@ class CodeGetter:
             if level > 0:
                 row = row + 1
             else:
-                res = self.find_inline(pattern, pt)
-                if res.begin() != -1 and \
-                        self.view.score_selector(res.begin(), scope):
-                    row = row + 1
-                else:
+                if not pattern:
                     s = sublime.Region(s.begin(), line.end())
                     break
+                else:
+                    res = self.find_inline(pattern, pt)
+                    if res.begin() != -1 and \
+                            self.view.score_selector(res.begin(), scope):
+                        row = row + 1
+                    else:
+                        s = sublime.Region(s.begin(), line.end())
+                        break
         if row == lastrow:
             s = sublime.Region(s.begin(), line.end())
 
@@ -216,6 +220,8 @@ class PythonCodeGetter(CodeGetter):
         elif re.match(r"[ \t]*\S", thiscmd):
             indentation = re.match(r"[ \t]*", thiscmd).group(0)
             while row < lastrow:
+                row = view.rowcol(self.forward_expand(prevline, pattern=None).end())[0]
+                prevline = view.line(view.text_point(row, 0))
                 row = row + 1
                 line = view.line(view.text_point(row, 0))
                 m = re.match(r"([ \t]*)([^\n\s]+)", view.substr(line))
