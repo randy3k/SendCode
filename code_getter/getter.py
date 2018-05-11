@@ -220,8 +220,11 @@ class PythonCodeGetter(CodeGetter):
         elif re.match(r"[ \t]*\S", thiscmd):
             indentation = re.match(r"[ \t]*", thiscmd).group(0)
             while row < lastrow:
-                row = view.rowcol(self.forward_expand(prevline, pattern=None).end())[0]
-                prevline = view.line(view.text_point(row, 0))
+                res = self.forward_expand(view.line(view.text_point(row, 0)), pattern=None)
+                newrow = view.rowcol(res.end())[0]
+                if newrow > row:
+                    row = newrow
+                    prevline = view.line(view.text_point(row, 0))
                 row = row + 1
                 line = view.line(view.text_point(row, 0))
                 m = re.match(r"([ \t]*)([^\n\s]+)", view.substr(line))
