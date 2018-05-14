@@ -1,5 +1,8 @@
 # SendCode for Sublime Text
 
+<a href="https://packagecontrol.io/packages/SendCode"><img src="https://packagecontrol.herokuapp.com/downloads/SendCode.svg"></a>
+<a href="https://www.paypal.me/randy3k/5usd" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-blue.svg" /></a>
+
 Send code and text to macOS and Linux Terminals, iTerm, ConEmu, Cmder, Tmux, TerminalView; R (RStudio), Julia, IPython.
 
 ![](https://user-images.githubusercontent.com/1690993/28198891-4ebe5eaa-682f-11e7-8173-10b64faef9b4.png)
