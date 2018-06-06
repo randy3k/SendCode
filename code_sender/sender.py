@@ -1,5 +1,7 @@
 import sublime
 import re
+import time
+
 from ..settings import Settings
 from .terminal import send_to_terminal
 from .iterm import send_to_iterm
@@ -146,6 +148,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_terminal(cmd, bracketed=True)
+                time.sleep(0.05)
                 send_to_terminal("\x1B", bracketed=False)
             else:
                 send_to_terminal(r"%cpaste -q")
@@ -158,6 +161,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_iterm(cmd, bracketed=True)
+                time.sleep(0.05)
                 send_to_iterm("\x1B", bracketed=False)
             else:
                 send_to_iterm(r"%cpaste -q")
@@ -171,6 +175,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_conemu(cmd, conemuc, bracketed=False)
+                time.sleep(0.05)
                 send_to_conemu("\x1B", conemuc, bracketed=False)
             else:
                 send_to_conemu(r"%cpaste -q", conemuc)
@@ -184,6 +189,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_cmder(cmd, conemuc, bracketed=False)
+                time.sleep(0.05)
                 send_to_cmder("\x1B", conemuc, bracketed=False)
             else:
                 send_to_cmder(r"%cpaste -q", conemuc)
@@ -208,6 +214,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_tmux(cmd, tmux, bracketed=True)
+                time.sleep(0.05)
                 send_to_tmux("\x1B", tmux, bracketed=False)
             else:
                 send_to_tmux(r"%cpaste -q", tmux)
@@ -222,6 +229,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_screen(cmd, screen, bracketed=True)
+                time.sleep(0.05)
                 send_to_screen("\x1B", screen, bracketed=False)
             else:
                 send_to_screen(r"%cpaste -q", screen)
@@ -234,6 +242,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_terminalview(cmd, bracketed=True)
+                time.sleep(0.05)
                 send_to_terminalview("\x1B", bracketed=False)
             else:
                 send_to_terminalview(r"%cpaste -q")
