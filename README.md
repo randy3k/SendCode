@@ -3,7 +3,7 @@
 <a href="https://packagecontrol.io/packages/SendCode"><img src="https://packagecontrol.herokuapp.com/downloads/SendCode.svg"></a>
 <a href="https://www.paypal.me/randy3k/5usd" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-blue.svg" /></a>
 
-Send code and text to macOS and Linux Terminals, iTerm, ConEmu, Cmder, Tmux, TerminalView; R (RStudio), Julia, IPython.
+Send code and text to macOS and Linux Terminals, iTerm, ConEmu, Cmder, Tmux, SublimelyTerminal; R (RStudio), Julia, IPython.
 
 ![](https://user-images.githubusercontent.com/1690993/28198891-4ebe5eaa-682f-11e7-8173-10b64faef9b4.png)
 
@@ -13,7 +13,7 @@ Following Programs are supported
 - Mac: Terminal, iTerm (>=2.9), R GUI, RStudio Desktop, RStudio and Jupyter running on Chrome and Safari
 - Windows: Cmder, ConEmu, R GUI, RStudio Desktop
 - Linux: Tmux, Screen, Gnome-Terminal, Pantheon-Terminal, Mate-Terminal, Konsole, RStudio Desktop
-- Others: [TerminalView](https://github.com/Wramberg/TerminalView), SublimeREPL (deprecating)
+- Others: [SublimelyTerminal](https://github.com/randy3k/SublimelyTerminal), [TerminalView](https://github.com/Wramberg/TerminalView)
 
 ### Installation
 

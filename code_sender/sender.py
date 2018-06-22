@@ -15,6 +15,7 @@ from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
 from .safari import send_to_safari_jupyter, send_to_safari_rstudio
 from .sublimerepl import send_to_sublimerepl
 from .terminalview import send_to_terminalview
+from .sublimely import send_to_sublimely
 
 
 class CodeSender:
@@ -79,6 +80,9 @@ class CodeSender:
     def send_to_terminalview(self, cmd):
         send_to_terminalview(cmd, bracketed=self.bracketed_paste_mode)
 
+    def send_to_sublimely(self, cmd):
+        send_to_sublimely(cmd, bracketed=self.bracketed_paste_mode)
+
     def send_to_rstudio(self, cmd):
         if sublime.platform() == "windows":
             send_to_rstudio(cmd, from_view=self.from_view)
@@ -111,6 +115,8 @@ class CodeSender:
             self.send_to_sublimerepl(cmd)
         elif prog == "terminalview":
             self.send_to_terminalview(cmd)
+        elif prog == "sublimelyterminal":
+            self.send_to_sublimely(cmd)
         elif prog == "rstudio":
             self.send_to_rstudio(cmd)
         else:
@@ -248,6 +254,19 @@ class PythonCodeSender(CodeSender):
                 send_to_terminalview(r"%cpaste -q")
                 send_to_terminalview(cmd)
                 send_to_terminalview("--")
+        else:
+            send_to_terminalview(cmd)
+
+    def send_to_sublimely(self, cmd):
+        if len(re.findall("\n", cmd)) > 0:
+            if self.bracketed_paste_mode:
+                send_to_sublimely(cmd, bracketed=True)
+                time.sleep(0.05)
+                send_to_sublimely("\x1B", bracketed=False)
+            else:
+                send_to_sublimely(r"%cpaste -q")
+                send_to_sublimely(cmd)
+                send_to_sublimely("--")
         else:
             send_to_terminalview(cmd)
 
