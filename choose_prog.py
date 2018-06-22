@@ -39,7 +39,7 @@ class SendCodeChooseProgCommand(sublime_plugin.TextCommand):
         else:
             sublime.error_message("Platform not supported!")
 
-        app_list += ["SublimelyTerminal", "SublimeREPL", "TerminalView"]
+        app_list += ["Terminus", "TerminalView", "SublimeREPL"]
 
         def on_done(action):
             if action == -1:

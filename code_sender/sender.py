@@ -15,7 +15,7 @@ from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
 from .safari import send_to_safari_jupyter, send_to_safari_rstudio
 from .sublimerepl import send_to_sublimerepl
 from .terminalview import send_to_terminalview
-from .sublimely import send_to_sublimely
+from .terminus import send_to_terminus
 
 
 class CodeSender:
@@ -80,8 +80,8 @@ class CodeSender:
     def send_to_terminalview(self, cmd):
         send_to_terminalview(cmd, bracketed=self.bracketed_paste_mode)
 
-    def send_to_sublimely(self, cmd):
-        send_to_sublimely(cmd, bracketed=self.bracketed_paste_mode)
+    def send_to_terminus(self, cmd):
+        send_to_terminus(cmd, bracketed=self.bracketed_paste_mode)
 
     def send_to_rstudio(self, cmd):
         if sublime.platform() == "windows":
@@ -115,8 +115,8 @@ class CodeSender:
             self.send_to_sublimerepl(cmd)
         elif prog == "terminalview":
             self.send_to_terminalview(cmd)
-        elif prog == "sublimelyterminal":
-            self.send_to_sublimely(cmd)
+        elif prog == "terminus":
+            self.send_to_terminus(cmd)
         elif prog == "rstudio":
             self.send_to_rstudio(cmd)
         else:
@@ -257,18 +257,18 @@ class PythonCodeSender(CodeSender):
         else:
             send_to_terminalview(cmd)
 
-    def send_to_sublimely(self, cmd):
+    def send_to_terminus(self, cmd):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
-                send_to_sublimely(cmd, bracketed=True)
+                send_to_terminus(cmd, bracketed=True)
                 time.sleep(0.05)
-                send_to_sublimely("\x1B", bracketed=False)
+                send_to_terminus("\x1B", bracketed=False)
             else:
-                send_to_sublimely(r"%cpaste -q")
-                send_to_sublimely(cmd)
-                send_to_sublimely("--")
+                send_to_terminus(r"%cpaste -q")
+                send_to_terminus(cmd)
+                send_to_terminus("--")
         else:
-            send_to_terminalview(cmd)
+            send_to_terminus(cmd)
 
 
 class JuliaCodeSender(CodeSender):
