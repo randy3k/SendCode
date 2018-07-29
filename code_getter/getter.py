@@ -249,11 +249,29 @@ class JuliaCodeGetter(CodeGetter):
         if view.score_selector(s.begin(), "string"):
             return s
         thiscmd = view.substr(s)
+        row = view.rowcol(s.begin())[0]
+        prevline = view.line(s.begin())
+        lastrow = view.rowcol(view.size())[0]
+
         keywords = [
             "function", "macro", "if", "for", "while", "let", "quote",
             "try", "module", "abstruct", "type", "struct", "immutable", "mutable"
         ]
-        if (re.match(r"\s*(?:{})".format("|".join(keywords)), thiscmd) and
+
+        if re.match(r"^(#\s%%|#%%)", thiscmd):
+            while row < lastrow:
+                row = row + 1
+                line = view.line(view.text_point(row, 0))
+                m = re.match(r"^(#\s%%|#%%)", view.substr(line))
+                if m:
+                    s = sublime.Region(s.begin(), prevline.end())
+                    break
+                else:
+                    prevline = line
+
+            if row == lastrow:
+                s = sublime.Region(s.begin(), prevline.end())
+        elif (re.match(r"\s*(?:{})".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*end\s*$", thiscmd)) or \
                 (re.match(r".*begin\s*$", thiscmd)):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
