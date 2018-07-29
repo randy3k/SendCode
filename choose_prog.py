@@ -51,7 +51,7 @@ class SendCodeChooseProgCommand(sublime_plugin.TextCommand):
         prog = settings.get("prog")
         try:
             selected_index = [self.normalize(p) for p in app_list].index(prog)
-        except:
+        except Exception:
             selected_index = 0
 
         self.show_quick_panel(app_list, on_done, selected_index=selected_index)
