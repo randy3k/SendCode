@@ -2,6 +2,7 @@
 
 <a href="https://packagecontrol.io/packages/SendCode"><img src="https://packagecontrol.herokuapp.com/downloads/SendCode.svg"></a>
 <a href="https://www.paypal.me/randy3k/5usd" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-blue.svg" /></a>
+<a href="https://liberapay.com/randy3k/donate"><img src="http://img.shields.io/liberapay/receives/randy3k.svg?logo=liberapay"></a>
 
 Send code and text to macOS and Linux Terminals, iTerm, ConEmu, Cmder, Tmux, Terminus; R (RStudio), Julia, IPython.
 
