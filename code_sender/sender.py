@@ -219,7 +219,7 @@ class PythonCodeSender(CodeSender):
         tmux = self.settings.get("tmux", "tmux")
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
-                send_to_tmux(cmd, tmux, bracketed=True)
+                send_to_tmux(cmd, tmux, bracketed=True, commit=False)
                 time.sleep(0.01)
                 send_to_tmux("\x1B", tmux, bracketed=False)
             else:
@@ -234,7 +234,7 @@ class PythonCodeSender(CodeSender):
         screen = self.settings.get("screen", "screen")
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
-                send_to_screen(cmd, screen, bracketed=True)
+                send_to_screen(cmd, screen, bracketed=True, commit=False)
                 time.sleep(0.01)
                 send_to_screen("\x1B", screen, bracketed=False)
             else:

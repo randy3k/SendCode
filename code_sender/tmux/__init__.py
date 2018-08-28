@@ -9,15 +9,16 @@ def _send_to_tmux(cmd, tmux):
         subprocess.check_call([tmux, 'paste-buffer', '-d'])
 
 
-def send_to_tmux(cmd, tmux="tmux", bracketed=False):
+def send_to_tmux(cmd, tmux="tmux", bracketed=False, commit=True):
     if bracketed:
         subprocess.check_call([tmux, 'set-buffer', "\x1b[200~"])
         subprocess.check_call([tmux, 'paste-buffer', '-d'])
         _send_to_tmux(cmd, tmux)
         subprocess.check_call([tmux, 'set-buffer', "\x1b[201~"])
         subprocess.check_call([tmux, 'paste-buffer', '-d'])
-        _send_to_tmux("\n", tmux)
+        if commit:
+            _send_to_tmux("\n", tmux)
     else:
-        if cmd != "\x04":
+        if commit and cmd != "\x04":
             cmd = cmd + "\n"
         _send_to_tmux(cmd, tmux)

@@ -12,12 +12,14 @@ def _send_to_screen(cmd, screen):
         subprocess.check_call([screen, '-X', 'stuff', chunk])
 
 
-def send_to_screen(cmd, screen="screen", bracketed=False):
+def send_to_screen(cmd, screen="screen", bracketed=False, commit=True):
     if bracketed:
         subprocess.check_call([screen, '-X', 'stuff', "\x1b[200~"])
         _send_to_screen(cmd, screen)
         subprocess.check_call([screen, '-X', 'stuff', "\x1b[201~"])
-        _send_to_screen("\n", screen)
+        if commit:
+            _send_to_screen("\n", screen)
     else:
-        cmd = cmd + "\n"
+        if commit:
+            cmd = cmd + "\n"
         _send_to_screen(cmd, screen)
