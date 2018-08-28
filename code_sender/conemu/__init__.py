@@ -59,21 +59,21 @@ def escape_dquote(cmd):
     return cmd
 
 
-def send_to_conemu(cmd, conemuc, bracketed=False):
+def send_to_conemu(cmd, conemuc, bracketed=False, commit=True):
     if not conemuc:
         conemuc = "ConEmuC"
         conemu_setup()
-    _send_to_conemu(cmd, conemuc, bracketed)
+    _send_to_conemu(cmd, conemuc, bracketed, commit)
 
 
-def send_to_cmder(cmd, conemuc, bracketed=False):
+def send_to_cmder(cmd, conemuc, bracketed=False, commit=True):
     if not conemuc:
         conemuc = "ConEmuC"
         cmder_setup()
-    _send_to_conemu(cmd, conemuc, bracketed)
+    _send_to_conemu(cmd, conemuc, bracketed, commit)
 
 
-def _send_to_conemu(cmd, conemuc, bracketed=False):
+def _send_to_conemu(cmd, conemuc, bracketed=False, commit=True):
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     try:
@@ -92,5 +92,6 @@ def _send_to_conemu(cmd, conemuc, bracketed=False):
             '{} -GuiMacro:0 Paste(2,"{}")'.format(conemuc, escape_dquote(cmd)),
             startupinfo=startupinfo)
 
-    subprocess.check_call(
-        '{} -GuiMacro:0 Keys("Return")'.format(conemuc), startupinfo=startupinfo)
+    if commit:
+        subprocess.check_call(
+            '{} -GuiMacro:0 Keys("Return")'.format(conemuc), startupinfo=startupinfo)

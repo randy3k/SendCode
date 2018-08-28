@@ -180,7 +180,7 @@ class PythonCodeSender(CodeSender):
         conemuc = self.settings.get("conemuc")
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
-                send_to_conemu(cmd, conemuc, bracketed=False)
+                send_to_conemu(cmd, conemuc, bracketed=False, commit=False)
                 time.sleep(0.05)
                 send_to_conemu("\x1B", conemuc, bracketed=False)
             else:
@@ -194,7 +194,7 @@ class PythonCodeSender(CodeSender):
         conemuc = self.settings.get("conemuc")
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
-                send_to_cmder(cmd, conemuc, bracketed=False)
+                send_to_cmder(cmd, conemuc, bracketed=False, commit=False)
                 time.sleep(0.05)
                 send_to_cmder("\x1B", conemuc, bracketed=False)
             else:
