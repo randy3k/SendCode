@@ -2,6 +2,7 @@ on run argv
     tell application "iTerm2"
         tell the current window to tell current session
             set cmd to (item 1 of argv) as string
+            set commit to ((item 2 of argv) as string is "True")
             set start_pos to 1
             set len to length of cmd
             if len is greater than 1000 then
@@ -26,7 +27,9 @@ on run argv
                     end if
                 end repeat
             end
-            write text ""
+            if commit then
+                write text ""
+            end if
         end tell
     end
 end run

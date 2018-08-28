@@ -154,7 +154,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_terminal(cmd, bracketed=True)
-                time.sleep(0.05)
+                time.sleep(0.01)
                 send_to_terminal("\x1B", bracketed=False)
             else:
                 send_to_terminal(r"%cpaste -q")
@@ -166,8 +166,8 @@ class PythonCodeSender(CodeSender):
     def send_to_iterm(self, cmd):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
-                send_to_iterm(cmd, bracketed=True)
-                time.sleep(0.05)
+                send_to_iterm(cmd, bracketed=True, commit=False)
+                time.sleep(0.01)
                 send_to_iterm("\x1B", bracketed=False)
             else:
                 send_to_iterm(r"%cpaste -q")
@@ -220,7 +220,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_tmux(cmd, tmux, bracketed=True)
-                time.sleep(0.05)
+                time.sleep(0.01)
                 send_to_tmux("\x1B", tmux, bracketed=False)
             else:
                 send_to_tmux(r"%cpaste -q", tmux)
@@ -235,7 +235,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_screen(cmd, screen, bracketed=True)
-                time.sleep(0.05)
+                time.sleep(0.01)
                 send_to_screen("\x1B", screen, bracketed=False)
             else:
                 send_to_screen(r"%cpaste -q", screen)
