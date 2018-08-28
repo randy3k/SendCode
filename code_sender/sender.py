@@ -260,15 +260,25 @@ class PythonCodeSender(CodeSender):
     def send_to_terminus(self, cmd):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
-                send_to_terminus(cmd, bracketed=True)
-                time.sleep(0.05)
-                send_to_terminus("\x1B", bracketed=False)
+                if sublime.platform() == "windows":
+                    send_to_terminus(cmd, bracketed=False, commit=False)
+                    time.sleep(0.05)
+                    send_to_terminus("\x1B", bracketed=False)
+                else:
+                    send_to_terminus(cmd, bracketed=True, commit=False)
+                    time.sleep(0.05)
+                    send_to_terminus("\x1B", bracketed=False)
             else:
                 send_to_terminus(r"%cpaste -q")
                 send_to_terminus(cmd)
                 send_to_terminus("--")
         else:
-            send_to_terminus(cmd)
+            if sublime.platform() == "windows":
+                send_to_terminus(cmd, bracketed=False, commit=False)
+                time.sleep(0.05)
+                send_to_terminus("\r", bracketed=False)
+            else:
+                send_to_terminus(cmd, bracketed=False)
 
 
 class JuliaCodeSender(CodeSender):
