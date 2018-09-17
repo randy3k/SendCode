@@ -254,8 +254,8 @@ class JuliaCodeGetter(CodeGetter):
         lastrow = view.rowcol(view.size())[0]
 
         keywords = [
-            "function", "macro", "if", "for", "while", "let", "quote",
-            "try", "module", "abstruct", "type", "struct", "immutable", "mutable"
+            "function", "macro", "if", "for", "while", "try", "module",
+            "abstruct", "type", "struct", "immutable", "mutable"
         ]
 
         if re.match(r"^(#\s%%|#%%)", thiscmd):
@@ -273,7 +273,7 @@ class JuliaCodeGetter(CodeGetter):
                 s = sublime.Region(s.begin(), prevline.end())
         elif (re.match(r"\s*(?:{})".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*end\s*$", thiscmd)) or \
-                (re.match(r".*begin\s*$", thiscmd)):
+                (re.match(r".*(?:begin|let|quote)\s*", thiscmd)):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
             endline = view.find("^" + indentation + "end", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
