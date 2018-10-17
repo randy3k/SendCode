@@ -272,13 +272,13 @@ class JuliaCodeGetter(CodeGetter):
             if row == lastrow:
                 s = sublime.Region(s.begin(), prevline.end())
         elif (re.match(r"\s*\b(?:{})\b".format("|".join(keywords)), thiscmd) and
-                not re.match(r".*end\s*$", thiscmd)) or \
-                (re.match(r".*(?:begin|let|quote)\s*", thiscmd)):
+                not re.match(r".*\bend\b\s*$", thiscmd)) or \
+                (re.match(r".*\b(?:begin|let|quote)\b\s*", thiscmd)):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
-            endline = view.find("^" + indentation + "end", s.begin())
+            endline = view.find(r"^" + indentation + "\bend\b", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
-        elif re.match(r"\s*(using|import|export)", thiscmd):
+        elif re.match(r"\s*\b(using|import|export)\b", thiscmd):
             row = view.rowcol(s.begin())[0]
             lastrow = view.rowcol(view.size())[0]
             while row <= lastrow:
