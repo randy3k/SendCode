@@ -271,7 +271,7 @@ class JuliaCodeGetter(CodeGetter):
 
             if row == lastrow:
                 s = sublime.Region(s.begin(), prevline.end())
-        elif (re.match(r"\s*(?:{})".format("|".join(keywords)), thiscmd) and
+        elif (re.match(r"\s*\b(?:{})\b".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*end\s*$", thiscmd)) or \
                 (re.match(r".*(?:begin|let|quote)\s*", thiscmd)):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
