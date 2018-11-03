@@ -275,7 +275,7 @@ class JuliaCodeGetter(CodeGetter):
                 not re.match(r".*\bend\b\s*$", thiscmd)) or \
                 (re.match(r".*\b(?:begin|let|quote)\b\s*", thiscmd)):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
-            endline = view.find(r"^" + indentation + "\bend\b", s.begin())
+            endline = view.find(r"^" + indentation + r"\bend\b", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
         elif re.match(r"\s*\b(using|import|export)\b", thiscmd):
