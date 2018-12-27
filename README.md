@@ -57,9 +57,9 @@ There are two main keybindings:
 
    [IPython](https://ipython.org) (5.0 or above, or any repls which support bracketed paste mode) are assumed to be used.
 
-1. [rtichoke](https://github.com/randy3k/rtichoke) console
+1. [radian](https://github.com/randy3k/radian) console
 
-   You might want to turn on `bracketed_paste_mode` if [rtichoke](https://github.com/randy3k/rtichoke) is used.
+   You might want to turn on `bracketed_paste_mode` if [radian](https://github.com/randy3k/radian) is used.
 
 1. RStudio on Windows
     
