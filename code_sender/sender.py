@@ -254,11 +254,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 if sublime.platform() == "windows":
-                    send_to_terminus(cmd, bracketed=False, commit=False)
-                    send_to_terminus("\x1b", bracketed=False, commit=False)
-                    # in ipython 7.0, it is necessary to have a small delay
-                    # between <esc> and <enter>
-                    time.sleep(0.1)
+                    send_to_terminus(cmd, bracketed=False, commit=True)
                     send_to_terminus("\r", bracketed=False, commit=False)
                 else:
                     send_to_terminus(cmd, bracketed=True, commit=False)
