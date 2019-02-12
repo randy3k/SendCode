@@ -154,8 +154,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_terminal(cmd, bracketed=True)
-                time.sleep(0.01)
-                send_to_terminal("\x1B", bracketed=False)
+                send_to_terminal("\x1b", bracketed=False)
             else:
                 send_to_terminal(r"%cpaste -q")
                 send_to_terminal(cmd)
@@ -167,8 +166,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_iterm(cmd, bracketed=True, commit=False)
-                time.sleep(0.01)
-                send_to_iterm("\x1B", bracketed=False)
+                send_to_iterm("\x1b", bracketed=False)
             else:
                 send_to_iterm(r"%cpaste -q")
                 send_to_iterm(cmd)
@@ -181,8 +179,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_conemu(cmd, conemuc, bracketed=False, commit=False)
-                time.sleep(0.05)
-                send_to_conemu("\x1B", conemuc, bracketed=False)
+                send_to_conemu("\x1b", conemuc, bracketed=False)
             else:
                 send_to_conemu(r"%cpaste -q", conemuc)
                 send_to_conemu(cmd, conemuc)
@@ -195,8 +192,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_cmder(cmd, conemuc, bracketed=False, commit=False)
-                time.sleep(0.05)
-                send_to_cmder("\x1B", conemuc, bracketed=False)
+                send_to_cmder("\x1b", conemuc, bracketed=False)
             else:
                 send_to_cmder(r"%cpaste -q", conemuc)
                 send_to_cmder(cmd, conemuc)
@@ -220,8 +216,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_tmux(cmd, tmux, bracketed=True, commit=False)
-                time.sleep(0.01)
-                send_to_tmux("\x1B", tmux, bracketed=False)
+                send_to_tmux("\x1b", tmux, bracketed=False)
             else:
                 send_to_tmux(r"%cpaste -q", tmux)
                 send_to_tmux(cmd, tmux)
@@ -235,8 +230,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_screen(cmd, screen, bracketed=True, commit=False)
-                time.sleep(0.01)
-                send_to_screen("\x1B", screen, bracketed=False)
+                send_to_screen("\x1b", screen, bracketed=False)
             else:
                 send_to_screen(r"%cpaste -q", screen)
                 send_to_screen(cmd, screen)
@@ -248,8 +242,7 @@ class PythonCodeSender(CodeSender):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
                 send_to_terminalview(cmd, bracketed=True)
-                time.sleep(0.05)
-                send_to_terminalview("\x1B", bracketed=False)
+                send_to_terminalview("\x1b", bracketed=False)
             else:
                 send_to_terminalview(r"%cpaste -q")
                 send_to_terminalview(cmd)
@@ -262,12 +255,14 @@ class PythonCodeSender(CodeSender):
             if self.bracketed_paste_mode:
                 if sublime.platform() == "windows":
                     send_to_terminus(cmd, bracketed=False, commit=False)
-                    time.sleep(0.05)
-                    send_to_terminus("\x1B", bracketed=False)
+                    # on ipython 7, we need to send <esc> and <enter> seperately
+                    time.sleep(0.01)
+                    send_to_terminus("\x1b", bracketed=False, commit=False)
+                    time.sleep(0.01)
+                    send_to_terminus("\r", bracketed=False, commit=False)
                 else:
                     send_to_terminus(cmd, bracketed=True, commit=False)
-                    time.sleep(0.05)
-                    send_to_terminus("\x1B", bracketed=False)
+                    send_to_terminus("\x1b", bracketed=False)
             else:
                 send_to_terminus(r"%cpaste -q")
                 send_to_terminus(cmd)
@@ -275,8 +270,7 @@ class PythonCodeSender(CodeSender):
         else:
             if sublime.platform() == "windows":
                 send_to_terminus(cmd, bracketed=False, commit=False)
-                time.sleep(0.05)
-                send_to_terminus("\r", bracketed=False)
+                send_to_terminus("\r", bracketed=False, commit=False)
             else:
                 send_to_terminus(cmd, bracketed=False)
 

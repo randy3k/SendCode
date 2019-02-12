@@ -15,7 +15,7 @@ on run argv
                 repeat
                     write text (text start_pos thru end_pos of cmd) without newline
                     -- write text is not synchronized?
-                    delay 0.2
+                    delay 0.1
                     if end_pos is len then
                         exit repeat
                     else

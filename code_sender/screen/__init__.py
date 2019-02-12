@@ -6,9 +6,8 @@ def _send_to_screen(cmd, screen):
     n = 200
     chunks = [cmd[i:i+n] for i in range(0, len(cmd), n)]
     for chunk in chunks:
-        if sublime.platform() == "linux":
-            chunk = chunk.replace("\\", r"\\")
-            chunk = chunk.replace("$", r"\$")
+        chunk = chunk.replace("\\", r"\\")
+        chunk = chunk.replace("$", r"\$")
         subprocess.check_call([screen, '-X', 'stuff', chunk])
 
 
@@ -18,8 +17,8 @@ def send_to_screen(cmd, screen="screen", bracketed=False, commit=True):
         _send_to_screen(cmd, screen)
         subprocess.check_call([screen, '-X', 'stuff', "\x1b[201~"])
         if commit:
-            _send_to_screen("\n", screen)
+            _send_to_screen("\r", screen)
     else:
         if commit:
-            cmd = cmd + "\n"
+            cmd = cmd + "\r"
         _send_to_screen(cmd, screen)
