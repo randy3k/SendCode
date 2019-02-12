@@ -255,10 +255,10 @@ class PythonCodeSender(CodeSender):
             if self.bracketed_paste_mode:
                 if sublime.platform() == "windows":
                     send_to_terminus(cmd, bracketed=False, commit=False)
-                    # on ipython 7, we need to send <esc> and <enter> seperately
-                    time.sleep(0.01)
                     send_to_terminus("\x1b", bracketed=False, commit=False)
-                    time.sleep(0.01)
+                    # in ipython 7.0, it is necessary to have a small delay
+                    # between <esc> and <enter>
+                    time.sleep(0.1)
                     send_to_terminus("\r", bracketed=False, commit=False)
                 else:
                     send_to_terminus(cmd, bracketed=True, commit=False)
