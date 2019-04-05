@@ -7,13 +7,13 @@
 
     "r" : {
         "prog": "cmder",
-        // turn brackted paste mode on if rtichoke or readline 7.0 is used
+        // turn brackted paste mode on if radian or readline 7.0 is used
         "bracketed_paste_mode": false
     },
 
     "rmd" : {
         "prog": "cmder",
-        // turn brackted paste mode on if rtichoke or readline 7.0 is used
+        // turn brackted paste mode on if radian or readline 7.0 is used
         "bracketed_paste_mode": false
     },
 
