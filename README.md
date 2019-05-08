@@ -153,7 +153,17 @@ A couple of settings can be found `Preferences: SendCode Settings`
 SendCode uses the following logics to expand cursor when sending code.
 
 - Expand current line to match `()`, `[]` and `{}`.
-- R: multiline code seperated by operators and knitr-spin `#+` decorators.
-- Julia: `# %%` decorators and `begin`, `end` indented pairs.
-- Python: indentations or `# %%`/`# In[]` decorators.
-- Markdown fenced code blocks of [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended) and [R Markdown](https://github.com/randy3k/R-Box): put the cursor at the line of <kbd>\`\`\`</kbd> to send the whole block.
+- R: 
+  - backward expand if the previous line ends with a pipe opeartor `%>%`
+  - `# %%` decorators
+  - `#+` spin decorators
+  - `#'` roxygen decorators
+- Julia
+  - `begin`, `end` indented pairs.
+  - `# %%` decorators
+- Python: 
+  - indentations
+  - `# %%` decorators.
+- (See the settings `block_start_pattern` and `block_end_pattern`)
+- Markdown fenced code blocks 
+  - put the cursor at the line of <kbd>\`\`\`</kbd> to send the whole block.

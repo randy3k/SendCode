@@ -4,6 +4,8 @@
     "auto_advance" : true,
     "auto_advance_non_empty": false,
     "bracketed_paste_mode": false,
+    "block_start_pattern": "# ?%%|# ?\\+|In \\[",
+    "block_end_pattern": "# ?%%|# ?\\+|#'|In \\[",
 
     "r" : {
         "prog": "cmder",

@@ -11,6 +11,8 @@ class CodeGetter:
         self.auto_expand_line = self.settings.get("auto_expand_line", True)
         self.auto_advance = self.settings.get("auto_advance", True)
         self.auto_advance_non_empty = self.settings.get("auto_advance_non_empty", False)
+        self.block_start_pattern = self.settings.get("block_start_pattern", "# %%")
+        self.block_end_pattern = self.settings.get("block_end_pattern", "# %%")
 
     @classmethod
     def initialize(cls, view):
@@ -135,6 +137,30 @@ class CodeGetter:
 
         return s
 
+    def block_expand(self, s):
+        # expand block based on block_start_pattern and block_end_pattern
+        view = self.view
+        thiscmd = view.substr(s)
+        row = view.rowcol(s.begin())[0]
+        lastrow = view.rowcol(view.size())[0]
+        if re.match(self.block_start_pattern, thiscmd):
+            prevline = view.line(s.begin())
+            while row < lastrow:
+                row = row + 1
+                line = view.line(view.text_point(row, 0))
+                line_content = view.substr(line)
+                m = re.match(self.block_end_pattern, line_content)
+                if m:
+                    s = sublime.Region(s.begin(), prevline.end())
+                    break
+                elif len(line_content.strip()) > 0:
+                    prevline = line
+
+            if row == lastrow:
+                s = sublime.Region(s.begin(), prevline.end())
+
+        return s
+
 
 class RCodeGetter(CodeGetter):
 
@@ -145,29 +171,11 @@ class RCodeGetter(CodeGetter):
 
         s = self.backward_expand(s, r"([+\-*/]|%[+<>$:a-zA-Z]+%)(?=\s*$)")
 
-        thiscmd = view.substr(s)
-        row = view.rowcol(s.begin())[0]
-        lastrow = view.rowcol(view.size())[0]
-        if re.match(r"#\+", thiscmd):
-            prevline = view.line(s.begin())
-            while row < lastrow:
-                row = row + 1
-                line = view.line(view.text_point(row, 0))
-                line_content = view.substr(line)
-                m = re.match(r"#'|#\+", line_content)
-                if m:
-                    s = sublime.Region(s.begin(), prevline.end())
-                    break
-                elif len(line_content.strip()) > 0:
-                    prevline = line
+        s_block = self.block_expand(s)
+        if s_block != s:
+            return s_block
 
-            if row == lastrow:
-                s = sublime.Region(s.begin(), prevline.end())
-
-        else:
-            s = self.forward_expand(s, pattern=r"([+\-*/]|%[+<>$:a-zA-Z]+%)(?=\s*$)")
-
-        return s
+        return self.forward_expand(s, pattern=r"([+\-*/]|%[+<>$:a-zA-Z]+%)(?=\s*$)")
 
     def substr(self, s):
         view = self.view
@@ -199,6 +207,11 @@ class PythonCodeGetter(CodeGetter):
         view = self.view
         if view.score_selector(s.begin(), "string"):
             return s
+
+        s_block = self.block_expand(s)
+        if s_block != s:
+            return s_block
+
         thiscmd = view.substr(s)
         row = view.rowcol(s.begin())[0]
         prevline = view.line(s.begin())
@@ -248,30 +261,20 @@ class JuliaCodeGetter(CodeGetter):
         view = self.view
         if view.score_selector(s.begin(), "string"):
             return s
+
+        s_block = self.block_expand(s)
+        if s_block != s:
+            return s_block
+
         thiscmd = view.substr(s)
         row = view.rowcol(s.begin())[0]
-        prevline = view.line(s.begin())
         lastrow = view.rowcol(view.size())[0]
 
         keywords = [
             "function", "macro", "if", "for", "while", "try", "module",
             "abstruct", "type", "struct", "immutable", "mutable"
         ]
-
-        if re.match(r"^(#\s%%|#%%)", thiscmd):
-            while row < lastrow:
-                row = row + 1
-                line = view.line(view.text_point(row, 0))
-                m = re.match(r"^(#\s%%|#%%)", view.substr(line))
-                if m:
-                    s = sublime.Region(s.begin(), prevline.end())
-                    break
-                else:
-                    prevline = line
-
-            if row == lastrow:
-                s = sublime.Region(s.begin(), prevline.end())
-        elif (re.match(r"\s*\b(?:{})\b".format("|".join(keywords)), thiscmd) and
+        if (re.match(r"\s*\b(?:{})\b".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*\bend\b\s*$", thiscmd)) or \
                 (re.match(r".*\b(?:begin|let|quote)\b\s*", thiscmd)):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
