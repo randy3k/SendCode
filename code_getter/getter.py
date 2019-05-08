@@ -216,21 +216,7 @@ class PythonCodeGetter(CodeGetter):
         row = view.rowcol(s.begin())[0]
         prevline = view.line(s.begin())
         lastrow = view.rowcol(view.size())[0]
-        if re.match(r"^(#\s%%|#%%|# In\[)", thiscmd):
-            while row < lastrow:
-                row = row + 1
-                line = view.line(view.text_point(row, 0))
-                m = re.match(r"^(#\s%%|#%%|# In\[)", view.substr(line))
-                if m:
-                    s = sublime.Region(s.begin(), prevline.end())
-                    break
-                elif len(view.substr(line).strip()) > 0:
-                    prevline = line
-
-            if row == lastrow:
-                s = sublime.Region(s.begin(), prevline.end())
-
-        elif re.match(r"[ \t]*\S", thiscmd):
+        if re.match(r"[ \t]*\S", thiscmd):
             indentation = re.match(r"[ \t]*", thiscmd).group(0)
             while row < lastrow:
                 res = self.forward_expand(view.line(view.text_point(row, 0)), pattern=None)
