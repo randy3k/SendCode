@@ -14,4 +14,5 @@ on run argv
             input.dispatchEvent(e);
         " & "}"
     end tell
+    tell application "Sublime Text" to activate
 end run
