@@ -146,6 +146,20 @@ The `prog` argument determines which program to use
 ### User settings
 
 A couple of settings can be found `Preferences: SendCode Settings`
+Project-wise settings could be also specified in `sublime-project`, for example
+
+```js
+{
+    "settings": {
+        "SendCode": {
+            "prog": "terminus",
+            "r" : {
+                "bracketed_paste_mode": true
+            }
+        }
+    }
+}
+```
 
 
 ### Block expansion

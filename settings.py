@@ -32,15 +32,26 @@ class Settings:
     def get(self, key, default=None):
         syntax = self.syntax()
 
-        #  check syntax settings
-        if syntax:
-            syntax_settings = self.s.get(syntax, {})
-            if key in syntax_settings:
-                return syntax_settings[key]
+        settings_list = [self.s]
 
-        # check global settings
-        if self.s.has(key) and self.s.get(key) is not None:
-            return self.s.get(key)
+        window = sublime.active_window()
+        if window:
+            view = window.active_view()
+            if view:
+                project_settings = view.settings().get("SendCode", {})
+                if project_settings:
+                    settings_list.insert(0, project_settings)
+
+        for settings in settings_list:
+            #  check syntax settings
+            if syntax:
+                syntax_settings = settings.get(syntax, {})
+                if key in syntax_settings:
+                    return syntax_settings[key]
+
+            # check global settings
+            if settings.get(key, None) is not None:
+                return settings.get(key)
 
         # fallback
         return default
