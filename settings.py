@@ -36,11 +36,9 @@ class Settings:
 
         window = sublime.active_window()
         if window:
-            view = window.active_view()
-            if view:
-                project_settings = view.settings().get("SendCode", {})
-                if project_settings:
-                    settings_list.insert(0, project_settings)
+            project_settings = window.project_data().get("settings", {}).get("SendCode", {})
+            if project_settings:
+                settings_list.insert(0, project_settings)
 
         for settings in settings_list:
             #  check syntax settings
@@ -59,15 +57,34 @@ class Settings:
     def set(self, key, value):
         syntax = self.syntax()
 
+        window = sublime.active_window()
+        if window:
+            project_data = window.project_data()
+            project_settings = project_data.get("settings", {}).get("SendCode", {})
+
+            if key == "prog" and key in project_settings:
+                project_settings[key] = value
+
+            if syntax:
+                syntax_settings = project_settings.get(syntax, {})
+                if key in syntax_settings:
+                    syntax_settings[key] = value
+                    window.set_project_data(project_data)
+                    return
+            if key in project_settings:
+                project_settings[key] = value
+                window.set_project_data(project_data)
+                return
+
         #  check syntax settings
+        if key == "prog":
+            self.s.set(key, value)
+
         if syntax:
             syntax_settings = self.s.get(syntax, {})
             syntax_settings[key] = value
             self.s.set(syntax, syntax_settings)
         else:
-            self.s.set(key, value)
-
-        if key == "prog":
             self.s.set(key, value)
 
         sublime.save_settings('SendCode.sublime-settings')
