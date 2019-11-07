@@ -145,8 +145,8 @@ The `prog` argument determines which program to use
 
 ### User settings
 
-A couple of settings can be found `Preferences: SendCode Settings`
-Project-wise settings could be also specified in `sublime-project`, for example
+A couple of settings can be found `Preferences: SendCode Settings`.
+Project-wise settings could also be specified in `sublime-project` as
 
 ```js
 {
