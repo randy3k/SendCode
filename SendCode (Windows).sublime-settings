@@ -21,7 +21,9 @@
 
     "python" : {
         "prog": "cmder",
-        "bracketed_paste_mode": true
+        "bracketed_paste_mode": true,
+        // send ctrl+v to cmder/conemu and terminus
+        "ctrl+v_to_console": true
     },
 
     "julia" : {
