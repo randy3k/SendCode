@@ -14,7 +14,6 @@ from .screen import send_to_screen
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
 from .safari import send_to_safari_jupyter, send_to_safari_rstudio
 from .sublimerepl import send_to_sublimerepl
-from .terminalview import send_to_terminalview
 from .terminus import send_to_terminus
 from .clipboard import clipboard
 
@@ -77,9 +76,6 @@ class CodeSender:
 
     def send_to_sublimerepl(self, cmd):
         send_to_sublimerepl(cmd)
-
-    def send_to_terminalview(self, cmd):
-        send_to_terminalview(cmd, bracketed=self.bracketed_paste_mode)
 
     def send_to_terminus(self, cmd):
         send_to_terminus(cmd, bracketed=self.bracketed_paste_mode)
@@ -258,18 +254,6 @@ class PythonCodeSender(CodeSender):
                 send_to_screen("--", screen)
         else:
             send_to_screen(cmd, screen)
-
-    def send_to_terminalview(self, cmd):
-        if len(re.findall("\n", cmd)) > 0:
-            if self.bracketed_paste_mode:
-                send_to_terminalview(cmd, bracketed=True)
-                send_to_terminalview("\x1b", bracketed=False)
-            else:
-                send_to_terminalview(r"%cpaste -q")
-                send_to_terminalview(cmd)
-                send_to_terminalview("--")
-        else:
-            send_to_terminalview(cmd)
 
     def send_to_terminus(self, cmd):
         if sublime.platform() == "windows" and self.settings.get("ctrl+v_to_console", True):
