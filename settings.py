@@ -36,7 +36,8 @@ class Settings:
 
         window = sublime.active_window()
         if window:
-            project_settings = window.project_data().get("settings", {}).get("SendCode", {})
+            project_data = window.project_data() or {}
+            project_settings = project_data.get("settings", {}).get("SendCode", {})
             if project_settings:
                 settings_list.insert(0, project_settings)
 
@@ -59,7 +60,7 @@ class Settings:
 
         window = sublime.active_window()
         if window:
-            project_data = window.project_data()
+            project_data = window.project_data() or {}
             project_settings = project_data.get("settings", {}).get("SendCode", {})
 
             if key == "prog" and key in project_settings:
