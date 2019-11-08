@@ -89,16 +89,3 @@ class Settings:
             self.s.set(key, value)
 
         sublime.save_settings('SendCode.sublime-settings')
-
-    def erase(self, key):
-        syntax = self.syntax()
-
-        #  check syntax settings
-        if syntax and self.s.get(syntax):
-            syntax_settings = self.s.get(syntax)
-            syntax_settings.pop(key, None)
-            self.s.set(syntax, syntax_settings)
-        else:
-            self.s.erase(key)
-
-        sublime.save_settings('SendCode.sublime-settings')
