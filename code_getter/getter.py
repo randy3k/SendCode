@@ -72,14 +72,14 @@ class CodeGetter:
 
         return cmd
 
-    def find_inline(self, pattern, pt):
+    def find_inline(self, pattern, pt, scope="-string, -comment"):
         while True:
             result = self.view.find(pattern, pt)
             if result.begin() == -1 or \
                     self.view.rowcol(result.begin())[0] != self.view.rowcol(pt)[0]:
                 return sublime.Region(-1, -1)
             else:
-                if not self.view.score_selector(result.begin(), "string, comment"):
+                if self.view.score_selector(result.begin(), scope):
                     return result
                 else:
                     pt = result.end()
@@ -92,7 +92,7 @@ class CodeGetter:
             line = self.view.line(self.view.text_point(row, 0))
             pt = line.begin()
             while paren:
-                res = self.find_inline(r"[{}\[\]()]", pt)
+                res = self.find_inline(r"[{}\[\]()]", pt, scope="punctuation")
                 if res.begin() == -1:
                     break
                 if self.view.substr(res) in ["{", "[", "("]:
