@@ -185,7 +185,7 @@ class PythonCodeSender(CodeSender):
         else:
             if len(re.findall("\n", cmd)) > 0:
                 if self.bracketed_paste_mode:
-                    send_to_conemu(cmd, conemuc, bracketed=False, commit=False)
+                    send_to_conemu(cmd, conemuc, bracketed=True, commit=False)
                     send_to_conemu("\x1b", conemuc, bracketed=False)
                 else:
                     send_to_conemu(r"%cpaste -q", conemuc)
@@ -208,7 +208,7 @@ class PythonCodeSender(CodeSender):
         else:
             if len(re.findall("\n", cmd)) > 0:
                 if self.bracketed_paste_mode:
-                    send_to_cmder(cmd, conemuc, bracketed=False, commit=False)
+                    send_to_cmder(cmd, conemuc, bracketed=True, commit=False)
                     send_to_cmder("\x1b", conemuc, bracketed=False)
                 else:
                     send_to_cmder(r"%cpaste -q", conemuc)
