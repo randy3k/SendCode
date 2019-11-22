@@ -147,6 +147,13 @@ class RCodeSender(CodeSender):
 
 class PythonCodeSender(CodeSender):
 
+    @property
+    def paste_to_console(self):
+        value = self.settings.get("paste_to_console", None)
+        if value is None:
+            value = self.settings.get("ctrl+v_to_console", None)
+        return value
+
     def send_to_terminal(self, cmd):
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
@@ -173,7 +180,7 @@ class PythonCodeSender(CodeSender):
 
     def send_to_conemu(self, cmd):
         conemuc = self.settings.get("conemuc")
-        if sublime.platform() == "windows" and self.settings.get("ctrl+v_to_console", True):
+        if sublime.platform() == "windows" and self.paste_to_console:
             clipboard.set_clipboard(cmd)
             # send ctrl+v
             send_to_cmder("\x16", conemuc, bracketed=False, commit=False)
@@ -196,7 +203,7 @@ class PythonCodeSender(CodeSender):
 
     def send_to_cmder(self, cmd):
         conemuc = self.settings.get("conemuc")
-        if sublime.platform() == "windows" and self.settings.get("ctrl+v_to_console", True):
+        if sublime.platform() == "windows" and self.paste_to_console:
             clipboard.set_clipboard(cmd)
             # send ctrl+v
             send_to_cmder("\x16", conemuc, bracketed=False, commit=False)
@@ -256,7 +263,7 @@ class PythonCodeSender(CodeSender):
             send_to_screen(cmd, screen)
 
     def send_to_terminus(self, cmd):
-        if sublime.platform() == "windows" and self.settings.get("ctrl+v_to_console", True):
+        if sublime.platform() == "windows" and self.paste_to_console:
             clipboard.set_clipboard(cmd)
             # send ctrl+v
             send_to_terminus("\x16", bracketed=False, commit=False)
