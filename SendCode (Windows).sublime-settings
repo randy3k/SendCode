@@ -9,13 +9,14 @@
 
     "r" : {
         "prog": "cmder",
-        // turn brackted paste mode on if radian or readline 7.0 is used
+        // turn bracketed_paste_mode on if you are sending code to remote server
+        // AND when radian or readline 7.0 is in use
         "bracketed_paste_mode": false
     },
 
     "rmd" : {
         "prog": "cmder",
-        // turn brackted paste mode on if radian or readline 7.0 is used
+        // turn bracketed_paste_mode on if radian or readline 7.0 is in use
         "bracketed_paste_mode": false
     },
 
@@ -24,7 +25,7 @@
         "bracketed_paste_mode": true,
         // paste clipboard to cmder/conemu and terminus assuming that
         // local ipython is in use
-        // you'll need to turn this off if you are sending the code to remote server
+        // you'll need to turn this off if you are sending code to remote server
         "paste_to_console": true
     },
 

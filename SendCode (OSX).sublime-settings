@@ -9,13 +9,13 @@
 
     "r" : {
         "prog": "terminal",
-        // turn brackted paste mode on if radian or readline 7.0 is used
+        // turn bracketed_paste_mode on if radian or readline 7.0 is in use
         "bracketed_paste_mode": false
     },
 
     "rmd" : {
         "prog": "terminal",
-        // turn brackted paste mode on if radian or readline 7.0 is used
+        // turn bracketed_paste_mode on if radian or readline 7.0 is in use
         "bracketed_paste_mode": false
     },
 
