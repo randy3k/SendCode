@@ -92,7 +92,12 @@ class CodeGetter:
             line = self.view.line(self.view.text_point(row, 0))
             pt = line.begin()
             while paren:
-                res = self.find_inline(r"[{}\[\]()]", pt, scope="punctuation")
+                # there is a bug in the R syntax of early ST release (see #125)
+                if sublime.version() > '3210':
+                    res = self.find_inline(r"[{}\[\]()]", pt, scope="punctuation")
+                else:
+                    res = self.find_inline(r"[{}\[\]()]", pt)
+
                 if res.begin() == -1:
                     break
                 if self.view.substr(res) in ["{", "[", "("]:
