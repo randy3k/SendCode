@@ -93,7 +93,7 @@ class CodeGetter:
             pt = line.begin()
             while paren:
                 # there is a bug in the R syntax of early ST release (see #125)
-                if sublime.version() > '3210':
+                if sublime.version() >= '4000':
                     res = self.find_inline(r"[{}\[\]()]", pt, scope="punctuation")
                 else:
                     res = self.find_inline(r"[{}\[\]()]", pt)
