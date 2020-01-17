@@ -88,13 +88,6 @@ class SendCodeCommand(sublime_plugin.TextCommand):
         sublime.set_timeout_async(lambda: sender.send_text(cmd))
 
 
-# historial reason
-class SendReplCommand(SendCodeCommand):
-    def run(self, *args, **kargs):
-        print("The `send_repl` command has been deprecated, please use `send_code` command.")
-        super(SendReplCommand, self).run(*args, **kargs)
-
-
 class SendCodeBuildCommand(sublime_plugin.WindowCommand):
 
     def run(self, cmd=None, prog=None):
