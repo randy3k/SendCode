@@ -1,0 +1,5 @@
+{
+    "target": "send_code_exec",
+    "code": "source(\"$file\")",
+    "selector": "source.r"
+}

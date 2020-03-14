@@ -1,0 +1,5 @@
+{
+    "target": "send_code_exec",
+    "code": "Rcpp::sourceCpp(\"$file\")",
+    "selector": "source.c++.rcpp"
+}

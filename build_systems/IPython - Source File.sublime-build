@@ -1,0 +1,5 @@
+{
+    "target": "send_code_exec",
+    "code": "%run \"$file\"",
+    "selector": "source.python"
+}

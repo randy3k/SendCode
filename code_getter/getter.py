@@ -1,6 +1,32 @@
 import sublime
 import re
+import os
 from ..settings import Settings
+
+
+def escape_dquote(cmd):
+    cmd = cmd.replace('\\', '\\\\')
+    cmd = cmd.replace('"', '\\"')
+    return cmd
+
+
+def escape_squote(cmd):
+    cmd = cmd.replace('\\', '\\\\')
+    cmd = cmd.replace("\'", "\'")
+    return cmd
+
+
+PATTERN = re.compile(r"""
+    (?P<quote>["'])
+    (?P<quoted_var>
+        \$ (?: [_a-z][_a-z0-9]*  | \{[^}]*\} )
+    )
+    (?P=quote)
+    |
+    (?P<var>
+        \$ (?: [_a-z][_a-z0-9]*  | \{[^}]*\} )
+    )
+""", re.VERBOSE)
 
 
 class CodeGetter:
@@ -51,7 +77,7 @@ class CodeGetter:
                 pt = view.text_point(view.rowcol(nextpt.begin())[0], 0)
         view.sel().add(sublime.Region(pt, pt))
 
-    def get_text(self):
+    def get_code(self):
         view = self.view
         cmd = ''
         moved = False
@@ -71,6 +97,37 @@ class CodeGetter:
             view.show(view.sel())
 
         return cmd
+
+    def get_code_above(self):
+        line = int(self.get_line())
+        if not line or line <= 1:
+            return
+        view = self.view
+        region = sublime.Region(0, view.line(view.text_point(line - 2, 0)).end())
+        return view.substr(region)
+
+    def get_selection(self):
+        view = self.view
+        word = view.substr(view.sel()[0])
+        if not word:
+            word = view.substr(view.word(view.sel()[0].begin()))
+        return word
+
+    def get_line(self):
+        view = self.view
+        if len(view.sel()) == 1:
+            row, _ = view.rowcol(view.sel()[0].begin())
+            return str(row + 1)
+
+    def get_current_folder(self):
+        view = self.view
+        fname = view.file_name()
+        window = view.window()
+        if fname:
+            fname = os.path.realpath(fname)
+            for folder in window.folders():
+                if fname.startswith(os.path.realpath(folder) + os.sep):
+                    return folder
 
     def find_inline(self, pattern, pt, scope="-string, -comment"):
         while True:
@@ -165,6 +222,41 @@ class CodeGetter:
                 s = sublime.Region(s.begin(), prevline.end())
 
         return s
+
+    def resolve(self, code):
+        view = self.view
+        window = view.window()
+        extracted_variables = window.extract_variables()
+
+        variable_getter = {
+            "line": self.get_line,
+            "selection": self.get_selection,
+            "current_folder": self.get_current_folder
+        }
+
+        for v, getter in variable_getter.items():
+            value = getter()
+            if value is not None:
+                extracted_variables[v] = value
+
+        def convert(m):
+            quote = m.group("quote")
+            var = m.group("quoted_var") if quote else m.group("var")
+            if var == "$code_above":
+                var = self.get_code_above()
+            else:
+                var = sublime.expand_variables(var, extracted_variables)
+
+            if quote == "'":
+                return "'" + escape_squote(var) + "'"
+            elif quote == '"':
+                return '"' + escape_dquote(var) + '"'
+            else:
+                return var
+
+        code = PATTERN.sub(convert, code)
+
+        return code
 
 
 class RCodeGetter(CodeGetter):
@@ -312,7 +404,9 @@ class MarkDownCodeGetter(CodeGetter):
             s = sublime.Region(s.end() + 1, end.begin() - 1)
         return s
 
+    def get_code_above(self):
+        pass
+
 
 class RMarkDownCodeGetter(MarkDownCodeGetter):
-
     pass

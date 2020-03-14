@@ -1,5 +1,0 @@
-{
-    "target": "send_code_build",
-    "cmd": "include(\"${file/\\\\/\\\\\\\\/g}\");",
-    "selector": "source.julia"
-}
