@@ -53,6 +53,8 @@ class CodeGetter:
             return PythonCodeGetter(view)
         elif syntax == "julia":
             return JuliaCodeGetter(view)
+        elif syntax == "matlab":
+            return JuliaCodeGetter(view)
         else:
             return CodeGetter(view)
 
