@@ -377,6 +377,11 @@ class JuliaCodeGetter(CodeGetter):
                     s = sublime.Region(s.begin(), line.end())
                     break
 
+        elif re.match(r"\s*#=", thiscmd) and not re.match(r".*=#\s", thiscmd):
+            indentation = re.match(r"^(\s*)", thiscmd).group(1)
+            endline = view.find(r"^" + indentation + r"=#", s.begin())
+            s = sublime.Region(s.begin(), view.line(endline.end()).end())
+
         else:
             s = self.forward_expand(s, pattern=r"[+\-*/](?=\s*$)")
 
