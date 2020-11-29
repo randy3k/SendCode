@@ -360,8 +360,6 @@ class JuliaCodeGetter(CodeGetter):
             "abstruct", "type", "struct", "immutable", "mutable"
         ]
         
-        print(re.match(r"\s*\b(#=)\b", thiscmd))
-
         if (re.match(r"\s*\b(?:{})\b".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*\bend\b\s*$", thiscmd)) or \
                 (re.match(r".*\b(?:begin|let|quote)\b\s*", thiscmd)):
@@ -379,6 +377,11 @@ class JuliaCodeGetter(CodeGetter):
                 else:
                     s = sublime.Region(s.begin(), line.end())
                     break
+
+        elif re.match(r"\s*#=", thiscmd) and not re.match(r".*=#\s", thiscmd):
+            indentation = re.match(r"^(\s*)", thiscmd).group(1)
+            endline = view.find(r"^" + indentation + r"=#", s.begin())
+            s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
         else:
             s = self.forward_expand(s, pattern=r"[+\-*/](?=\s*$)")
