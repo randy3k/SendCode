@@ -359,6 +359,9 @@ class JuliaCodeGetter(CodeGetter):
             "function", "macro", "if", "for", "while", "try", "module",
             "abstruct", "type", "struct", "immutable", "mutable"
         ]
+        
+        print(re.match(r"\s*\b(#=)\b", thiscmd))
+
         if (re.match(r"\s*\b(?:{})\b".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*\bend\b\s*$", thiscmd)) or \
                 (re.match(r".*\b(?:begin|let|quote)\b\s*", thiscmd)):
