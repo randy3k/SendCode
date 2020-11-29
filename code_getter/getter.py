@@ -90,10 +90,8 @@ class CodeGetter:
                     view.sel().subtract(original_s)
                     self.advance(s)
                     moved = True
-            
-            subs_cmd = self.substr(s)
-            if subs_cmd:
-                cmd += subs_cmd + '\n'
+
+            cmd += self.substr(s) + '\n'
 
         if moved:
             view.show(view.sel())
@@ -359,7 +357,6 @@ class JuliaCodeGetter(CodeGetter):
             "function", "macro", "if", "for", "while", "try", "module",
             "abstruct", "type", "struct", "immutable", "mutable"
         ]
-        
         if (re.match(r"\s*\b(?:{})\b".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*\bend\b\s*$", thiscmd)) or \
                 (re.match(r".*\b(?:begin|let|quote)\b\s*", thiscmd)):
