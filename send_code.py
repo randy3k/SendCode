@@ -25,5 +25,6 @@ class SendCodeCommand(sublime_plugin.TextCommand):
             code = getter.resolve(code)
         else:
             code = getter.get_code()
-
-        sublime.set_timeout_async(lambda: sender.send_text(code))
+        
+        if code:
+            sublime.set_timeout_async(lambda: sender.send_text(code))

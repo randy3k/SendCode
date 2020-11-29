@@ -90,8 +90,10 @@ class CodeGetter:
                     view.sel().subtract(original_s)
                     self.advance(s)
                     moved = True
-
-            cmd += self.substr(s) + '\n'
+            
+            subs_cmd = self.substr(s)
+            if subs_cmd:
+                cmd += subs_cmd + '\n'
 
         if moved:
             view.show(view.sel())
