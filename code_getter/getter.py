@@ -381,6 +381,11 @@ class JuliaCodeGetter(CodeGetter):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
             endline = view.find(r"^" + indentation + r"=#", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
+        
+        elif re.match(r"\s*#>>", thiscmd) and not re.match(r".*#<<\s*$", thiscmd):
+            indentation = re.match(r"^(\s*)", thiscmd).group(1)
+            endline = view.find(r"^" + indentation + r"#<<", s.begin())
+            s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
         else:
             s = self.forward_expand(s, pattern=r"[+\-*/](?=\s*$)")
@@ -404,7 +409,8 @@ class MatlabCodeGetter(CodeGetter):
         lastrow = view.rowcol(view.size())[0]
 
         keywords = [
-            "for", "while", "switch", "try", "if", "parfor" 
+            "for", "while", "switch", "try", "if", "parfor",
+            "function"
         ]
         if (re.match(r"\s*\b(?:{})\b".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*\bend\b\s*$", thiscmd)):
@@ -412,7 +418,7 @@ class MatlabCodeGetter(CodeGetter):
             endline = view.find(r"^" + indentation + r"\bend\b", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
-        elif re.match(r"\s*\bimport\b", thiscmd): #not sure about this but matlab has no export and using
+        elif re.match(r"\s*\bimport\b", thiscmd):
             row = view.rowcol(s.begin())[0]
             lastrow = view.rowcol(view.size())[0]
             while row <= lastrow:
@@ -423,10 +429,15 @@ class MatlabCodeGetter(CodeGetter):
                     s = sublime.Region(s.begin(), line.end())
                     break
             
-        elif re.match(r"\s*%{", thiscmd) and not re.match(r".*%}\s*$", thiscmd):
+        elif re.match(r"\s*%{\s*$", thiscmd):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
             endline = view.find(r"^" + indentation + r"%}", s.begin())
             no_cmts = True,
+            s = sublime.Region(s.begin(), view.line(endline.end()).end())
+
+        elif re.match(r"\s*%>>", thiscmd) and not re.match(r".*%<<\s*$", thiscmd):
+            indentation = re.match(r"^(\s*)", thiscmd).group(1)
+            endline = view.find(r"^" + indentation + r"%<<", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
         else:
