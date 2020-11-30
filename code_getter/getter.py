@@ -404,7 +404,7 @@ class MatlabCodeGetter(CodeGetter):
         lastrow = view.rowcol(view.size())[0]
 
         keywords = [
-            "if", "for", "while"
+            "for", "while", "switch", "try", "if", "parfor" 
         ]
         if (re.match(r"\s*\b(?:{})\b".format("|".join(keywords)), thiscmd) and
                 not re.match(r".*\bend\b\s*$", thiscmd)):
@@ -412,7 +412,7 @@ class MatlabCodeGetter(CodeGetter):
             endline = view.find(r"^" + indentation + r"\bend\b", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
-        elif re.match(r"\s*\b(using|import|export)\b", thiscmd):
+        elif re.match(r"\s*\bimport\b", thiscmd): #not sure about this but matlab has no export and using
             row = view.rowcol(s.begin())[0]
             lastrow = view.rowcol(view.size())[0]
             while row <= lastrow:
