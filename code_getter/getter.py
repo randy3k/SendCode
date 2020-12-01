@@ -200,6 +200,22 @@ class CodeGetter:
             break
 
         return s
+    
+    def backward_sq_bracket_expand(self, s, pattern=r"[\[](?=\s*$)"):
+        # backward_expand previous lines ending with operators
+
+        view = self.view
+        row = view.rowcol(s.begin())[0]
+        while row > 0:
+            row = row - 1
+            line = view.line(view.text_point(row, 0))
+            if re.search(pattern, view.substr(line)):
+                endpt = self.find_inline(r"\S(?=\s*$)", line.begin()).begin()
+                if endpt != -1:
+                    s = sublime.Region(line.begin(), s.end())
+                    continue
+                break
+        return s
 
     def block_expand(self, s):
         # expand block based on block_start_pattern and block_end_pattern
@@ -387,6 +403,9 @@ class JuliaCodeGetter(CodeGetter):
             endline = view.find(r"^" + indentation + r"#<<", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
+        elif re.match(r".*].*$", thiscmd) and not re.match(r".*\[.*$", thiscmd):
+            s = self.backward_sq_bracket_expand(s, pattern=r"[\[](?=\s*)")
+
         else:
             s = self.forward_expand(s, pattern=r"[+\-*/](?=\s*$)")
 
@@ -439,6 +458,9 @@ class MatlabCodeGetter(CodeGetter):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
             endline = view.find(r"^" + indentation + r"%<<", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
+        
+        elif re.match(r".*].*$", thiscmd) and not re.match(r".*\[.*$", thiscmd):
+            s = self.backward_sq_bracket_expand(s, pattern=r"[\[](?=\s*)")
 
         else:
             s = self.forward_expand(s, pattern=r"[+\-*/](?=\s*$)")
