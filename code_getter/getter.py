@@ -451,7 +451,6 @@ class MatlabCodeGetter(CodeGetter):
         elif re.match(r"\s*%{\s*$", thiscmd):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
             endline = view.find(r"^" + indentation + r"%}", s.begin())
-            no_cmts = True,
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
 
         elif re.match(r"\s*%>>", thiscmd) and not re.match(r".*%<<\s*$", thiscmd):
