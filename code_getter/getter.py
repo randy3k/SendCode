@@ -448,7 +448,7 @@ class MatlabCodeGetter(CodeGetter):
                     s = sublime.Region(s.begin(), line.end())
                     break
             
-        elif re.match(r"\s*%{\s*$", thiscmd):
+        elif re.match(r"^\s*%{\s*$", thiscmd):
             indentation = re.match(r"^(\s*)", thiscmd).group(1)
             endline = view.find(r"^" + indentation + r"%}", s.begin())
             s = sublime.Region(s.begin(), view.line(endline.end()).end())
