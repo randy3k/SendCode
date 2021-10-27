@@ -266,13 +266,13 @@ class RCodeGetter(CodeGetter):
         if view.score_selector(s.begin(), "string"):
             return s
 
-        s = self.backward_expand(s, r"([+\-*/]|%[+<>$:a-zA-Z]+%)(?=\s*$)")
+        s = self.backward_expand(s, r"([+\-*/]|%[+<>$:a-zA-Z]+%|\|>)(?=\s*$)")
 
         s_block = self.block_expand(s)
         if s_block != s:
             return s_block
 
-        return self.forward_expand(s, pattern=r"([+\-*/]|%[+<>$:a-zA-Z]+%)(?=\s*$)")
+        return self.forward_expand(s, pattern=r"([+\-*/]|%[+<>$:a-zA-Z]+%|\|>)(?=\s*$)")
 
     def substr(self, s):
         view = self.view
