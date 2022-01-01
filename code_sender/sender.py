@@ -39,6 +39,8 @@ class CodeSender:
             return PythonCodeSender(view, **kwargs)
         elif syntax == "julia":
             return JuliaCodeSender(view, **kwargs)
+        elif syntax == "matlab":
+            return MatlabCodeSender(view, **kwargs)
         else:
             return CodeSender(view, **kwargs)
 
@@ -286,5 +288,9 @@ class PythonCodeSender(CodeSender):
 
 
 class JuliaCodeSender(CodeSender):
+
+    pass
+
+class MatlabCodeSender(CodeSender):
 
     pass

@@ -8,7 +8,8 @@ class Settings:
         "text.html.markdown.rmarkdown": "rmd",
         "text.html.markdown": "md",
         "source.python": "python",
-        "source.julia": "julia"
+        "source.julia": "julia",
+        "source.matlab": "matlab"
     }
 
     def __init__(self, view):
