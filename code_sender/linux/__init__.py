@@ -47,7 +47,7 @@ if plat == "linux":
             sublime.status_message("{} (WM_NAME) not found; trying {} (WM_CLASS)"
                                    .format(window_name, linux_terminal))
         except TypeError:
-            # We get here if window_name is None
+            # We get here if window_name is None, meaning we should just look at WM_CLASS
             pass
 
         wids = xdotool("search", "--onlyvisible", "--class", linux_terminal)
@@ -57,10 +57,9 @@ if plat == "linux":
 
         return wids
 
-
 else:
-    def get_linux_wids(cmd):
+    def send_to_linux_terminal(cmd):
         pass
 
-    def send_to_linux_terminal(cmd):
+    def get_linux_wids(cmd):
         pass
