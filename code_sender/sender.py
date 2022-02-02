@@ -8,7 +8,7 @@ from .iterm import send_to_iterm
 from .r import send_to_r
 from .rstudio import send_to_rstudio
 from .conemu import send_to_conemu, send_to_cmder
-from .linux import send_to_linux_terminal
+from .linux import send_to_linux_terminal, get_linux_wids
 from .tmux import send_to_tmux
 from .screen import send_to_screen
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
@@ -57,8 +57,10 @@ class CodeSender:
         send_to_cmder(cmd, conemuc, bracketed=self.bracketed_paste_mode)
 
     def send_to_linux_terminal(self, cmd):
+        window_name = self.settings.get("window_name")
         linux_terminal = self.settings.get("linux_terminal")
-        send_to_linux_terminal(linux_terminal, cmd)
+        wids = get_linux_wids(window_name, linux_terminal)
+        send_to_linux_terminal(wids, cmd)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
@@ -225,15 +227,17 @@ class PythonCodeSender(CodeSender):
                 send_to_cmder(cmd, conemuc)
 
     def send_to_linux_terminal(self, cmd):
+        window_name = self.settings.get("window_name")
         linux_terminal = self.settings.get("linux_terminal")
+        wids = get_linux_wids(window_name, linux_terminal)
 
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
-                send_to_linux_terminal(linux_terminal, [cmd, ""])
+                send_to_linux_terminal(wids, [cmd, ""])
             else:
-                send_to_linux_terminal(linux_terminal, [r"%cpaste -q", cmd, "--"])
+                send_to_linux_terminal(wids, [r"%cpaste -q", cmd, "--"])
         else:
-            send_to_linux_terminal(linux_terminal, cmd)
+            send_to_linux_terminal(wids, cmd)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")

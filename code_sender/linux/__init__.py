@@ -2,18 +2,15 @@ import sublime
 import time
 import os
 from ..clipboard import clipboard
+from subprocess import CalledProcessError
 
 plat = sublime.platform()
 
 if plat == "linux":
     from ..xdotool import xdotool
 
-    def send_to_linux_terminal(linux_terminal, cmd_list):
-        wid = xdotool("search", "--onlyvisible", "--class", linux_terminal)
-        if not wid:
-            raise Exception("{} not found.".format(linux_terminal))
-
-        wid = wid.decode("utf-8").strip().split("\n")[-1]
+    def send_to_linux_terminal(wids, cmd_list):
+        wid = wids.decode("utf-8").strip().split("\n")[-1]
 
         if isinstance(cmd_list, str):
             cmd_list = [cmd_list]
@@ -42,7 +39,28 @@ if plat == "linux":
         else:
             xdotool("windowfocus", sublime_id)
 
+    def get_linux_wids(window_name, linux_terminal):
+        try:
+            wids = xdotool("search", "--onlyvisible", "--name", window_name)
+            return wids
+        except CalledProcessError:
+            sublime.status_message("{} (WM_NAME) not found; trying {} (WM_CLASS)"
+                                   .format(window_name, linux_terminal))
+        except TypeError:
+            # We get here if window_name is None
+            pass
+
+        wids = xdotool("search", "--onlyvisible", "--class", linux_terminal)
+
+        if not wids:
+            raise Exception("{} not found.".format(linux_terminal))
+
+        return wids
+
 
 else:
+    def get_linux_wids(cmd):
+        pass
+
     def send_to_linux_terminal(cmd):
         pass
