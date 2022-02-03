@@ -59,8 +59,7 @@ class CodeSender:
     def send_to_linux_terminal(self, cmd):
         linux_window_name = self.settings.get("linux_window_name")
         linux_terminal = self.settings.get("linux_terminal")
-        wids = get_linux_wids(linux_window_name, linux_terminal)
-        send_to_linux_terminal(wids, cmd)
+        send_to_linux_terminal(linux_window_name, linux_terminal, cmd)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
@@ -227,17 +226,17 @@ class PythonCodeSender(CodeSender):
                 send_to_cmder(cmd, conemuc)
 
     def send_to_linux_terminal(self, cmd):
-        window_name = self.settings.get("window_name")
+        linux_window_name = self.settings.get("linux_window_name")
         linux_terminal = self.settings.get("linux_terminal")
-        wids = get_linux_wids(window_name, linux_terminal)
 
         if len(re.findall("\n", cmd)) > 0:
             if self.bracketed_paste_mode:
-                send_to_linux_terminal(wids, [cmd, ""])
+                send_to_linux_terminal(linux_window_name, linux_terminal, [cmd, ""])
             else:
-                send_to_linux_terminal(wids, [r"%cpaste -q", cmd, "--"])
+                send_to_linux_terminal(linux_window_name, linux_terminal,
+                                       [r"%cpaste -q", cmd, "--"])
         else:
-            send_to_linux_terminal(wids, cmd)
+            send_to_linux_terminal(linux_window_name, linux_terminal, cmd)
 
     def send_to_tmux(self, cmd):
         tmux = self.settings.get("tmux", "tmux")
