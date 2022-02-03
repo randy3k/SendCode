@@ -182,7 +182,7 @@ If you have multiple instances of the same terminal emulator running (e.g. one `
 }
 ```
 
-It is not recommended to use the `linux_window_name` setting unless you specify a permanent window name when running your terminal emulator; by default, window names may change frequently, making this setting useless. Note that `linux_window_name` is only meaningful when in a settings block where `prog` is set to `linux-terminal`.
+It is not recommended to use the `linux_window_name` setting unless you specify a permanent window name when running your terminal emulator; by default, window names may change frequently, which makes this setting unreliable (although you can use a regular expression in `linux_window_name` to try to catch these windows). Note that `linux_window_name` is only meaningful when in a settings block where `prog` is set to `linux-terminal`.
 
 ### Block expansion
 
