@@ -8,7 +8,7 @@ from .iterm import send_to_iterm
 from .r import send_to_r
 from .rstudio import send_to_rstudio
 from .conemu import send_to_conemu, send_to_cmder
-from .linux import send_to_linux_terminal, get_linux_wids
+from .linux import send_to_linux_terminal
 from .tmux import send_to_tmux
 from .screen import send_to_screen
 from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
