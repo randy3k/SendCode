@@ -57,9 +57,9 @@ class CodeSender:
         send_to_cmder(cmd, conemuc, bracketed=self.bracketed_paste_mode)
 
     def send_to_linux_terminal(self, cmd):
-        window_name = self.settings.get("window_name")
+        linux_window_name = self.settings.get("linux_window_name")
         linux_terminal = self.settings.get("linux_terminal")
-        wids = get_linux_wids(window_name, linux_terminal)
+        wids = get_linux_wids(linux_window_name, linux_terminal)
         send_to_linux_terminal(wids, cmd)
 
     def send_to_tmux(self, cmd):
