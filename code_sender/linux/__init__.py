@@ -42,18 +42,15 @@ if plat == "linux":
             xdotool("windowfocus", sublime_id)
 
     def get_linux_wids(linux_window_name, linux_terminal):
-        try:
-            wids = xdotool("search", "--onlyvisible", "--name", linux_window_name)
-            return wids
-        except CalledProcessError:
-            sublime.status_message("{} (WM_NAME) not found; trying {} (WM_CLASS)"
-                                   .format(linux_window_name, linux_terminal))
-        except TypeError:
-            # We get here if linux_window_name is None, meaning we should just look at
-            # WM_CLASS (the default behavior if this optional key is not in the settings)
-            pass
-
-        wids = xdotool("search", "--onlyvisible", "--class", linux_terminal)
+        if linux_window_name:
+            try:
+                wids = xdotool("search", "--onlyvisible", "--name", linux_window_name)
+            except CalledProcessError:
+                sublime.status_message("{} (WM_NAME) not found; trying {} (WM_CLASS)"
+                                       .format(linux_window_name, linux_terminal))
+                wids = xdotool("search", "--onlyvisible", "--class", linux_terminal)
+        else:
+            wids = xdotool("search", "--onlyvisible", "--class", linux_terminal)
 
         if not wids:
             raise Exception("{} not found.".format(linux_terminal))
