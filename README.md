@@ -160,6 +160,29 @@ Project-wise settings could also be specified in `sublime-project` as
 }
 ```
 
+#### Enabling selection by window name/title (WM_NAME) for linux-terminal
+
+If you have multiple instances of the same terminal emulator running (e.g. one `alacritty` window for R, one for IPython, etc.), you may want to want to send code to a terminal with a specific name/title (e.g. so `python` code is sent to the window named `My Special IPython` but `julia` code is sent to `My Julia`). If you force a permanent window name when running your terminal emulator (e.g. `$ alacritty -t "My Special IPython"`), you can place this name in a `linux_window_name` SendCode setting. SendCode will then first try to find a window with the corresponding `WM_NAME` *before* using the `WM_CLASS` specified by the `linux_terminal` global setting. A minimal example is:
+
+```js
+{
+    "linux_terminal": "alacritty",
+    "prog": "linux-terminal",
+
+    // First try to send Python & Julia code to the named windows, respectively
+    "python" : {
+        "linux_window_name": "My Special IPython",
+        "bracketed_paste_mode": true,
+    }, 
+    "julia" : {
+        "linux_window_name": "My Julia",
+        "bracketed_paste_mode": true,
+    }
+    // Other code behaves as usual (e.g. R gets sent to the last alacritty window)
+}
+```
+
+It is not recommended to use the `linux_window_name` setting unless you specify a permanent window name when running your terminal emulator; by default, window names may change frequently, which makes this setting unreliable (although you can use a regular expression in `linux_window_name` to try to catch these windows). Note that `linux_window_name` is only meaningful when in a settings block where `prog` is set to `linux-terminal`.
 
 ### Block expansion
 
