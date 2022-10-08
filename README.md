@@ -77,6 +77,20 @@ There are two main keybindings:
 
    Most likely you haven't enabled JavaScript for AppleScript. Check the option "Allow JavaScript from Apple Events" in the `Develop` menu (the `Develope` menu needs to be enabled in the preferences).
 
+1. Kitty
+   All text commands from Sublime Text to Kitty are sent through the unix socket, so it is vital to have correct configuration on both sides. Please follow these steps:
+
+   1. Add this configuration to your `SendCode.sublime-settings`:
+   ```json
+    "prog": "kitty",
+    "kitty": {
+        "path": "/path/to/kitty",
+        "socket": "unix:/tmp/kitty",
+    }
+   ```
+    2. Add `allow_remote_control socket-only` to your `kitty.conf`
+    3. Start kitty with `--listen-on=unix:/tmp/kitty` flag. If you are using MacOS you can conveniently put it into `<kitty config dir>/macos-launch-services-cmdline` file.
+    4. Double check that `echo $KITTY_LISTEN_ON` is pointing to the same socket as defined in your Sublime Text configuration.
 
 ### Custom Keybindings
 
