@@ -15,6 +15,7 @@ from .chrome import send_to_chrome_jupyter, send_to_chrome_rstudio
 from .safari import send_to_safari_jupyter, send_to_safari_rstudio
 from .sublimerepl import send_to_sublimerepl
 from .terminus import send_to_terminus
+from .kitty import send_to_kitty
 from .clipboard import clipboard
 
 
@@ -86,6 +87,10 @@ class CodeSender:
         else:
             send_to_rstudio(cmd)
 
+    def send_to_kitty(self, cmd):
+        kitty = self.settings.get("kitty", "kitty")
+        send_to_kitty(cmd, kitty["path"], kitty["socket"])
+
     def send_text(self, cmd):
         cmd = cmd.rstrip()
         cmd = cmd.expandtabs(self.view.settings().get("tab_size", 4))
@@ -116,6 +121,8 @@ class CodeSender:
             self.send_to_terminus(cmd)
         elif prog == "rstudio":
             self.send_to_rstudio(cmd)
+        elif prog == "kitty":
+            self.send_to_kitty(cmd)
         else:
             sublime.message_dialog("%s is not supported for current syntax." % prog)
 
